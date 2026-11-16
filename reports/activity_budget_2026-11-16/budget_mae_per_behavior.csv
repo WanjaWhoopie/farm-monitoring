@@ -1,0 +1,6 @@
+method,sleep,investigating,eat,standing,lying,walk,drink
+always investigating,21.48,67.54,11.4,12.74,7.18,13.11,1.64
+training-days average,30.09,26.99,18.69,14.19,11.98,11.77,2.5
+geometry,17.62,22.49,3.55,13.55,10.3,12.71,2.2
+"geometry, smoothed",17.71,22.4,3.4,13.57,10.4,13.5,2.22
+"geometry, smoothed, all frames",19.55,23.37,2.75,12.61,10.71,25.04,1.98

@@ -47,6 +47,7 @@ AI4E_Project_Proposal_Submitted.pdf   the proposal
 AI4E_Proposal_template/               LaTeX template for the final paper (main.tex, references.bib)
 IMPLEMENTATION_NOTES.txt              what the data probe found and the implementation plan (9 Nov 2026)
 scripts/                              data probe: small bounded download, preprocessing, checks, summary figure
+scripts/activity_budget.py            activity-budget evaluation of the v2 geometry model (runs locally, no videos needed)
 requirements-probe.txt                packages for the scripts; versions used are in reports/environment.json
 Experiments/
   notebook_v1_kadima.ipynb            v1 (Kaggle): an image network looks at one cut-out of each pig; one fixed test day
@@ -59,6 +60,7 @@ reports/
   v2_molab_2026-11-16/                v2 results: per-day scores, confusion matrix, recall per behaviour, v2_results.xlsx
     run2_rebuilt_csv/                 the run the numbers below come from (seed 42, label file fingerprint 0f2be06d...)
     run3_reproducibility_check.md     the attempted repeat run and what went wrong
+  activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
 ```
 
 ## Vision branch so far
@@ -93,6 +95,31 @@ The still postures (lying, sleeping, standing) are the weak classes for every mo
 that does not move looks the same for all three. These numbers are the best case for the deployed
 system: the boxes were placed by people, and the model that finds and follows pigs automatically
 has not been run yet.
+
+## Activity budgets
+
+The deployed system is not meant to report a label per frame. It reports an activity budget: the
+share of time a pig, or the pen, spends in each behaviour over a period. That is what a farmer
+reads and what the alert rules compare against "normal". `scripts/activity_budget.py` checks how
+close budgets built from the geometry model's predictions come to budgets built from the human
+labels. The period is one five-minute clip and the unit is one pig (12 clips x 8 pigs = 96
+budgets), using the same held-out-day predictions as the table above. The score is the mean
+absolute difference in percentage points between the predicted and true share, averaged over the
+seven behaviours (lower is better; 0 would be a perfect budget).
+
+| Budget built from | Per pig and clip | Per clip, pen level (8 pigs averaged) |
+|---|---|---|
+| "Always investigating" | 19.3 | 19.3 |
+| Average budget of the training days, copied over | 16.6 | 11.9 |
+| Geometry model predictions | **11.8** | **9.2** |
+| Geometry model, majority vote over 2 s | 11.9 | 9.2 |
+
+Eating and drinking budgets are within 2 to 4 points of the truth. Sleeping (18 points off) and
+investigating (22 points off) are the problem: the model splits still time between sleeping,
+lying, standing and investigating, so a clip that is really 88% sleep comes out as 33% sleep.
+The predicted budgets are flatter than the true ones. Smoothing the predictions over two seconds
+helps the per-frame score (0.323 to 0.339) but not the budgets, which already average over the
+whole clip. Details, per-behaviour errors and a figure are in `reports/activity_budget_2026-11-16/`.
 
 ## Reproducibility
 
