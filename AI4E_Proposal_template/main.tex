@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 04-655 A: AI for Engineers, Fall 2026
+% Course Project Proposal Template (v1.0)
+%
+% HOW TO USE THIS TEMPLATE
+%   1. Upload this folder (main.tex and references.bib) to Overleaf, or
+%      compile locally with: pdflatex, bibtex, pdflatex, pdflatex.
+%   2. Fill in the title block below.
+%   3. Replace every block of grey guidance text with your own writing.
+%      The grey text tells you what each section should contain. Delete it
+%      once you have written the section.
+%   4. Add your sources to references.bib and cite them with \cite{key}.
+%      References are formatted automatically in IEEE style.
+%
+% RULES
+%   - Keep the four sections and their order. Do not rename them.
+%   - The content (title block through the end of Section 4) must fit on
+%     AT MOST 2 PAGES. The reference list starts on a new page and does
+%     not count toward the limit.
+%   - Do not change the font size, margins, or line spacing.
+%   - Submit the compiled PDF on Canvas by the posted deadline.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% DOCUMENT SETUP: Do not change this section.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm, headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\urlstyle{same}
+
+% Compact section headings so more space goes to content.
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\setlist{nosep, leftmargin=*}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+% Running header and page numbers.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 04-655 A: AI for Engineers, Fall 2026}
+\fancyhead[R]{\small Project Proposal}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Guidance text macro. Every \guide{...} block is an instruction to you.
+% Replace it with your own text. Nothing written with \guide should remain
+% in your submitted PDF.
+\newcommand{\guide}[1]{{\color{gray!85!black}\itshape #1}}
+
+\begin{document}
+
+% TITLE BLOCK: Replace the placeholders below.
+\begin{center}
+  {\LARGE\bfseries Project Title: Short, Specific, and Descriptive\par}
+  \vspace{8pt}
+  {\normalsize
+  Member One (andrewid1), Member Two (andrewid2), Member Three (andrewid3)\\[3pt]
+  Group X: Application Domain (e.g., Healthcare \& Medical Technology)\\[3pt]
+  Month DD, 2026\par}
+\end{center}
+\vspace{4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec:intro}
+% Suggested length: 1 to 2 paragraphs.
+\guide{Introduce the engineering or real-world context of your project and explain why it matters. Who is affected, and what is the cost of the problem today? Where possible, ground the motivation in an African or local setting and support claims with sources, for example statistics from a report or results from prior work \cite{lecun2015deep}.}
+
+\guide{Briefly describe what has already been done on this problem. Cite 2 to 4 relevant papers, systems, or datasets \cite{he2016deep, vaswani2017attention} and state in one or two sentences what gap your project addresses. End the section with a single sentence that summarises what your team will build or study.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Statement}\label{sec:problem}
+% Suggested length: 1 short paragraph.
+\guide{In a few sentences, state the problem, the gap that current solutions leave, and the solution your team proposes to close that gap.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data}\label{sec:data}
+% Suggested length: 1 paragraph.
+\guide{Describe the data your project will use. Give the name and source of each dataset with a citation \cite{kermany2018identifying, uci_repository}, its size (number of samples, features, classes, or file size), its format, and how you will access it. If you are collecting your own data or building a simulated environment, explain how and on what scale.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project Plan and Timeline}\label{sec:plan}
+% Suggested length: 1 short paragraph plus the timeline table.
+\guide{Summarise how your team will carry out the project: the main stages of work, the tools and libraries you will use (for example, Python and scikit-learn \cite{pedregosa2011scikit}), the computing resources you need, and who is responsible for what. Identify the biggest risk to the project (for example, data access or model training time) and your fallback plan if it happens.}
+
+\guide{Fill in Table~\ref{tab:timeline} with your milestones by course week. The rows below are an example only. Replace them with your own plan. Project presentations take place in Week 15.}
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Project timeline and responsibilities.}
+  \label{tab:timeline}
+  \begin{tabularx}{\linewidth}{@{}l X l@{}}
+    \toprule
+    \textbf{Week} & \textbf{Milestone and Deliverable} & \textbf{Lead} \\
+    \midrule
+    10 & Data acquired and cleaned; exploratory analysis complete & Member One \\
+    11 & Baseline implemented and evaluated & Member Two \\
+    12 & Main method implemented & Member Three \\
+    13 & Experiments, tuning, and error analysis & All \\
+    14 & Results finalised; slides and write-up drafted & All \\
+    15 & Project presentation & All \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END OF CONTENT. Everything above this line must fit on at most 2 pages.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% REFERENCES: Do not change this section. References start on a new page,
+% are formatted in IEEE style, and do not count toward the page limit.
+% Only sources you \cite in the text appear in the list.
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

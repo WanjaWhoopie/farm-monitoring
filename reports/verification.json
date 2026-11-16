@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": {
+    "audio_metadata_rows_and_group_exclusivity": 6887,
+    "decoded_audio_duration_hash_and_feature_checks": 68,
+    "source_keyframe_boxes_labels_and_timestamps": 12646,
+    "independent_midpoint_interpolation_checks": 96,
+    "disjoint_day_holdouts": 7,
+    "rgb_frames_and_pig_crops": {
+      "frames": 6,
+      "crops": 48
+    },
+    "baseline_scores_recomputed_from_heldout_predictions": 3
+  },
+  "not_verified": [
+    "Model inference on edge hardware",
+    "Continuous farm-audio call detection",
+    "Real welfare anomaly labels",
+    "Synchronized audio/video fusion accuracy",
+    "Individual-pig-independent generalization"
+  ]
+}

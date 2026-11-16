@@ -1,0 +1,11 @@
+# Versions actually used are recorded in reports/environment.json.
+requests
+numpy
+pandas
+openpyxl
+scipy
+soundfile
+opencv-python
+scikit-learn
+Pillow
+matplotlib

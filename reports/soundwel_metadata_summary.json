@@ -1,0 +1,95 @@
+{
+  "metadata_rows": 6887,
+  "archive_wavs": 6887,
+  "archive_wavs_without_key": [],
+  "key_without_archive": [],
+  "valence_counts": {
+    "Neg": 4572,
+    "Pos": 2315
+  },
+  "context_counts": {
+    "Isolation": 2048,
+    "Reunion": 944,
+    "Restrain": 927,
+    "Run": 737,
+    "Barren": 585,
+    "Enriched": 336,
+    "NovelObject": 333,
+    "Castration": 295,
+    "Crushing": 146,
+    "NegativeConditioning": 119,
+    "PositiveConditioning": 119,
+    "AfterNursing": 79,
+    "Huddling": 74,
+    "Fighting": 57,
+    "MissedNursing": 45,
+    "BeforeNursing": 26,
+    "Surprise": 17
+  },
+  "recording_team_counts": {
+    "IASPA": 2406,
+    "NMBU": 1418,
+    "FBN": 1349,
+    "IASPB": 696,
+    "ETHZ": 551,
+    "IASPC": 467
+  },
+  "missing_per_source_column": {
+    "recording_team": 0,
+    "recording_date": 737,
+    "audio_filename": 0,
+    "spectrogram_filename": 0,
+    "age_category": 0,
+    "age_cat_nb": 737,
+    "sex": 1042,
+    "context": 0,
+    "context_category": 0,
+    "call_type_freq": 737,
+    "call_type_nb": 737,
+    "valence": 0,
+    "f0mean": 3163,
+    "q25": 737,
+    "q50": 737,
+    "q75": 737,
+    "fpeak": 737,
+    "dur": 737,
+    "amvar": 817,
+    "amrate": 927,
+    "amextent": 927,
+    "harmonicity": 737,
+    "wienentrmean": 737,
+    "dfmin": 1530,
+    "lpc1": 1530,
+    "lpc2": 1530,
+    "lpc3": 1530,
+    "lpc4": 1530,
+    "lpc5": 1530,
+    "lpc6": 1530,
+    "type": 737
+  },
+  "date_groups": 43,
+  "candidate_folds": {
+    "Neg": {
+      "0": 1363,
+      "1": 890,
+      "2": 503,
+      "3": 557,
+      "4": 1259
+    },
+    "Pos": {
+      "0": 18,
+      "1": 480,
+      "2": 878,
+      "3": 812,
+      "4": 127
+    }
+  },
+  "sample_selected": 68,
+  "seed": 42,
+  "limitations": [
+    "Team/date grouping is a proxy, not a verified individual-pig split.",
+    "Context, team, filename and valence-derived fields must not be predictive inputs.",
+    "Metadata-derived acoustic features are not measured edge inference latency.",
+    "Contextual negative valence is not a diagnosis or a confirmed distress event."
+  ]
+}

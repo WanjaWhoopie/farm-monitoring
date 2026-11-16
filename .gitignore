@@ -1,0 +1,26 @@
+# Datasets are not stored in this repository; see README.md for the sources.
+data/
+tmp/
+
+# Credentials and sandbox tokens
+*.env
+kaggle.json
+token.txt
+
+# Local agent tooling (marimo-pair skill, Claude Code settings)
+.agents/
+.claude/
+skills-lock.json
+
+# Course handouts (not the group's own work)
+Final project description and timeline.pptx.pdf
+Projects_AI4E_Description.pdf
+
+# Python / notebook caches
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Presentations
+*.pptx
+*.ppt

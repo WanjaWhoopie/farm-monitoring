@@ -1,0 +1,14 @@
+{
+  "saved_at": "2026-11-16T11:02:12",
+  "gate": {
+    "MAX_GAP": 20,
+    "MIN_IOU": 0.5,
+    "MAX_TRAIL": 10
+  },
+  "rows_kept_7class": 46367,
+  "embeddings_run": true,
+  "audit": {
+    "correct": null,
+    "total": 24
+  }
+}

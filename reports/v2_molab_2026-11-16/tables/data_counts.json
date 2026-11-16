@@ -1,0 +1,31 @@
+{
+  "tier_rows_all_labels": {
+    "stored": 12646,
+    "gated": 20266,
+    "rejected": 139888
+  },
+  "annotation_source_rows": {
+    "stored": 12646,
+    "interpolated_box_forward_label": 43232,
+    "trailing_forward": 116922
+  },
+  "kept_rows_7class": 30337,
+  "stored_rows_per_class": {
+    "investigating": 4203,
+    "walk": 2736,
+    "standing": 1812,
+    "eat": 980,
+    "lying": 601,
+    "sleep": 530,
+    "drink": 211
+  },
+  "stored_rows_per_held_out_day": {
+    "2019_11_05": 4352,
+    "2019_11_11": 1641,
+    "2019_11_15": 947,
+    "2019_11_22": 752,
+    "2019_11_28": 1227,
+    "2019_12_02": 1587,
+    "2019_12_10": 567
+  }
+}

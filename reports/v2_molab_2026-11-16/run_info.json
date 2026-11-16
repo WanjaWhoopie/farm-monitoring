@@ -1,0 +1,19 @@
+{
+  "run_date": "2026-11-16",
+  "where": "molab marimo notebook (v2, converted from Experiments/notebook_v2_improved.ipynb); data at /home/marimo/pig_data",
+  "evaluation": "leave-one-day-out over 7 recording days; macro-F1 over classes present in the held-out day; 'stored' = human-placed rows only, 'all_kept' = stored + gated",
+  "gate": {
+    "MAX_GAP": 20,
+    "MIN_IOU": 0.5,
+    "MAX_TRAIL": 10,
+    "note": "one annotation step = one video frame (~0.17 s), so MAX_GAP is ~3 s and MAX_TRAIL ~1.7 s"
+  },
+  "data_fix": "CSV had no raw_frame_index/elapsed_seconds; raw_frame_index = annotation_index (1,800 frames, 1,800 times.txt lines, max index 1799 in all 12 clips); elapsed_seconds from times.txt",
+  "models": {
+    "geometry_motion_HGB": "HistGradientBoosting(max_depth=4, lr=0.08, max_iter=150), balanced sample weights, 11 box geometry/motion/crowding features",
+    "frozen_emb_LR": "MobileNetV3-Small ImageNet features (576-d, no fine-tuning), crop = box + 10% margin padded square 224px; median impute + standardise + LogisticRegression(C=0.02, balanced)",
+    "frozen_emb+geometry_LR": "same LR on embeddings concatenated with geometry features"
+  },
+  "seed": 42,
+  "provenance": "Numbers transcribed from kernel output printed during the session. The sandbox ended (HTTP 410) before files were copied, so per-fold all_kept rows for the embedding models, the gate sensitivity table and gated_audit_sheet.png were not retrieved."
+}

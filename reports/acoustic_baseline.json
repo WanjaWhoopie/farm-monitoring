@@ -1,0 +1,258 @@
+{
+  "random_call_optimistic": {
+    "oof_balanced_accuracy": 0.7407554331373978,
+    "oof_macro_f1": 0.6852718880742383,
+    "confusion_matrix_rows_true_posvalence_negvalence": [
+      [
+        1252,
+        326
+      ],
+      [
+        1426,
+        3146
+      ]
+    ],
+    "folds": [
+      {
+        "fold": 0,
+        "train": 4920,
+        "test": 1230,
+        "test_groups": [],
+        "test_positive_valence": 316,
+        "test_negative_valence": 914
+      },
+      {
+        "fold": 1,
+        "train": 4920,
+        "test": 1230,
+        "test_groups": [],
+        "test_positive_valence": 316,
+        "test_negative_valence": 914
+      },
+      {
+        "fold": 2,
+        "train": 4920,
+        "test": 1230,
+        "test_groups": [],
+        "test_positive_valence": 316,
+        "test_negative_valence": 914
+      },
+      {
+        "fold": 3,
+        "train": 4920,
+        "test": 1230,
+        "test_groups": [],
+        "test_positive_valence": 315,
+        "test_negative_valence": 915
+      },
+      {
+        "fold": 4,
+        "train": 4920,
+        "test": 1230,
+        "test_groups": [],
+        "test_positive_valence": 315,
+        "test_negative_valence": 915
+      }
+    ]
+  },
+  "team_date_group_proxy": {
+    "oof_balanced_accuracy": 0.563598395257627,
+    "oof_macro_f1": 0.5487014861348313,
+    "confusion_matrix_rows_true_posvalence_negvalence": [
+      [
+        735,
+        843
+      ],
+      [
+        1548,
+        3024
+      ]
+    ],
+    "folds": [
+      {
+        "fold": 0,
+        "train": 4863,
+        "test": 1287,
+        "test_groups": [
+          "IASPA|2011-01-01"
+        ],
+        "test_positive_valence": 0,
+        "test_negative_valence": 1287
+      },
+      {
+        "fold": 1,
+        "train": 4935,
+        "test": 1215,
+        "test_groups": [
+          "FBN|2014-03-03",
+          "FBN|2014-04-24",
+          "IASPA|2008-01-01",
+          "NMBU|2017-06-15"
+        ],
+        "test_positive_valence": 447,
+        "test_negative_valence": 768
+      },
+      {
+        "fold": 2,
+        "train": 4932,
+        "test": 1218,
+        "test_groups": [
+          "ETHZ|2014-08-27",
+          "FBN|2014-02-06",
+          "FBN|2014-03-13",
+          "FBN|2014-04-14",
+          "FBN|2014-07-17",
+          "FBN|2015-02-05",
+          "FBN|2015-04-09",
+          "IASPB|2011-01-01",
+          "NMBU|2017-06-08",
+          "NMBU|2017-06-16"
+        ],
+        "test_positive_valence": 777,
+        "test_negative_valence": 441
+      },
+      {
+        "fold": 3,
+        "train": 4934,
+        "test": 1216,
+        "test_groups": [
+          "ETHZ|2014-08-26",
+          "ETHZ|2014-09-15",
+          "FBN|2014-02-10",
+          "FBN|2014-02-20",
+          "FBN|2014-03-20",
+          "FBN|2014-03-24",
+          "FBN|2014-05-15",
+          "IASPA|2011-03-29",
+          "IASPC|2011-03-29",
+          "IASPC|2011-04-26",
+          "NMBU|2017-06-06",
+          "NMBU|2017-06-09",
+          "NMBU|2017-06-13"
+        ],
+        "test_positive_valence": 216,
+        "test_negative_valence": 1000
+      },
+      {
+        "fold": 4,
+        "train": 4936,
+        "test": 1214,
+        "test_groups": [
+          "ETHZ|2014-08-25",
+          "ETHZ|2014-09-16",
+          "FBN|2014-02-27",
+          "FBN|2014-04-03",
+          "FBN|2014-05-01",
+          "FBN|2014-05-05",
+          "FBN|2014-07-03",
+          "FBN|2014-07-24",
+          "FBN|2014-08-07",
+          "FBN|2015-02-27",
+          "IASPA|2011-04-26",
+          "IASPC|2011-03-08",
+          "NMBU|2017-06-07",
+          "NMBU|2017-06-14"
+        ],
+        "test_positive_valence": 138,
+        "test_negative_valence": 1076
+      }
+    ]
+  },
+  "leave_recording_team_out": {
+    "oof_balanced_accuracy": 0.5181157250780914,
+    "oof_macro_f1": 0.5016964361978503,
+    "confusion_matrix_rows_true_posvalence_negvalence": [
+      [
+        695,
+        883
+      ],
+      [
+        1848,
+        2724
+      ]
+    ],
+    "folds": [
+      {
+        "fold": 0,
+        "train": 5599,
+        "test": 551,
+        "test_groups": [
+          "ETHZ"
+        ],
+        "test_positive_valence": 240,
+        "test_negative_valence": 311
+      },
+      {
+        "fold": 1,
+        "train": 4801,
+        "test": 1349,
+        "test_groups": [
+          "FBN"
+        ],
+        "test_positive_valence": 119,
+        "test_negative_valence": 1230
+      },
+      {
+        "fold": 2,
+        "train": 3744,
+        "test": 2406,
+        "test_groups": [
+          "IASPA"
+        ],
+        "test_positive_valence": 427,
+        "test_negative_valence": 1979
+      },
+      {
+        "fold": 3,
+        "train": 5454,
+        "test": 696,
+        "test_groups": [
+          "IASPB"
+        ],
+        "test_positive_valence": 696,
+        "test_negative_valence": 0
+      },
+      {
+        "fold": 4,
+        "train": 5683,
+        "test": 467,
+        "test_groups": [
+          "IASPC"
+        ],
+        "test_positive_valence": 0,
+        "test_negative_valence": 467
+      },
+      {
+        "fold": 5,
+        "train": 5469,
+        "test": 681,
+        "test_groups": [
+          "NMBU"
+        ],
+        "test_positive_valence": 96,
+        "test_negative_valence": 585
+      }
+    ]
+  },
+  "scope": {
+    "rows": 6150,
+    "excluded_all_features_missing": 737,
+    "excluded_context_counts": {
+      "Run": 737
+    },
+    "features": [
+      "dur",
+      "amvar",
+      "amrate",
+      "amextent",
+      "q25",
+      "q50",
+      "q75",
+      "fpeak",
+      "harmonicity",
+      "wienentrmean"
+    ],
+    "seed": 42,
+    "note": "Exploratory baseline on provided acoustic measurements, no hyperparameter tuning. This does not validate continuous-call detection, distress detection, CNN inference or independent pigs."
+  }
+}

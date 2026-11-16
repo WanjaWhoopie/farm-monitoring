@@ -1,0 +1,127 @@
+{
+  "annotated_clips": 12,
+  "days": 7,
+  "unique_labeled_video_frames": 7200,
+  "pig_annotation_slots": 57600,
+  "sparse_change_points": 12646,
+  "duplicates_resolved_last_wins": 0,
+  "boxes_clipped_to_image": 0,
+  "raw_label_counts_change_points": {
+    "investigating": 4203,
+    "nose-to-nose": 358,
+    "walk": 2736,
+    "drink": 211,
+    "standing": 1812,
+    "run": 106,
+    "nose-poke-elsewhere": 62,
+    "playwithtoy": 85,
+    "jumpontopof": 6,
+    "other": 4,
+    "lying": 601,
+    "sitting": 144,
+    "fight": 807,
+    "eat": 980,
+    "sleep": 530,
+    "chase": 1
+  },
+  "expanded_label_counts": {
+    "sleep": {
+      "pig_annotation_slots": 16392,
+      "clips": 10,
+      "days": 7
+    },
+    "investigating": {
+      "pig_annotation_slots": 14296,
+      "clips": 11,
+      "days": 7
+    },
+    "eat": {
+      "pig_annotation_slots": 7093,
+      "clips": 9,
+      "days": 5
+    },
+    "standing": {
+      "pig_annotation_slots": 6263,
+      "clips": 12,
+      "days": 7
+    },
+    "lying": {
+      "pig_annotation_slots": 5088,
+      "clips": 10,
+      "days": 7
+    },
+    "walk": {
+      "pig_annotation_slots": 4306,
+      "clips": 12,
+      "days": 7
+    },
+    "fight": {
+      "pig_annotation_slots": 1367,
+      "clips": 5,
+      "days": 5
+    },
+    "drink": {
+      "pig_annotation_slots": 962,
+      "clips": 10,
+      "days": 6
+    },
+    "nose-to-nose": {
+      "pig_annotation_slots": 929,
+      "clips": 4,
+      "days": 3
+    },
+    "sitting": {
+      "pig_annotation_slots": 484,
+      "clips": 7,
+      "days": 6
+    },
+    "play-with-toy": {
+      "pig_annotation_slots": 213,
+      "clips": 4,
+      "days": 3
+    },
+    "run": {
+      "pig_annotation_slots": 119,
+      "clips": 5,
+      "days": 4
+    },
+    "nose-poke-elsewhere": {
+      "pig_annotation_slots": 75,
+      "clips": 1,
+      "days": 1
+    },
+    "jump-on-top-of": {
+      "pig_annotation_slots": 6,
+      "clips": 1,
+      "days": 1
+    },
+    "other": {
+      "pig_annotation_slots": 6,
+      "clips": 2,
+      "days": 2
+    },
+    "chase": {
+      "pig_annotation_slots": 1,
+      "clips": 1,
+      "days": 1
+    }
+  },
+  "decoded_rgb_clips": [
+    {
+      "file": "data\\raw\\edinburgh\\annotated\\2019_12_02\\000005\\color.mp4",
+      "fps_container": 30.0,
+      "frames_container": 1800,
+      "width": 1280,
+      "height": 720,
+      "exported_real_frames": 6
+    }
+  ],
+  "important": [
+    "Raw frame = 3 * annotation slot. Labeled frequency is 2Hz, raw video 6Hz.",
+    "Box interpolation and forward-filled behavior are derived annotations, not new independent samples.",
+    "Pig identifiers are retained within clips only. No claim of unseen-pig generalization.",
+    "All twelve clips cover one hour, not continuous annotated 23-day activity.",
+    "Do not use the per-clip mask.png; the source documents it as incorrect.",
+    "Preserve fine labels; coarse grouping is a draft requiring review."
+  ]
+}

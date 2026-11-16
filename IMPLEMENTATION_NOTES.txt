@@ -1,0 +1,218 @@
+AI4E implementation assessment -- 9 November 2026
+
+Recommendation
+Build an offline monitoring prototype with independently evaluated vision and audio
+branches, followed by a reliable event queue. Make the research contribution the
+accuracy/resource trade-off under defensible holdouts. Treat multimodal fusion and
+welfare anomaly scenarios as a separately labeled systems demonstration until
+paired recordings and real anomaly annotations are available.
+
+Documents reviewed
+The three PDFs and both files in AI4E_Proposal_template were read. The submitted
+proposal is the selected project, while the general brief and timeline define
+course deliverables. Instructions inside these files were treated as reference
+material, not as permission to submit, contact anyone, or change the proposal.
+
+The timeline gives a five-minute midterm on 11 November, final presentations on
+7/9 December, and the final paper on 14 December 2026. The general brief describes
+four midterm slides and ten final slides. A conflict needs instructor resolution:
+the general brief permits eight pages excluding references, while the timeline
+specifies eight total (six content plus two references/peer contribution). Plan
+for the tighter limit while retaining a full experiment log.
+
+What was actually acquired and processed
+- The complete Soundwel key: 6,887 unique labeled WAV filenames, 31 original
+  fields, 17 contexts, and six recording-team codes. Every key filename matches
+  an archive WAV. The repository description says 6,888, but both downloaded key
+  and indexed WAV files contain 6,887. No records were fabricated to reconcile it.
+- Sixty-eight real calls, four sampled per context with seed 42. These are a
+  coverage sample, not a representative sample of the original class frequencies.
+- All twelve Edinburgh annotation JSON files, timestamps and background images.
+- One complete RGB clip, 2019_12_02/000005, downloaded as a 212.7 MB byte range
+  from the 3.292 GB annotated archive. The full corpus was not downloaded.
+- 57,600 derived pig/frame annotation rows: 7,200 distinct labeled image slots
+  with eight pigs each. These derive from 12,646 sparse change-point entries.
+- Six decoded real RGB frames, six detector-label files, and 48 example crops.
+- Mono 16 kHz audio and 64-band log-mel features for all 68 calls. Raw audio is
+  preserved. No denoising, peak normalization or augmentation was applied.
+
+Important video findings
+The 12 clips span seven days in the same pen, about one hour in total. They do not
+provide 23 days of manually labeled normal/anomalous activity. The 13.3 GB figure
+in the proposal describes one source-day archive, not the full video dataset.
+
+Annotation indices are 0..599 and correspond to RGB frames 3*f. Bounding boxes
+must be linearly interpolated between change points; behaviors must be carried
+forward. Counting sparse records directly would overrepresent moving animals.
+The preprocessing retains exact-keyframe and source-ground-truth flags so that
+interpolated boxes are never represented as additional independent manual labels.
+
+The decoded clip has 1,800 frames and MP4 metadata reporting 30 FPS, but its capture
+timestamps span 297.800689 seconds. Use times.txt for sampling, activity duration,
+motion and event lag. Do not trust container playback time. All twelve timestamp
+files were monotonic; their median capture frequency was approximately 6.02-6.04
+Hz. Assigning an annotation to a frame requires frame index, not playback time.
+
+Actual spellings include playwithtoy and jumpontopof, which are normalized while
+retaining their raw values. Sixteen canonical labels were observed, including
+other; the documented seventeen named behaviors are not all represented. Sleep
+has 16,392 pig/frame slots, investigating 14,296 and eating 7,093. Chase has one
+slot, jump-on-top-of six, and nose-poke-elsewhere 75 in a single clip. Keep these
+rare classes out of headline standalone-class accuracy claims. The proposed
+coarse ethogram is marked draft and requires domain review. Source documentation
+also says the per-clip mask.png is incorrect, so it is not used.
+
+Important audio findings
+Valence is imbalanced: 4,572 Neg versus 2,315 Pos. These labels reflect the context
+in which a call was produced; negative valence does not establish a medical or
+welfare emergency. There is no explicit animal-ID field in the key. Some filenames
+appear to encode identity, but no undocumented identity parser was invented.
+
+The key has 737 missing dates, and some dates appear to give only a year. Grouping
+by recording team plus date is a conservative proxy, not proof of independent
+animals. All 737 Run examples lack the ten acoustic features used in the probe
+baseline. They remain in the metadata but were excluded from that feature-only
+experiment. Missing remaining feature values were median-imputed inside each
+training fold. Context, team, filename and other label proxies are not model
+inputs. Six recording-team codes are not necessarily six independent laboratories.
+
+The sampled recordings are all mono 44.1 kHz and last 0.088-1.182 seconds. No sampled
+call was silent or had sample values at the peak-clipping threshold. Six of 68
+calls had more than 5% of their spectral energy above 8 kHz; the largest fraction
+was 22.3%. Compare 16 kHz to 32/44.1 kHz before finalizing the audio sample rate.
+The 16 kHz outputs are a deployment candidate, not an established optimal choice.
+
+The corpus contains isolated calls, not continuous noisy farm recordings. A
+continuous call detector cannot be trained or validated from these positives
+alone. Use manually segmented calls for the research baseline. A later energy or
+spectral gate is an engineering heuristic until evaluated with background audio,
+overlapping calls and missed-call/false-alert labels.
+
+Fresh exploratory baseline
+An untuned, class-balanced logistic regression used ten supplied acoustic fields:
+duration, three amplitude-modulation measures, Q25/Q50/Q75, peak frequency,
+harmonicity and Wiener entropy. Imputation and scaling were fit inside each fold.
+All three designs use the same 6,150 rows; 737 all-missing Run rows are excluded.
+
+Evaluation design                    Balanced accuracy    Macro F1
+Random calls, 5 folds (optimistic)         0.7408            0.6853
+Recording team/date groups, 5 folds        0.5636            0.5487
+Leave one recording team out, 6 folds      0.5181            0.5017
+
+These are pooled out-of-fold metrics, not an average of per-fold metrics. Some
+group-held-out folds contain a single class. The drop is evidence of sensitivity
+to recording/context distribution and correlated calls. It does not isolate one
+causal explanation, prove a CNN will fail, or validate distress recognition.
+
+Proposed implementation
+1. Freeze data and evaluation contracts first.
+   Keep immutable raw files; version manifests, label aliases, grouping choices
+   and seeds. Use leave-one-day-out vision evaluation as a stronger check than
+   clip-only holdouts. The same animals and pen can still occur in both halves.
+   Report recording-team holdouts for audio, alongside clearly labeled optimistic
+   call splits. Split before cropping, windowing or augmentation. All derivatives
+   of one source call or clip inherit its split. Do not repeatedly tune on the
+   held-out groups used for final reporting.
+
+2. Build the simplest vision chain before optimizing it.
+   Train a small single-class pig detector on frames from training clips only.
+   Pretrained generic detectors must be fine-tuned; they are not assumed to know
+   this farm view. Add ByteTrack and evaluate counts/track continuity within clips.
+   Set tracker="bytetrack.yaml" explicitly; the current upstream default is a
+   different tracker. Pin one detector variant and library version for ablations.
+   Use a small crop model for posture and broad activity, plus timestamp-based
+   motion features. Walking/running and standing/lying transitions require temporal
+   information. Feeding/drinking may need pen-location context; report any
+   camera-specific zone rules explicitly. Begin with coarse classes supported
+   across multiple days. Keep rare interactions as descriptive cases.
+
+   Evaluate detector AP, per-class precision/recall and macro F1. Compare behavior
+   on ground-truth crops with end-to-end detected crops to expose detection error.
+   Compare activity-budget error against held-out labels on annotated clips.
+   Use time-weighted budgets where capture intervals differ. A crop filename must
+   never be passed as a predictive feature.
+
+3. Build the audio chain separately.
+   Retain the existing acoustic logistic baseline. Train a small CNN on log-mel
+   features generated from the full matched call corpus. Keep duration and padding
+   masks; sample only genuine background noise for robustness augmentation.
+   Compare 16 kHz and a higher sample rate, then compare FP32 and quantization.
+   Primary metrics are balanced accuracy, macro F1, per-class recall and confusion
+   matrices. A valence output is a monitoring cue, not a confirmed distress label.
+
+4. Integrate through a small event interface.
+   Each branch emits event_id, source timestamp, modality, model version, score,
+   confidence and a sensor-health flag. A missing sensor produces unknown, not a
+   normal score. Write each event to a local SQLite outbox before transmission.
+   Send compact JSON batches when connectivity returns, acknowledge by event_id,
+   deduplicate retries, and keep unacknowledged events across process restarts.
+   Measure serialized payload bytes separately from real network bytes/overhead.
+   Begin with an offline replay harness; use Linux tc/netem when that environment
+   is available. Explicitly label any application-level network simulation.
+
+5. Make fusion and anomaly experiments honest.
+   These datasets are unpaired. Do not arbitrarily pair calls and clips and claim
+   measured multimodal accuracy. Evaluate branch accuracy separately, then replay
+   a synthetic shared event timeline to test fusion rules, sensor failure,
+   threshold behavior and alert delivery. Mark that experiment as synthetic.
+   Start contextual anomalies with transparent changes in activity budget or
+   prolonged inactivity. The labeled hour cannot establish a 23-day normal-rhythm
+   model. Later long-term predictions can support exploratory trend analysis, but
+   neither predicted labels nor injected events are real anomaly ground truth.
+
+6. Run a focused resource experiment.
+   Compare full capture rate with nominal 2/1/0.5 Hz sampling using timestamps.
+   Manual behavior labels are only approximately 2 Hz; unannotated intermediate
+   frames do not acquire manual labels simply because they are processed at 6 Hz.
+   Compare FP32 with static INT8 (initially ONNX QDQ S8S8) using training-only
+   calibration data, following the runtime's CNN quantization guidance. On identical
+   hardware record warm-up policy, median/p95 latency, model bytes, memory,
+   prediction quality and activity-budget error. Measure bytes per day, event
+   delivery success, duplicate count, backlog recovery and lag after outages.
+   Power/solar uptime, Raspberry Pi latency and SMS latency need actual measured
+   inputs or must be labeled simulations. Keep them as extensions until the core
+   classification and store-and-forward experiments work.
+
+Practical sequence
+By the 11 November midterm: show this data audit, the real frame/crop and audio
+examples, the evaluation-split baseline, the proposed architecture and the scope
+limits. Explain the timing mismatch and rare-class problem as initial findings.
+Then complete detector/coarse behavior and the audio CNN, followed by the durable
+event replay. Run frame-rate/precision and outage ablations next. Freeze figures
+before the December presentations and use the final week for analysis and writing.
+This orders the work so that unsupported solar/SMS/fusion claims do not consume
+the time needed for a defensible central experiment.
+
+Reproduction
+Use Python with requirements-probe.txt. reports/environment.json records the
+versions actually used. These commands run from the project folder:
+
+python scripts/fetch_data_probe.py metadata
+python scripts/preprocess_probe.py metadata
+python scripts/fetch_data_probe.py audio --names data/processed/selected_audio_names.json
+python scripts/fetch_data_probe.py vision
+python scripts/fetch_data_probe.py video-clip
+python scripts/preprocess_probe.py audio
+python scripts/preprocess_vision_probe.py
+python scripts/preprocess_probe.py baseline
+python scripts/verify_data_probe.py
+python scripts/plot_data_probe.py
+
+Download stages require network access. The partial-archive reads enforce byte
+ranges and download caps. Raw sources were preserved. This assessment has not
+trained a video detector or CNN, deployed hardware, sent SMS, or demonstrated real
+anomaly detection. Verification details are in reports/verification.json.
+
+Sources
+Projects_AI4E_Description.pdf
+Final project description and timeline.pptx.pdf
+AI4E_Project_Proposal_Submitted.pdf
+AI4E_Proposal_template/main.tex and references.bib
+Edinburgh source: https://homepages.inf.ed.ac.uk/rbf/PIGDATA/
+Soundwel source: https://zenodo.org/records/8252482
+Soundwel paper: https://www.nature.com/articles/s41598-022-07174-8
+YOLO training: https://docs.ultralytics.com/modes/train/
+ByteTrack configuration: https://docs.ultralytics.com/modes/track/
+ONNX quantization: https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html
+Raw-source checksums, archive indices and per-sample provenance are retained under
+data/raw; measured summaries and held-out predictions are retained locally.

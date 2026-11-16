@@ -1,0 +1,35 @@
+{
+  "decoded_files": 68,
+  "contexts": 17,
+  "source_rate_counts": {
+    "44100": 68
+  },
+  "channels_counts": {
+    "1": 68
+  },
+  "duration_s": {
+    "min": 0.08798185941043084,
+    "median": 0.2596825396825397,
+    "max": 1.1817233560090703,
+    "sum": 20.691609977324262
+  },
+  "silent_files": 0,
+  "files_with_peak_clipping": 0,
+  "energy_above_8khz_fraction": {
+    "median": 0.001539468066766858,
+    "max": 0.22312520444393158,
+    "files_above_5pct": 6
+  },
+  "target_rate_hz": 16000,
+  "window_s": 2,
+  "feature_windows": 68,
+  "mel_bins": 64,
+  "n_fft": 512,
+  "hop_length": 160,
+  "amplitude_normalization": false,
+  "mel_scale": "HTK",
+  "window": "periodic Hann",
+  "center": false,
+  "log_power_floor": 1e-10,
+  "warning": "Sample has four calls per context, not the natural class distribution. All windows from a call must inherit its group/fold. Resampling to 16kHz is a deployment candidate; compare original bandwidth before finalizing because high-frequency calls may lose information."
+}
