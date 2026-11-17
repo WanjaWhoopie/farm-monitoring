@@ -2,8 +2,7 @@
 
 Resource-aware monitoring of pig welfare for low-connectivity farms. The idea is an offline-first
 edge pipeline that fuses two cheap signals, pen video and pen audio, into compact event summaries
-that can reach a farmer over a poor connection. This is the AI4E group project (group of 5);
-final presentations are on 7 and 9 December 2026 and the paper is due on 14 December 2026.
+that can reach a farmer over a poor connection. 
 
 Proposal asks three questions: how accurate small behaviour and distress models are on days they
 have never seen, how much accuracy is lost when the models are compressed or fed fewer frames per
