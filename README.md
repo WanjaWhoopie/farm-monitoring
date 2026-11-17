@@ -46,6 +46,7 @@ AI4E_Proposal_template/               LaTeX template for the final paper (main.t
 IMPLEMENTATION_NOTES.txt              what the data probe found and the implementation plan (9 Nov 2026)
 scripts/                              data probe: small bounded download, preprocessing, checks, summary figure
 scripts/activity_budget.py            activity-budget evaluation of the v2 geometry model (runs locally, no videos needed)
+scripts/audit_gate.py                 three-frame audit sheet for checking recovered label rows by eye (needs the videos)
 requirements-probe.txt                packages for the scripts; versions used are in reports/environment.json
 Experiments/
   notebook_v1_kadima.ipynb            v1 (Kaggle): an image network looks at one cut-out of each pig; one fixed test day
@@ -59,6 +60,7 @@ reports/
     run2_rebuilt_csv/                 the run the numbers below come from (seed 42, label file fingerprint 0f2be06d...)
     run3_reproducibility_check.md     the attempted repeat run and what went wrong
   activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
+  gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
 ```
 
 ## Vision branch so far
@@ -137,7 +139,8 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 
 ## Open items
 
-1. Check the 24 pictures in the audit sheet by eye and record how many recovered rows are right.
+1. Audit of recovered rows: done for one clip (23 of 24 boxes correct, no label contradicted;
+   `reports/gate_audit_2026-11-18/`). Repeat across all 12 clips once the videos are on molab.
 2. Run the notebook again and confirm it gives the same tables as the reference run.
 3. Add the model that finds each pig in the frame and follows it between frames (YOLO-nano with
    ByteTrack), so the nine box numbers come from predicted boxes instead of human ones.

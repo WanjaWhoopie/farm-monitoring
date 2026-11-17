@@ -470,8 +470,13 @@ def _(mo):
 def _(mo):
     # Record the audit result here so it persists with the notebook.
     # Count the panels in the sheet above whose red box sits on the labelled pig doing the labelled behaviour.
-    AUDIT_CORRECT = None   # <- type the count, for example 21
+    # 18 Nov 2026: counted on the three-frame sheet made by scripts/audit_gate.py (seed 42, 24 gated rows
+    # from clip 2019_12_02/000005, the only clip with video on the local machine). 23 boxes correct,
+    # 1 doubtful (row 15); no label contradicted by the neighbouring human frames. Rows and verdicts are in
+    # reports/gate_audit_2026-11-18/audit_rows.csv. Repeat across all 12 clips on molab before the paper.
+    AUDIT_CORRECT = 23
     AUDIT_TOTAL = 24
+    AUDIT_SAMPLE = "24 gated rows from clip 2019_12_02/000005, three-frame sheet of 18 Nov 2026 (one clip only)"
 
     if AUDIT_CORRECT is None:
         _txt = "**Audit pass rate: not counted yet.** Open the audit sheet above, count the correct panels, and set `AUDIT_CORRECT` in this cell."
@@ -479,9 +484,9 @@ def _(mo):
         _rate = AUDIT_CORRECT / AUDIT_TOTAL
         _verdict = ("the gate can be trusted as set." if _rate >= 0.9
                     else "tighten `MAX_GAP` and `MIN_IOU` in the configuration cell and re-run.")
-        _txt = f"**Audit pass rate: {AUDIT_CORRECT} of {AUDIT_TOTAL} = {_rate:.0%}.** At this level {_verdict} Report this number next to the gate thresholds in the paper."
+        _txt = f"**Audit pass rate: {AUDIT_CORRECT} of {AUDIT_TOTAL} = {_rate:.0%}** ({AUDIT_SAMPLE}). At this level {_verdict} Report this number next to the gate thresholds in the paper, and say which sample it came from."
     mo.md(_txt)
-    return AUDIT_CORRECT, AUDIT_TOTAL
+    return AUDIT_CORRECT, AUDIT_SAMPLE, AUDIT_TOTAL
 
 
 @app.cell(hide_code=True)
@@ -900,6 +905,7 @@ def _(mo):
 @app.cell
 def _(
     AUDIT_CORRECT,
+    AUDIT_SAMPLE,
     AUDIT_TOTAL,
     CLASSES7,
     MAX_GAP,
@@ -965,7 +971,7 @@ def _(
         "embeddings_run": bool(RUN_EMBEDDINGS),
         "device": _device,
         "versions": _versions,
-        "audit": {"correct": AUDIT_CORRECT, "total": AUDIT_TOTAL},
+        "audit": {"correct": AUDIT_CORRECT, "total": AUDIT_TOTAL, "sample": AUDIT_SAMPLE},
     }
     with (RESULTS_DIR / "run_info.json").open("w") as _fh:
         json.dump(RUN_INFO, _fh, indent=2)
