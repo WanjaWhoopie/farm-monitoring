@@ -18,8 +18,7 @@ The two sources are public:
 | Vision | Edinburgh Pig Behaviour Video Dataset (University of Edinburgh, School of Informatics). 12 annotated clips over 7 days in one pen, 8 pigs, about one hour in total, with per-pig bounding boxes and behaviour labels in `output.json` and capture timestamps in `times.txt`. | Dataset page: https://homepages.inf.ed.ac.uk/rbf/PIGDATA/ . The notebooks read the Kaggle mirror of the annotated subset: https://www.kaggle.com/datasets/jackbyte/edinburgh-pig-behaviour-annotated |
 | Audio  | Soundwel: 6,887 labelled pig calls with valence and context labels.                                                                                                                                                                                                          | Zenodo record: https://zenodo.org/records/8252482 . Paper: Briefer et al., Scientific Reports 2022, https://doi.org/10.1038/s41598-022-07174-8                                                       |
 
-The data itself is not in this repository (the `data/` folder is ignored). Things to know about it,
-found while probing it (details in `IMPLEMENTATION_NOTES.txt`):
+Things to know about it,  (details in `IMPLEMENTATION_NOTES.txt`):
 
 - The video files say 30 frames per second, but the recorded timestamps show about 6 frames per
   second. Use the timestamps in `times.txt`, not the video's own clock, for anything involving
