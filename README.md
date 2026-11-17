@@ -47,6 +47,7 @@ IMPLEMENTATION_NOTES.txt              what the data probe found and the implemen
 scripts/                              data probe: small bounded download, preprocessing, checks, summary figure
 scripts/activity_budget.py            activity-budget evaluation of the v2 geometry model (runs locally, no videos needed)
 scripts/audit_gate.py                 three-frame audit sheet for checking recovered label rows by eye (needs the videos)
+scripts/fps_ablation.py               geometry model and budgets at 6, 2, 1 and 0.5 boxes per second (runs locally)
 requirements-probe.txt                packages for the scripts; versions used are in reports/environment.json
 Experiments/
   notebook_v1_kadima.ipynb            v1 (Kaggle): an image network looks at one cut-out of each pig; one fixed test day
@@ -61,6 +62,7 @@ reports/
     run3_reproducibility_check.md     the attempted repeat run and what went wrong
   activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
   gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
+  fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
 ```
 
 ## Vision branch so far
@@ -121,6 +123,29 @@ The predicted budgets are flatter than the true ones. Smoothing the predictions 
 helps the per-frame score (0.323 to 0.339) but not the budgets, which already average over the
 whole clip. Details, per-behaviour errors and a figure are in `reports/activity_budget_2026-11-16/`.
 
+## Fewer boxes per second
+
+A system on a farm will not run at full frame rate. `scripts/fps_ablation.py` thins the box track
+to 2, 1 and 0.5 boxes per pig per second (the camera captured 6), recomputes the nine box numbers,
+retrains the geometry model and rebuilds the budgets at each rate. Same held-out-day scoring as
+above; the label gate is computed once at full rate so only the rate changes.
+
+| Boxes per second | Per-frame macro-F1 | Pen budget error (points) | Boxes per pig per minute |
+|---|---|---|---|
+| 6 (full rate) | 0.323 ± 0.051 | 9.2 | 362 |
+| 2 | **0.360 ± 0.064** | **8.3** | 121 |
+| 1 | 0.338 ± 0.069 | 8.4 | 60 |
+| 0.5 | 0.332 ± 0.039 | 8.5 | 30 |
+
+Two things stand out. First, 2 boxes per second beats the full rate. The human labels sit on
+every third frame, so the full-rate track repeats each box twice before it jumps, which makes the
+speed feature a train of small steps; at 2 per second every box is a real one and speed is
+cleaner. Second, going from 2 to 0.5 per second cuts the data twelve-fold and costs about 0.03 in
+per-frame score and almost nothing in the budgets. Walking and drinking suffer most at 0.5 per
+second (short events and speed are what a slow track loses); eating, sleeping and lying do not.
+For the budget use case, half a box per second looks sufficient. Figure and tables are in
+`reports/fps_ablation_2026-11-18/`.
+
 ## Reproducibility
 
 `Experiments/notebook_v2_marimo.py` fixes every source of randomness from one seed (42). Each run
@@ -144,6 +169,7 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 2. Run the notebook again and confirm it gives the same tables as the reference run.
 3. Add the model that finds each pig in the frame and follows it between frames (YOLO-nano with
    ByteTrack), so the nine box numbers come from predicted boxes instead of human ones.
-4. Repeat the vision results with fewer frames per second (2, 1 and 0.5) and with a compressed
-   model (8-bit instead of 32-bit numbers), then write the rules that combine video and audio
-   events and test them on days with simulated problems.
+4. Frame-rate ablation: done on human boxes (see "Fewer boxes per second"); repeat on predicted
+   boxes once the detector exists, and time a compressed model (8-bit instead of 32-bit numbers).
+5. Write the rules that combine video and audio events and test them on days with simulated
+   problems.

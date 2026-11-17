@@ -1,0 +1,5 @@
+step,boxes_per_second,rows,rows_kept,rows_stored,macro_f1_stored_mean,macro_f1_stored_std,budget_mae_pp_clip_pig,budget_mae_pp_pen,copied_budget_mae_pp_clip_pig,copied_budget_mae_pp_pen,boxes_per_pig_per_minute
+1,6.04,172800,46367,11073,0.323,0.051,11.77,9.17,16.6,11.91,362.4
+3,2.01,57600,18018,11073,0.36,0.064,11.06,8.34,16.34,11.88,120.8
+6,1.01,28800,9319,6259,0.338,0.069,11.3,8.36,16.35,11.76,60.4
+12,0.5,14400,4641,3102,0.332,0.039,11.56,8.51,16.4,11.65,30.2
