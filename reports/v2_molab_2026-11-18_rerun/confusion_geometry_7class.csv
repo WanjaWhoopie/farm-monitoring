@@ -1,0 +1,8 @@
+,sleep,investigating,eat,standing,lying,walk,drink
+sleep,150,72,0,58,21,228,1
+investigating,309,1495,96,629,411,1171,92
+eat,0,53,756,59,0,112,0
+standing,132,443,69,425,92,544,107
+lying,79,190,0,71,84,177,0
+walk,212,325,73,262,170,1659,35
+drink,2,16,5,32,1,28,127

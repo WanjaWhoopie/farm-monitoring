@@ -60,6 +60,7 @@ reports/
   v2_molab_2026-11-16/                v2 results: per-day scores, confusion matrix, recall per behaviour, v2_results.xlsx
     run2_rebuilt_csv/                 the run the numbers below come from (seed 42, label file fingerprint 0f2be06d...)
     run3_reproducibility_check.md     the attempted repeat run and what went wrong
+  v2_molab_2026-11-18_rerun/          the repeat run that reproduced run 2 exactly (tables, manifest, comparison note)
   activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
   gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
   fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
@@ -222,8 +223,15 @@ at a time. Outputs are in `reports/detector_2026-11-18/`.
 `Experiments/notebook_v2_marimo.py` fixes every source of randomness from one seed (42). Each run
 writes `results/run_info.json` saying which seed, which label file (its fingerprint and row count),
 which sanity-check thresholds, how many rows of each kind, which library versions and which
-hardware produced the tables. Two runs with the same entries should give the same tables to three
-decimals. That check is still to be done: see `reports/v2_molab_2026-11-16/run3_reproducibility_check.md`.
+hardware produced the tables.
+
+Checked on 18 Nov 2026: the notebook was run again from scratch on a fresh molab sandbox (new
+machine, newer libraries, videos downloaded afresh, same label file) and every table came out
+identical to the reference run of 16 Nov, to the last decimal: the summary table, all 140
+per-day rows, the confusion matrix and the recall per behaviour. The image-network scores
+reproduced too, not only the geometry model. The two runs' tables and manifests are in
+`reports/v2_molab_2026-11-16/run2_rebuilt_csv/` and `reports/v2_molab_2026-11-18_rerun/`, with
+the comparison in the latter's `reproducibility_check.md`.
 
 ## Running v2
 
@@ -237,7 +245,7 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 
 1. Audit of recovered rows: done for one clip (23 of 24 boxes correct, no label contradicted;
    `reports/gate_audit_2026-11-18/`). Repeat across all 12 clips once the videos are on molab.
-2. Run the notebook again and confirm it gives the same tables as the reference run.
+2. Reproducibility: done; the 18 Nov re-run matched the reference run exactly (see "Reproducibility").
 3. Detector and tracker: done on four clips (see "Finding the pigs"). Train on more days once
    the other eight videos are fetched, and reduce identity switches (tune the tracker, or use the
    fact that the pen always holds eight pigs).

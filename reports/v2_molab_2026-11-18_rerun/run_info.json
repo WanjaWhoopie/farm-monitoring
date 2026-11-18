@@ -1,0 +1,35 @@
+{
+  "saved_at": "2026-11-18T12:10:15",
+  "seed": 42,
+  "input_csv": {
+    "path": "/marimo/pig_work/reconstructed_annotations.csv",
+    "md5": "0f2be06d97076cf6bace2ccb1d1f75ed",
+    "rows": 172800
+  },
+  "gate": {
+    "MAX_GAP": 20,
+    "MIN_IOU": 0.5,
+    "MAX_TRAIL": 10
+  },
+  "rows_by_tier": {
+    "rejected": 120974,
+    "gated": 39180,
+    "stored": 12646
+  },
+  "rows_kept_7class": 46367,
+  "embeddings_run": true,
+  "device": "cuda: NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "torch": "2.11.0+cu130",
+    "torchvision": "0.26.0+cu130"
+  },
+  "audit": {
+    "correct": 23,
+    "total": 24,
+    "sample": "24 gated rows from clip 2019_12_02/000005, three-frame sheet of 18 Nov 2026 (one clip only)"
+  }
+}
