@@ -64,6 +64,7 @@ reports/
   gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
   fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
   detector_2026-11-18/                detector weights (best.pt), training curves, one track file per clip, detector_eval.csv
+  fps_ablation_tracks_2026-11-18/     the frame-rate ablation on the predicted track (per clip, mean over unseen clips, figure)
 ```
 
 ## Vision branch so far
@@ -147,6 +148,31 @@ second (short events and speed are what a slow track loses); eating, sleeping an
 For the budget use case, half a box per second looks sufficient. Figure and tables are in
 `reports/fps_ablation_2026-11-18/`.
 
+### The same ablation on the predicted track
+
+`scripts/fps_ablation_tracks.py` repeats the frame-rate ablation with the detector's boxes in
+place of the human ones: the predicted track is thinned to each rate, the geometry model is
+trained on human boxes of the other days at that rate, and the pen budget is rebuilt from the
+predicted boxes. Means over the three clips the detector never saw:
+
+| Boxes per second | Precision | Recall | Id switches in 5 min | Macro-F1, human boxes | Macro-F1, predicted track | Pen budget error, human (pts) | Pen budget error, predicted (pts) |
+|---|---|---|---|---|---|---|---|
+| 6 (full rate) | 0.889 | 0.928 | 154 | 0.279 | 0.294 | 6.4 | 5.9 |
+| 2 | 0.890 | 0.927 | 78 | 0.305 | 0.297 | 6.7 | 7.8 |
+| 1 | 0.891 | 0.926 | 54 | 0.283 | 0.310 | 7.0 | 7.9 |
+| 0.5 | 0.891 | 0.924 | 42 | 0.306 | 0.315 | 6.4 | 8.7 |
+
+Finding pigs does not depend on the rate at all: precision and recall are flat, because each
+frame is detected on its own. The per-frame behaviour score on the predicted track stays within
+0.02 of itself across the four rates, which is inside the clip-to-clip noise with only three
+clips. The pen budget from the predicted track drifts up from about 6 to about 9 points as the
+rate drops, still well under the 12 points of the no-model baseline. Fewer boxes per second also
+means fewer identity switches, but mostly because there are fewer frames at which to switch. The
+practical reading is the same as on human boxes: half a box per second is enough for budgets, and
+nothing in the detector stops the rate being lowered. Per-clip numbers and the figure are in
+`reports/fps_ablation_tracks_2026-11-18/`; three unseen clips is a small sample, so treat the
+differences between rates as indicative.
+
 ## Finding the pigs: detector and tracker
 
 Everything above used the human-drawn boxes. A farm system has to find the pigs itself, so
@@ -215,7 +241,7 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 3. Detector and tracker: done on four clips (see "Finding the pigs"). Train on more days once
    the other eight videos are fetched, and reduce identity switches (tune the tracker, or use the
    fact that the pen always holds eight pigs).
-4. Frame-rate ablation: done on human boxes (see "Fewer boxes per second"); repeat on the
-   predicted track, and time a compressed detector (8-bit instead of 32-bit numbers).
+4. Frame-rate ablation: done on human boxes and on the predicted track (see "Fewer boxes per
+   second"). Still to do: time a compressed detector (8-bit instead of 32-bit numbers).
 5. Write the rules that combine video and audio events and test them on days with simulated
    problems.

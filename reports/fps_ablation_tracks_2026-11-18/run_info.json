@@ -1,0 +1,18 @@
+{
+  "saved_at": "2026-11-18T13:47:03",
+  "seed": 42,
+  "steps": [
+    1,
+    3,
+    6,
+    12
+  ],
+  "tracks": "reports\\detector_2026-11-18",
+  "train_clip": "2019_12_02/000005",
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1"
+  }
+}

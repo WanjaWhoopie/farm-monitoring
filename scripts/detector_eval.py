@@ -79,10 +79,10 @@ def tracking_stats(matched: pd.DataFrame) -> dict:
     return {"identity_switches": switches, "mean_track_ids_per_pig": round(float(np.mean(ids_per_pig)), 1) if ids_per_pig else None}
 
 
-def geometry_on_tracks(labels: pd.DataFrame, clip: str, matched: pd.DataFrame, pr_feats_src: pd.DataFrame) -> dict:
-    """Train on human boxes of other days (2 Hz, kept rows); score on human boxes and on the predicted track of this clip."""
+def geometry_on_tracks(labels: pd.DataFrame, clip: str, matched: pd.DataFrame, pr_feats_src: pd.DataFrame, step: int = STEP) -> dict:
+    """Train on human boxes of other days (every step-th frame, kept rows); score on human boxes and on the predicted track of this clip."""
     day = clip.split("/")[0]
-    grid = labels[labels["annotation_index"] % STEP == 0].reset_index(drop=True)
+    grid = labels[labels["annotation_index"] % step == 0].reset_index(drop=True)
     feats = build_features(grid)
     cols = list(feats.columns)
     grid = pd.concat([grid, feats], axis=1)

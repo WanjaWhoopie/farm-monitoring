@@ -176,7 +176,7 @@ def _(DATA_ROOT, Path, WORK, mo, os):
     # Restore data after a sandbox restart.
     # molab keeps only /marimo between sessions. The videos (about 3 GB) are downloaded again
     # into DATA_ROOT each session; the label CSV and every output live under WORK, which persists.
-    # Kaggle credentials come from a file named kaggle.env in the notebook folder (/marimo), which
+    # Kaggle credentials come from a file named kaggle.env in WORK or the notebook folder (/marimo), which
     # persists across restarts. Create it from the file panel with two lines:
     #   KAGGLE_USERNAME=your_kaggle_username
     #   KAGGLE_KEY=your_kaggle_api_key
@@ -199,7 +199,7 @@ def _(DATA_ROOT, Path, WORK, mo, os):
                 n += 1
         return n
 
-    for _envf in (Path("/marimo/kaggle.env"), Path("/marimo/.env")):
+    for _envf in (WORK / "kaggle.env", Path("/marimo/kaggle.env"), Path("/marimo/.env")):
         if not (os.environ.get("KAGGLE_USERNAME") and os.environ.get("KAGGLE_KEY")):
             _load_env_file(_envf)
     KAGGLE_DATASET = "jackbyte/edinburgh-pig-behaviour-annotated"
