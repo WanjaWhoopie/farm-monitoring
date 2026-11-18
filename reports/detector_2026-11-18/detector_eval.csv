@@ -1,0 +1,5 @@
+clip_id,role,human_boxes,predicted_boxes,matched,precision,recall,mean_iou_matched,boxes_per_frame,identity_switches,mean_track_ids_per_pig,macro_f1_human_boxes,macro_f1_predicted_boxes,n_scored_human,n_scored_predicted,pen_budget_mae_pp_human_boxes,pen_budget_mae_pp_predicted_boxes
+2019_11_11/000028,held-out day,4800,4935,4423,0.896,0.921,0.755,8.22,94,5.9,0.288,0.307,420,393,3.35,5.24
+2019_11_22/000010,held-out day,4800,4670,4364,0.934,0.909,0.759,7.78,83,6.1,0.278,0.283,752,707,6.54,7.72
+2019_12_02/000005,train (detector),4800,4809,4794,0.997,0.999,0.923,8.02,0,1.0,0.354,0.39,231,226,4.89,7.45
+2019_12_10/000078,held-out day,4800,5427,4563,0.841,0.951,0.773,9.04,58,4.2,0.348,0.301,373,352,10.14,10.43

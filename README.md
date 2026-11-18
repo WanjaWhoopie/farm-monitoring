@@ -63,6 +63,7 @@ reports/
   activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
   gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
   fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
+  detector_2026-11-18/                detector weights (best.pt), training curves, one track file per clip, detector_eval.csv
 ```
 
 ## Vision branch so far
@@ -146,6 +147,50 @@ second (short events and speed are what a slow track loses); eating, sleeping an
 For the budget use case, half a box per second looks sufficient. Figure and tables are in
 `reports/fps_ablation_2026-11-18/`.
 
+## Finding the pigs: detector and tracker
+
+Everything above used the human-drawn boxes. A farm system has to find the pigs itself, so
+`scripts/detector_train.py` fine-tunes a small detector (YOLO11n, 2.6 million parameters, starting
+from weights pretrained on everyday photos) on 600 frames of one clip (2019_12_02/000005, the
+2-per-second grid), and `scripts/detector_eval.py` measures how much is lost when the nine box
+numbers come from predicted boxes instead of human ones. Only four clip videos are on this
+machine (fetched with `scripts/fetch_clips.py`), so the detector saw one day and was tested on
+the other three.
+
+Detection on 1,800 frames from the three unseen days: mAP50 0.951, precision 0.941, recall 0.906.
+In plain words: on a new day it finds about nine in ten pigs, nine in ten of its boxes are real
+pigs, and a box counts as right when it overlaps the human one by at least half. Training took
+about 25 minutes on a laptop GPU and stopped itself at epoch 24 (best epoch 14). One frame takes
+13.5 ms on the GPU and 58 ms on the CPU, so a CPU alone manages 17 frames per second, far more
+than the 2 per second the rest of the pipeline needs.
+
+ByteTrack then follows each box from frame to frame and gives it a track id. The table scores each
+clip on the 2-per-second grid: predicted boxes are matched one to one to human boxes (overlap at
+least 0.5); the geometry model, trained on human boxes of the other days at the same rate, is run
+on the predicted track; and its scores are set beside the same model on that clip's human boxes.
+
+| Clip | Role | Precision | Recall | Id switches in 5 min | Track ids per pig | Macro-F1, human boxes | Macro-F1, predicted boxes | Pen budget error, human (pts) | Pen budget error, predicted (pts) |
+|---|---|---|---|---|---|---|---|---|---|
+| 2019_11_11/000028 | unseen day | 0.896 | 0.921 | 94 | 5.9 | 0.288 | 0.307 | 3.4 | 5.2 |
+| 2019_11_22/000010 | unseen day | 0.934 | 0.909 | 83 | 6.1 | 0.278 | 0.283 | 6.5 | 7.7 |
+| 2019_12_10/000078 | unseen day | 0.841 | 0.951 | 58 | 4.2 | 0.348 | 0.301 | 10.1 | 10.4 |
+| 2019_12_02/000005 | detector's training clip | 0.997 | 0.999 | 0 | 1.0 | 0.354 | 0.390 | 4.9 | 7.5 |
+
+What this says:
+
+- Finding pigs transfers to new days; keeping their identities does not. On unseen days a pig
+  changes track id 60 to 90 times in five minutes and collects 4 to 6 ids, so a per-pig history is
+  not reliable yet. Counting pigs and the pen-level budget are.
+- The behaviour score barely moves between human and predicted boxes (within 0.05, up on two
+  clips, down on one), so the geometry model does not depend on perfect boxes. The pen budget
+  error rises by one to three points.
+- The training clip's row (no switches, near-perfect boxes) is optimistic: the detector has seen
+  those frames. Read the unseen-day rows.
+
+Caveats: one training clip and four clips in total; the human-box scores here differ from the
+per-day numbers in the notebook because this model is trained at 2 per second and scored one clip
+at a time. Outputs are in `reports/detector_2026-11-18/`.
+
 ## Reproducibility
 
 `Experiments/notebook_v2_marimo.py` fixes every source of randomness from one seed (42). Each run
@@ -167,9 +212,10 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 1. Audit of recovered rows: done for one clip (23 of 24 boxes correct, no label contradicted;
    `reports/gate_audit_2026-11-18/`). Repeat across all 12 clips once the videos are on molab.
 2. Run the notebook again and confirm it gives the same tables as the reference run.
-3. Add the model that finds each pig in the frame and follows it between frames (YOLO-nano with
-   ByteTrack), so the nine box numbers come from predicted boxes instead of human ones.
-4. Frame-rate ablation: done on human boxes (see "Fewer boxes per second"); repeat on predicted
-   boxes once the detector exists, and time a compressed model (8-bit instead of 32-bit numbers).
+3. Detector and tracker: done on four clips (see "Finding the pigs"). Train on more days once
+   the other eight videos are fetched, and reduce identity switches (tune the tracker, or use the
+   fact that the pen always holds eight pigs).
+4. Frame-rate ablation: done on human boxes (see "Fewer boxes per second"); repeat on the
+   predicted track, and time a compressed detector (8-bit instead of 32-bit numbers).
 5. Write the rules that combine video and audio events and test them on days with simulated
    problems.
