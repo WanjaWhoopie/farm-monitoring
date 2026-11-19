@@ -63,6 +63,7 @@ reports/
   v2_molab_2026-11-18_rerun/          the repeat run that reproduced run 2 exactly (tables, manifest, comparison note)
   activity_budget_2026-11-16/         how well predicted time budgets match the true ones (tables, figure, run_info.json)
   gate_audit_2026-11-18/              audit sheets and verdicts for 24 recovered rows (one clip): 23 of 24 boxes correct
+  gate_audit_2026-11-18_all_clips/    four sheets and verdicts for 48 recovered rows, four per clip, all 12 clips: 45 correct, 3 doubtful
   fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
   detector_2026-11-18/                detector weights (best.pt), training curves, one track file per clip, detector_eval.csv
   fps_ablation_tracks_2026-11-18/     the frame-rate ablation on the predicted track (per clip, mean over unseen clips, figure)
@@ -243,8 +244,11 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
 
 ## Open items
 
-1. Audit of recovered rows: done for one clip (23 of 24 boxes correct, no label contradicted;
-   `reports/gate_audit_2026-11-18/`). Repeat across all 12 clips once the videos are on molab.
+1. Audit of recovered rows: done. 24 rows from one clip (23 correct, 1 doubtful) and 48 rows from
+   all 12 clips, four per clip (45 correct, 3 doubtful, none wrong): 68 of 72 boxes correct, no
+   label contradicted. The three doubtful rows are ones where the human boxes before and after sit
+   in the same odd place, or the pig moved within half a second. Verdicts in
+   `reports/gate_audit_2026-11-18/` and `reports/gate_audit_2026-11-18_all_clips/`.
 2. Reproducibility: done; the 18 Nov re-run matched the reference run exactly (see "Reproducibility").
 3. Detector and tracker: done on four clips (see "Finding the pigs"). Train on more days once
    the other eight videos are fetched, and reduce identity switches (tune the tracker, or use the

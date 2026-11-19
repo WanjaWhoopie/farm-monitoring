@@ -452,6 +452,111 @@ def _(DATA_ROOT, SEED, WORK, display, labels, math, mo):
     return (cv2,)
 
 
+@app.cell
+def _(DATA_ROOT, SEED, WORK, cv2, labels, mo, np, pd):
+
+    # All-clip gate audit (added 18 Nov 2026). Same three-frame sheet as scripts/audit_gate.py in the
+    # repository: for each sampled gated row, the last human frame before it, the gated frame with the
+    # red box, and the next human frame after it, all cropped to the same window so movement shows.
+    # Four gated rows per clip, seed 42 -> 48 rows on four sheets under WORK/audit_all/.
+    _ROWS_PER_CLIP, _PANEL, _PER_SHEET = 4, 300, 12
+    _RED, _WHITE, _GREY = (0, 0, 255), (255, 255, 255), (170, 170, 170)
+    _OUT = WORK / "audit_all"
+    _OUT.mkdir(parents=True, exist_ok=True)
+
+    def _bracketing_stored(series, idx):
+        st = series[series["annotation_source"] == "stored"]
+        before = st[st["annotation_index"] < idx]
+        after = st[st["annotation_index"] > idx]
+        return (before.iloc[-1] if len(before) else None, after.iloc[0] if len(after) else None)
+
+    def _read_frame(cap, idx):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(idx))
+        ok, frame = cap.read()
+        if not ok:
+            raise RuntimeError(f"could not read frame {idx}")
+        return frame
+
+    def _crop_window(box, fw, fh, scale=3.0, min_side=260):
+        cx, cy = box["x"] + box["width"] / 2, box["y"] + box["height"] / 2
+        side = max(min_side, scale * max(box["width"], box["height"]))
+        x0 = int(np.clip(cx - side / 2, 0, max(fw - side, 0)))
+        y0 = int(np.clip(cy - side / 2, 0, max(fh - side, 0)))
+        return x0, y0, int(min(side, fw - x0)), int(min(side, fh - y0))
+
+    def _draw_panel(frame, win, box, caption, size, colour):
+        x0, y0, w, h = win
+        img = frame[y0:y0 + h, x0:x0 + w].copy()
+        if box is not None:
+            bx, by = int(box["x"] - x0), int(box["y"] - y0)
+            cv2.rectangle(img, (bx, by), (bx + int(box["width"]), by + int(box["height"])), colour, 2)
+        img = cv2.resize(img, (size, int(size * h / w)))
+        bar = np.full((22, img.shape[1], 3), 30, np.uint8)
+        cv2.putText(bar, caption, (4, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.45, _WHITE, 1, cv2.LINE_AA)
+        return np.vstack([bar, img])
+
+    _pool = labels[labels["tier"] == "gated"]
+    _sample = pd.concat([g.sample(min(_ROWS_PER_CLIP, len(g)), random_state=SEED) for _, g in _pool.groupby("clip_id")]
+                        ).sort_values(["clip_id", "pig_id", "annotation_index"])
+    _strips, _rows, _caps = [], [], {}
+    for _k, (_, _r) in enumerate(_sample.iterrows(), 1):
+        _clip = _r["clip_id"]
+        if _clip not in _caps:
+            _caps[_clip] = cv2.VideoCapture(str(DATA_ROOT / _clip / "color.mp4"))
+        _cap = _caps[_clip]
+        _fw, _fh = int(_cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        _series = labels[(labels["clip_id"] == _clip) & (labels["pig_id"] == _r["pig_id"])]
+        _before, _after = _bracketing_stored(_series, _r["annotation_index"])
+        _win = _crop_window(_r, _fw, _fh)
+        _panels = []
+        for _tag, _rec, _colour in (("human, before", _before, _GREY), ("GATED (audit this)", _r, _RED), ("human, after", _after, _GREY)):
+            if _rec is None:
+                _blank = np.full((_win[3], _win[2], 3), 60, np.uint8)
+                _panels.append(_draw_panel(_blank, (0, 0, _win[2], _win[3]), None, f"{_tag}: none", _PANEL, _colour))
+                continue
+            _frame = _read_frame(_cap, _rec["annotation_index"])
+            _panels.append(_draw_panel(_frame, _win, _rec, f"{_tag}  frame {int(_rec['annotation_index'])}  {_rec['behavior']}", _PANEL, _colour))
+        _hmax = max(p.shape[0] for p in _panels)
+        _panels = [np.vstack([p, np.full((_hmax - p.shape[0], p.shape[1], 3), 30, np.uint8)]) for p in _panels]
+        _strip = np.hstack([_panels[0], np.full((_hmax, 4, 3), 255, np.uint8), _panels[1], np.full((_hmax, 4, 3), 255, np.uint8), _panels[2]])
+        _head = np.full((26, _strip.shape[1], 3), 255, np.uint8)
+        _gap = "" if _before is None or _after is None else f"   gap {int(_after['annotation_index'] - _before['annotation_index'])} frames (about {(_after['annotation_index'] - _before['annotation_index']) / 6.04:.1f} s)"
+        cv2.putText(_head, f"#{_k}  {_clip}  pig {_r['pig_id']}  frame {int(_r['annotation_index'])}  label: {_r['behavior']}{_gap}",
+                    (4, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+        _strips.append(np.vstack([_head, _strip]))
+        _rows.append({"n": _k, "clip_id": _clip, "pig_id": _r["pig_id"], "annotation_index": int(_r["annotation_index"]),
+                      "behavior": _r["behavior"], "annotation_source": _r["annotation_source"],
+                      "before_frame": None if _before is None else int(_before["annotation_index"]),
+                      "after_frame": None if _after is None else int(_after["annotation_index"]),
+                      "box_ok": "", "label_ok": "", "note": ""})
+    for _cap in _caps.values():
+        _cap.release()
+
+    _wmax = max(s.shape[1] for s in _strips)
+    _strips = [np.hstack([s, np.full((s.shape[0], _wmax - s.shape[1], 3), 255, np.uint8)]) for s in _strips]
+    _sheets = []
+    for _si in range(0, len(_strips), _PER_SHEET):
+        _chunk = _strips[_si:_si + _PER_SHEET]
+        _lines = []
+        for _a in range(0, len(_chunk), 2):
+            _pair = _chunk[_a:_a + 2]
+            if len(_pair) == 1:
+                _pair.append(np.full_like(_pair[0], 255))
+            _hm = max(p.shape[0] for p in _pair)
+            _pair = [np.vstack([p, np.full((_hm - p.shape[0], p.shape[1], 3), 255, np.uint8)]) for p in _pair]
+            _lines.append(np.hstack([_pair[0], np.full((_hm, 16, 3), 255, np.uint8), _pair[1]]))
+            _lines.append(np.full((14, _lines[-1].shape[1], 3), 255, np.uint8))
+        _name = f"audit_sheet_{_si // _PER_SHEET + 1}.png"
+        cv2.imwrite(str(_OUT / _name), np.vstack(_lines))
+        _sheets.append(_name)
+    pd.DataFrame(_rows).to_csv(_OUT / "audit_rows_all.csv", index=False)
+    mo.md(f"**All-clip audit sample written.** {len(_rows)} gated rows ({_ROWS_PER_CLIP} per clip from {_sample['clip_id'].nunique()} clips, "
+          f"out of {len(_pool):,} gated rows), on {len(_sheets)} sheets in `{_OUT}`: " + ", ".join(_sheets) +
+          ". Fill in `box_ok` and `label_ok` in `audit_rows_all.csv` (y, n or ?).")
+
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -470,13 +575,16 @@ def _(mo):
 def _(mo):
     # Record the audit result here so it persists with the notebook.
     # Count the panels in the sheet above whose red box sits on the labelled pig doing the labelled behaviour.
-    # 18 Nov 2026: counted on the three-frame sheet made by scripts/audit_gate.py (seed 42, 24 gated rows
-    # from clip 2019_12_02/000005, the only clip with video on the local machine). 23 boxes correct,
-    # 1 doubtful (row 15); no label contradicted by the neighbouring human frames. Rows and verdicts are in
-    # reports/gate_audit_2026-11-18/audit_rows.csv. Repeat across all 12 clips on molab before the paper.
-    AUDIT_CORRECT = 23
-    AUDIT_TOTAL = 24
-    AUDIT_SAMPLE = "24 gated rows from clip 2019_12_02/000005, three-frame sheet of 18 Nov 2026 (one clip only)"
+    # 18 Nov 2026: three-frame sheet from scripts/audit_gate.py, 24 gated rows from clip 2019_12_02/000005
+    # (the only clip with video on the local machine): 23 boxes correct, 1 doubtful, no label contradicted.
+    # 19 Nov 2026: the all-clip cell above on molab, 48 gated rows (4 per clip from all 12 clips, seed 42):
+    # 45 boxes correct, 3 doubtful (rows 10 and 12: the human boxes before and after sit in the same odd
+    # place; row 46: the pig moved within half a second), none wrong, no label contradicted.
+    # Combined: 68 of 72 boxes correct, 4 doubtful, 0 wrong. Verdict files: reports/gate_audit_2026-11-18/
+    # audit_rows.csv and reports/gate_audit_2026-11-18_all_clips/audit_rows_all.csv.
+    AUDIT_CORRECT = 68
+    AUDIT_TOTAL = 72
+    AUDIT_SAMPLE = "24 rows from one clip (18 Nov 2026) plus 48 rows, four per clip, from all 12 clips (19 Nov 2026); 4 doubtful, none wrong"
 
     if AUDIT_CORRECT is None:
         _txt = "**Audit pass rate: not counted yet.** Open the audit sheet above, count the correct panels, and set `AUDIT_CORRECT` in this cell."
