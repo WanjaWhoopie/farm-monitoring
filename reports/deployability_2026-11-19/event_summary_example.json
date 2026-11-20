@@ -1,0 +1,23 @@
+{
+  "v": 1,
+  "pen": 1,
+  "t": 1573466400,
+  "win_min": 5,
+  "pigs_seen": 8.2,
+  "budget": {
+    "sleep": 0.282,
+    "investigating": 0.307,
+    "eat": 0.0,
+    "standing": 0.15,
+    "lying": 0.0,
+    "walk": 0.214,
+    "drink": 0.047
+  },
+  "motion_px_s": 22.3,
+  "audio": {
+    "calls": null,
+    "neg_valence": null
+  },
+  "flags": [],
+  "src": "clip 2019_11_11/000028"
+}

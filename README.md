@@ -67,6 +67,7 @@ reports/
   fps_ablation_2026-11-18/            scores and budgets at 6, 2, 1 and 0.5 boxes per second (table, recall by rate, figure)
   detector_2026-11-18/                detector weights (best.pt), training curves, one track file per clip, detector_eval.csv
   fps_ablation_tracks_2026-11-18/     the frame-rate ablation on the predicted track (per clip, mean over unseen clips, figure)
+  deployability_2026-11-19/           example event record, one record per clip, bytes-per-day table and figure
 ```
 
 ## Vision branch so far
@@ -219,6 +220,41 @@ Caveats: one training clip and four clips in total; the human-box scores here di
 per-day numbers in the notebook because this model is trained at 2 per second and scored one clip
 at a time. Outputs are in `reports/detector_2026-11-18/`.
 
+## What leaves the farm: event summaries and bytes per day
+
+The point of running the models on the farm is that only a small record has to leave it.
+`scripts/event_summary.py` defines that record and costs it. One record per pen per time window
+holds: when and how long the window was, how many pigs the detector saw, the share of time in
+each of the seven behaviours (the geometry model's pen budget), how much the pigs moved, two
+audio fields (call count and share of negative-valence calls, empty here because these pens have
+no paired audio), and any flags. The example in `reports/deployability_2026-11-19/` is filled
+from the real outputs for one clip.
+
+The same record encoded four ways: readable JSON 374 bytes, compact JSON 273, compressed 211,
+and a fixed binary layout of 24 bytes (whole-number shares at 0.4 percent resolution, a check
+byte, three spare bytes). Five binary records fit in one SMS.
+
+Bytes per day for one pen, 24 hours, by what is sent:
+
+| What is sent | Bytes per day | Hours on a 2G link | SMS per day |
+|---|---|---|---|
+| Raw video as recorded (mean of the 12 clips) | 73 GB | 4,078 | 524 million |
+| Raw audio, 16 kHz 16-bit | 2.8 GB | 154 | 20 million |
+| Audio compressed (Opus, 24 kbit/s) | 259 MB | 14 | 1.9 million |
+| Box stream, CSV at 6 per second | 508 MB | 28 | 3.6 million |
+| Box stream, binary, 2 per second | 11 MB | 0.6 | 82 thousand |
+| Event summary, compact JSON every 5 min | 79 kB | under a minute | 562 |
+| Event summary, 24-byte binary every 5 min | 6.9 kB | seconds | 50 |
+| Event summary, 24-byte binary every hour | 576 B | seconds | 5 |
+
+Assumptions, all in the script: a 2G link moving 5,000 bytes per second, 140 bytes of payload
+per SMS, audio at 16 kHz 16-bit or Opus at 24 kbit/s. Video and box sizes are measured from the
+real files. The reading is simple: raw video needs a link that is busy for 170 days to send one
+day, the box stream still needs a fast link, and the event summary fits in a handful of SMS
+messages a day with no data link at all. That is the case for running the models on the farm.
+What the summary loses is the ability to look back at the pictures; what it keeps is what the
+activity-budget evaluation above showed the model can measure.
+
 ## Reproducibility
 
 `Experiments/notebook_v2_marimo.py` fixes every source of randomness from one seed (42). Each run
@@ -257,3 +293,6 @@ Locally: `pip install marimo` then `marimo edit Experiments/notebook_v2_marimo.p
    second"). Still to do: time a compressed detector (8-bit instead of 32-bit numbers).
 5. Write the rules that combine video and audio events and test them on days with simulated
    problems.
+6. Systems track (week 13): bytes per day done (see "What leaves the farm"); still to do:
+   delivery under emulated 2G/4G links, SMS fallback latency, solar uptime for three kit sizes,
+   and timing on a small computer such as a Raspberry Pi.
