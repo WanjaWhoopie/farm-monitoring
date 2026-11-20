@@ -50,6 +50,7 @@ scripts/audit_gate.py                 three-frame audit sheet for checking recov
 scripts/fps_ablation.py               geometry model and budgets at 6, 2, 1 and 0.5 boxes per second (runs locally)
 requirements-probe.txt                packages for the scripts; versions used are in reports/environment.json
 Experiments/
+  behaviour-2026-11-20/               crop ablations and the six-day activity budget: notebooks, scripts, and tables
   notebook_v1_kadima.ipynb            v1 (Kaggle): an image network looks at one cut-out of each pig; one fixed test day
   notebook_v2_improved.ipynb          v2 (Jupyter draft): recovers usable interpolated rows, uses box geometry, tests every day in turn
   notebook_v2_marimo.py               v2 as a marimo notebook, the version that runs on molab (current)

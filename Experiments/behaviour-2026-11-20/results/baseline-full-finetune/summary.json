@@ -1,0 +1,7 @@
+{
+  "metrics": {
+    "validation_macro_f1": 0.2652665261546877,
+    "validation_accuracy": 0.2505938242280285,
+    "best_epoch": 1
+  }
+}

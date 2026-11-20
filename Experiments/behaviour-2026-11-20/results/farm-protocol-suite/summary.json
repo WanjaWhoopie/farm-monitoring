@@ -1,0 +1,14 @@
+{
+  "metrics": {
+    "validation_macro_f1": 0.2809635525648036,
+    "validation_accuracy": null,
+    "best_epoch": 1,
+    "geometry_macro_f1": 0.2809635525648036,
+    "sequence_macro_f1": 0.17367261569588668,
+    "fusion_macro_f1": 0.28388138091994847,
+    "geometry_pen_budget_mae": 10.396507150064014,
+    "sequence_pen_budget_mae": 14.131447954983349,
+    "fusion_pen_budget_mae": 11.210978177266242,
+    "copied_pen_budget_mae": 12.243740933943013
+  }
+}
