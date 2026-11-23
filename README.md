@@ -102,6 +102,43 @@ Things to know about the video data (details in `IMPLEMENTATION_NOTES.txt`):
   drink). The other nine are too rare to score day by day. Sleep and investigating alone make up
   over half of all rows, which is why every score below is macro-F1 rather than accuracy.
 
+### Data accounting
+
+Every count, with its unit, so nobody has to guess what a number refers to.
+
+| Count | Unit | What it is |
+| --- | --- | --- |
+| 172,800 | label rows | 12 clips x 8 pigs x 1,800 video frames, one row per pig per frame |
+| 12,646 | label rows | a human placed the box and the label (every third frame, when something changed) |
+| 43,232 | label rows | box interpolated between two human boxes, label carried forward |
+| 116,922 | label rows | after a pig's last human box in the clip, box and label carried forward |
+| 57,600 | label rows | the 2-per-second grid, 12 x 8 x 600, where every human label sits |
+| 39,180 | label rows | filled-in rows kept by the gate (used for training only) |
+| 120,974 | label rows | filled-in rows rejected by the gate (never used) |
+| 600 | video frames | exported per clip for the detector, one per grid slot |
+| 6,887 | calls | Soundwel, one WAV file per call |
+| 6,150 | calls | calls with all ten supplied acoustic features; the other 737, all from one team, lack them, so the feature-based models use 6,150 and the spectrogram models use all 6,887 |
+
+The 16 behaviour labels, their counts on the 2-per-second grid, and what we do with each:
+
+| Label | Rows | Scored as | Merged group | Why |
+| --- | --- | --- | --- | --- |
+| sleep | 16,392 | sleep | resting | frequent, welfare-relevant (inactivity) |
+| investigating | 14,296 | investigating | exploring | frequent, the normal active state |
+| eat | 7,093 | eat | feeding | frequent, feeding is a core welfare measure |
+| standing | 6,263 | standing | stationary | frequent still posture |
+| lying | 5,088 | lying | resting | frequent still posture, awake |
+| walk | 4,306 | walk | locomotion | frequent, locomotion |
+| fight | 1,367 | not scored | none | welfare-relevant but absent on some days, so it cannot be scored day by day; candidate for an event flag |
+| drink | 962 | drink | drinking | rare but happens in one place, so it is learnable |
+| nose-to-nose, sitting, play with toy, run, nose-poke elsewhere | 75 to 929 | not scored | none | too rare for a per-day score |
+| jump on top of, other, chase | 1 to 6 | not scored | none | almost never occur |
+
+The merged groups follow the Welfare Quality grouping of pig activity into resting, stationary,
+locomotion, feeding, drinking and exploring. Audio valence is a label derived from the context a
+call was recorded in. Isolation, restraint and castration calls are negative, reunion, running and
+enrichment calls are positive. It is a proxy for emotional state, not a welfare diagnosis.
+
 ## Layout
 
 ```
@@ -180,6 +217,24 @@ The nine box numbers do as well as the pretrained image network, and the two tog
 The still postures (lying, sleeping, standing) are the weak classes for every model, because a box
 that does not move looks the same for all three. These numbers use boxes placed by people. The
 section on the detector shows what changes when the boxes are predicted.
+
+Per class, for the box model under the six-day protocol the paper will use (2 December excluded,
+every other day held out in turn, human-labelled rows on the 2-per-second grid):
+
+| Behaviour | Precision | Recall | F1 | Human-labelled rows |
+| --- | --- | --- | --- | --- |
+| walk | 0.55 | 0.67 | 0.61 | 2,464 |
+| investigating | 0.53 | 0.41 | 0.46 | 3,638 |
+| drink | 0.32 | 0.45 | 0.37 | 163 |
+| eat | 0.40 | 0.26 | 0.32 | 467 |
+| standing | 0.26 | 0.30 | 0.28 | 1,672 |
+| sleep | 0.23 | 0.30 | 0.26 | 498 |
+| lying | 0.17 | 0.17 | 0.17 | 584 |
+
+Walking is the strongest class and drinking is found despite being small, because it happens in
+one place. The confusion matrix is in `reports/v2_sixday_confusion_2026-11-23.csv`. Under this
+protocol the mean macro-F1 is 0.314 ± 0.070 and the pen budget error 9.3 points against 12.2 for
+no model.
 
 ### Activity budgets
 
@@ -363,6 +418,9 @@ versus 9.3 points, both against 12.2 for no model). It is on the branch
 `report/behaviour-experiments-2026-11-20` and will be merged after review.
 
 ## What is next
+
+The instructor's evaluation of 23 November and our point-by-point response are in
+`reports/instructor_feedback_response_2026-11-23.md`. The items below reflect it.
 
 1. Fusion rules on the event summary, for example less movement together with more negative calls,
    tested by injecting anomalies into real summaries and sweeping the alert threshold. Week 12,
