@@ -1,0 +1,242 @@
+{
+  "2019_11_05/000002": {
+    "true": {
+      "sleep": 0.0,
+      "investigating": 0.47,
+      "eat": 0.0,
+      "standing": 0.189,
+      "lying": 0.031,
+      "walk": 0.283,
+      "drink": 0.027
+    },
+    "predicted_track": {
+      "sleep": 0.026,
+      "investigating": 0.384,
+      "eat": 0.02,
+      "standing": 0.08,
+      "lying": 0.201,
+      "walk": 0.254,
+      "drink": 0.035
+    }
+  },
+  "2019_11_05/000009": {
+    "true": {
+      "sleep": 0.005,
+      "investigating": 0.702,
+      "eat": 0.011,
+      "standing": 0.083,
+      "lying": 0.0,
+      "walk": 0.187,
+      "drink": 0.011
+    },
+    "predicted_track": {
+      "sleep": 0.038,
+      "investigating": 0.338,
+      "eat": 0.053,
+      "standing": 0.292,
+      "lying": 0.08,
+      "walk": 0.19,
+      "drink": 0.01
+    }
+  },
+  "2019_11_11/000016": {
+    "true": {
+      "sleep": 0.01,
+      "investigating": 0.342,
+      "eat": 0.322,
+      "standing": 0.023,
+      "lying": 0.213,
+      "walk": 0.04,
+      "drink": 0.05
+    },
+    "predicted_track": {
+      "sleep": 0.128,
+      "investigating": 0.408,
+      "eat": 0.0,
+      "standing": 0.395,
+      "lying": 0.069,
+      "walk": 0.0,
+      "drink": 0.0
+    }
+  },
+  "2019_11_11/000028": {
+    "true": {
+      "sleep": 0.127,
+      "investigating": 0.452,
+      "eat": 0.0,
+      "standing": 0.171,
+      "lying": 0.011,
+      "walk": 0.238,
+      "drink": 0.001
+    },
+    "predicted_track": {
+      "sleep": 0.264,
+      "investigating": 0.474,
+      "eat": 0.002,
+      "standing": 0.173,
+      "lying": 0.006,
+      "walk": 0.046,
+      "drink": 0.035
+    }
+  },
+  "2019_11_11/000036": {
+    "true": {
+      "sleep": 0.089,
+      "investigating": 0.637,
+      "eat": 0.091,
+      "standing": 0.016,
+      "lying": 0.064,
+      "walk": 0.096,
+      "drink": 0.008
+    },
+    "predicted_track": {
+      "sleep": 0.166,
+      "investigating": 0.572,
+      "eat": 0.052,
+      "standing": 0.118,
+      "lying": 0.033,
+      "walk": 0.051,
+      "drink": 0.007
+    }
+  },
+  "2019_11_15/000033": {
+    "true": {
+      "sleep": 0.064,
+      "investigating": 0.128,
+      "eat": 0.0,
+      "standing": 0.537,
+      "lying": 0.002,
+      "walk": 0.247,
+      "drink": 0.021
+    },
+    "predicted_track": {
+      "sleep": 0.086,
+      "investigating": 0.459,
+      "eat": 0.009,
+      "standing": 0.204,
+      "lying": 0.072,
+      "walk": 0.126,
+      "drink": 0.044
+    }
+  },
+  "2019_11_22/000010": {
+    "true": {
+      "sleep": 0.157,
+      "investigating": 0.492,
+      "eat": 0.0,
+      "standing": 0.121,
+      "lying": 0.001,
+      "walk": 0.229,
+      "drink": 0.0
+    },
+    "predicted_track": {
+      "sleep": 0.028,
+      "investigating": 0.482,
+      "eat": 0.003,
+      "standing": 0.295,
+      "lying": 0.048,
+      "walk": 0.136,
+      "drink": 0.008
+    }
+  },
+  "2019_11_28/000113": {
+    "true": {
+      "sleep": 0.017,
+      "investigating": 0.287,
+      "eat": 0.024,
+      "standing": 0.18,
+      "lying": 0.306,
+      "walk": 0.172,
+      "drink": 0.014
+    },
+    "predicted_track": {
+      "sleep": 0.03,
+      "investigating": 0.58,
+      "eat": 0.006,
+      "standing": 0.157,
+      "lying": 0.075,
+      "walk": 0.125,
+      "drink": 0.026
+    }
+  },
+  "2019_12_02/000005": {
+    "true": {
+      "sleep": 0.118,
+      "investigating": 0.266,
+      "eat": 0.458,
+      "standing": 0.042,
+      "lying": 0.005,
+      "walk": 0.097,
+      "drink": 0.013
+    },
+    "predicted_track": {
+      "sleep": 0.129,
+      "investigating": 0.383,
+      "eat": 0.274,
+      "standing": 0.121,
+      "lying": 0.057,
+      "walk": 0.02,
+      "drink": 0.016
+    }
+  },
+  "2019_12_02/000208": {
+    "true": {
+      "sleep": 0.0,
+      "investigating": 0.399,
+      "eat": 0.354,
+      "standing": 0.087,
+      "lying": 0.015,
+      "walk": 0.116,
+      "drink": 0.029
+    },
+    "predicted_track": {
+      "sleep": 0.044,
+      "investigating": 0.241,
+      "eat": 0.289,
+      "standing": 0.234,
+      "lying": 0.014,
+      "walk": 0.116,
+      "drink": 0.062
+    }
+  },
+  "2019_12_10/000060": {
+    "true": {
+      "sleep": 0.165,
+      "investigating": 0.0,
+      "eat": 0.594,
+      "standing": 0.17,
+      "lying": 0.063,
+      "walk": 0.008,
+      "drink": 0.0
+    },
+    "predicted_track": {
+      "sleep": 0.255,
+      "investigating": 0.381,
+      "eat": 0.078,
+      "standing": 0.165,
+      "lying": 0.111,
+      "walk": 0.01,
+      "drink": 0.0
+    }
+  },
+  "2019_12_10/000078": {
+    "true": {
+      "sleep": 0.185,
+      "investigating": 0.172,
+      "eat": 0.25,
+      "standing": 0.203,
+      "lying": 0.0,
+      "walk": 0.128,
+      "drink": 0.061
+    },
+    "predicted_track": {
+      "sleep": 0.125,
+      "investigating": 0.318,
+      "eat": 0.189,
+      "standing": 0.306,
+      "lying": 0.002,
+      "walk": 0.052,
+      "drink": 0.008
+    }
+  }
+}

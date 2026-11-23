@@ -64,8 +64,11 @@ def match_clip(gt: pd.DataFrame, pr: pd.DataFrame, thr: float = 0.5) -> pd.DataF
 
 def detection_stats(gt: pd.DataFrame, matched: pd.DataFrame) -> dict:
     n_gt = len(gt); n_pr = len(matched); n_hit = int(matched["gt_pig"].notna().sum())
+    rel = gt["tier"] != "rejected"
+    n_rel = int(rel.sum()); n_hit_rel = int(matched["gt_tier"].isin(["stored", "gated"]).sum())
     return {"human_boxes": n_gt, "predicted_boxes": n_pr, "matched": n_hit,
             "precision": round(n_hit / max(n_pr, 1), 3), "recall": round(n_hit / max(n_gt, 1), 3),
+            "reliable_boxes": n_rel, "recall_reliable": round(n_hit_rel / max(n_rel, 1), 3),
             "mean_iou_matched": round(float(matched["iou"].mean()), 3),
             "boxes_per_frame": round(n_pr / gt["annotation_index"].nunique(), 2)}
 
@@ -119,8 +122,14 @@ def geometry_on_tracks(labels: pd.DataFrame, clip: str, matched: pd.DataFrame, p
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--tracks", type=Path, required=True, help="folder with track_<clip>.csv files (reports/detector_<date>)")
-    ap.add_argument("--train-clip", default="2019_12_02/000005", help="clip the detector was trained on (reported separately)")
+    ap.add_argument("--train-clips", default="2019_12_02/000005", help="comma-separated clips the detector was trained on")
+    ap.add_argument("--val-clips", default="", help="comma-separated clips used to pick the detector's epoch")
+    ap.add_argument("--test-clips", default="", help="comma-separated clips never used for training or model choice")
     args = ap.parse_args()
+    role_of = {}
+    for name, arg in (("train (detector)", args.train_clips), ("validation (epoch choice)", args.val_clips), ("test (untouched)", args.test_clips)):
+        for c in (arg.split(",") if arg else []):
+            role_of[c] = name
     set_seeds()
     labels = load_labels()
     rows = []
@@ -138,7 +147,7 @@ def main() -> None:
         src = pd.DataFrame({"clip_id": clip, "pig_id": pr["track_id"].astype(str), "annotation_index": pr["frame"],
                             "x": pr["x"], "y": pr["y"], "width": pr["width"], "height": pr["height"],
                             "elapsed_seconds": secs[pr["frame"].to_numpy()], "tier": "stored"}).sort_values(["pig_id", "annotation_index"]).reset_index(drop=True)
-        d = {"clip_id": clip, "role": "train (detector)" if clip == args.train_clip else "held-out day"}
+        d = {"clip_id": clip, "role": role_of.get(clip, "held-out day")}
         d.update(detection_stats(gt, matched)); d.update(tracking_stats(matched)); d.update(geometry_on_tracks(labels, clip, matched, src))
         rows.append(d)
         print(clip, {k: d[k] for k in ("role", "precision", "recall", "mean_iou_matched", "identity_switches", "macro_f1_human_boxes", "macro_f1_predicted_boxes", "pen_budget_mae_pp_human_boxes", "pen_budget_mae_pp_predicted_boxes")})

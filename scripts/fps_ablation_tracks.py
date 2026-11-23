@@ -40,7 +40,7 @@ SUMMARY_COLS = ["precision", "recall", "identity_switches", "mean_track_ids_per_
                 "macro_f1_predicted_boxes", "pen_budget_mae_pp_human_boxes", "pen_budget_mae_pp_predicted_boxes"]
 
 
-def evaluate_rate(labels: pd.DataFrame, tracks: Path, k: int, train_clip: str) -> list[dict]:
+def evaluate_rate(labels: pd.DataFrame, tracks: Path, k: int, train_clips: set) -> list[dict]:
     rows = []
     for f in sorted(tracks.glob("track_*.csv")):
         s = f.stem[len("track_"):]
@@ -54,7 +54,7 @@ def evaluate_rate(labels: pd.DataFrame, tracks: Path, k: int, train_clip: str) -
                             "x": pr["x"], "y": pr["y"], "width": pr["width"], "height": pr["height"],
                             "elapsed_seconds": secs[pr["frame"].to_numpy()], "tier": "stored"}).sort_values(["pig_id", "annotation_index"]).reset_index(drop=True)
         d = {"step": k, "boxes_per_second": round(FULL_RATE_HZ / k, 2), "clip_id": clip,
-             "role": "train (detector)" if clip == train_clip else "unseen day"}
+             "role": "train (detector)" if clip in train_clips else "unseen day"}
         d.update(detection_stats(gt, matched)); d.update(tracking_stats(matched))
         d.update(geometry_on_tracks(labels, clip, matched, src, step=k))
         rows.append(d)
@@ -105,7 +105,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--tracks", type=Path, required=True, help="folder with track_<clip>.csv files")
     ap.add_argument("--steps", default="1,3,6,12")
-    ap.add_argument("--train-clip", default="2019_12_02/000005")
+    ap.add_argument("--train-clips", default="2019_12_02/000005", help="comma-separated clips the detector was trained on")
     ap.add_argument("--out", type=Path, default=None)
     args = ap.parse_args()
     steps = [int(s) for s in args.steps.split(",")]
@@ -116,7 +116,7 @@ def main() -> None:
     rows = []
     for k in steps:
         print(f"step {k}: {FULL_RATE_HZ / k:.2f} boxes per second ...", flush=True)
-        rows += evaluate_rate(labels, args.tracks, k, args.train_clip)
+        rows += evaluate_rate(labels, args.tracks, k, set(args.train_clips.split(",")))
     table = pd.DataFrame(rows).drop(columns=["budget_true", "budget_predicted_track"])
     table.to_csv(out / "fps_ablation_tracks_per_clip.csv", index=False)
     unseen = table[table["role"] == "unseen day"]
@@ -125,7 +125,7 @@ def main() -> None:
     print("\nMean over the unseen clips:\n" + summary.to_string(index=False))
     draw_figure(summary, out / "fps_ablation_tracks_figure.png")
     info = {"saved_at": datetime.datetime.now().isoformat(timespec="seconds"), "seed": SEED, "steps": steps,
-            "tracks": str(args.tracks), "train_clip": args.train_clip,
+            "tracks": str(args.tracks), "train_clips": args.train_clips,
             "versions": {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__, "scikit-learn": sklearn.__version__}}
     (out / "run_info.json").write_text(json.dumps(info, indent=2), encoding="utf-8")
     print("\nSaved to", out)

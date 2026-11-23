@@ -68,6 +68,7 @@ def main() -> None:
     ap.add_argument("--split", choices=["time", "clip"], default="time",
                     help="time: first 70%% of each clip trains, last 30%% validates (same day!); clip: hold out whole clips")
     ap.add_argument("--val-clips", default="", help="comma-separated clip ids for --split clip")
+    ap.add_argument("--exclude-clips", default="", help="comma-separated clip ids left out of both lists (the untouched test day)")
     ap.add_argument("--clean-only", action="store_true", help="train only on frames where no pig's box was rejected by the gate")
     args = ap.parse_args()
     (OUT / "images").mkdir(parents=True, exist_ok=True)
@@ -93,7 +94,10 @@ def main() -> None:
         name = "split_time"
     else:
         vc = set(args.val_clips.split(",")) if args.val_clips else set()
-        train = list(man[~man["clip_id"].isin(vc)]["image"]); val = list(man[man["clip_id"].isin(vc)]["image"])
+        ex = set(args.exclude_clips.split(",")) if args.exclude_clips else set()
+        train = list(man[~man["clip_id"].isin(vc | ex)]["image"]); val = list(man[man["clip_id"].isin(vc)]["image"])
+        if ex:
+            print("excluded from both lists:", sorted(ex))
         name = "split_clip"
     if args.clean_only:
         clean = set(man[man["n_rejected"] == 0]["image"])

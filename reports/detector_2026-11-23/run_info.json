@@ -1,0 +1,122 @@
+{
+  "saved_at": "2026-11-23T10:20:01",
+  "seed": 42,
+  "device": "NVIDIA GeForce RTX 2050",
+  "clips": [
+    "2019_11_05/000002",
+    "2019_11_05/000009",
+    "2019_11_11/000016",
+    "2019_11_11/000028",
+    "2019_11_11/000036",
+    "2019_11_15/000033",
+    "2019_11_22/000010",
+    "2019_11_28/000113",
+    "2019_12_02/000005",
+    "2019_12_02/000208",
+    "2019_12_10/000060",
+    "2019_12_10/000078"
+  ],
+  "validation": {
+    "map50": 0.9946,
+    "map50_95": 0.5961,
+    "precision": 0.9904,
+    "recall": 0.9896,
+    "epochs": 30,
+    "imgsz": 640,
+    "weights_start": "data/processed/vision/weights/yolo11n.pt",
+    "data": "data/processed/vision/yolo_pig/split_clip.yaml",
+    "train_images": 4200,
+    "val_images": 1200
+  },
+  "tracking": {
+    "2019_11_05/000002": {
+      "frames": 1800,
+      "boxes": 14444,
+      "track_ids": 49,
+      "boxes_per_frame": 8.02,
+      "seconds": 33.9
+    },
+    "2019_11_05/000009": {
+      "frames": 1800,
+      "boxes": 14651,
+      "track_ids": 36,
+      "boxes_per_frame": 8.14,
+      "seconds": 33.5
+    },
+    "2019_11_11/000016": {
+      "frames": 1800,
+      "boxes": 15769,
+      "track_ids": 19,
+      "boxes_per_frame": 8.76,
+      "seconds": 32.2
+    },
+    "2019_11_11/000028": {
+      "frames": 1800,
+      "boxes": 14789,
+      "track_ids": 37,
+      "boxes_per_frame": 8.22,
+      "seconds": 32.2
+    },
+    "2019_11_11/000036": {
+      "frames": 1800,
+      "boxes": 14606,
+      "track_ids": 20,
+      "boxes_per_frame": 8.11,
+      "seconds": 31.3
+    },
+    "2019_11_15/000033": {
+      "frames": 1800,
+      "boxes": 14469,
+      "track_ids": 26,
+      "boxes_per_frame": 8.04,
+      "seconds": 30.2
+    },
+    "2019_11_22/000010": {
+      "frames": 1800,
+      "boxes": 14452,
+      "track_ids": 17,
+      "boxes_per_frame": 8.03,
+      "seconds": 33.5
+    },
+    "2019_11_28/000113": {
+      "frames": 1800,
+      "boxes": 14475,
+      "track_ids": 36,
+      "boxes_per_frame": 8.04,
+      "seconds": 32.1
+    },
+    "2019_12_02/000005": {
+      "frames": 1800,
+      "boxes": 14482,
+      "track_ids": 17,
+      "boxes_per_frame": 8.05,
+      "seconds": 28.5
+    },
+    "2019_12_02/000208": {
+      "frames": 1800,
+      "boxes": 14567,
+      "track_ids": 43,
+      "boxes_per_frame": 8.09,
+      "seconds": 30.4
+    },
+    "2019_12_10/000060": {
+      "frames": 1800,
+      "boxes": 14398,
+      "track_ids": 8,
+      "boxes_per_frame": 8.0,
+      "seconds": 30.9
+    },
+    "2019_12_10/000078": {
+      "frames": 1800,
+      "boxes": 14469,
+      "track_ids": 17,
+      "boxes_per_frame": 8.04,
+      "seconds": 50.5
+    }
+  },
+  "ms_per_frame": {
+    "gpu": 19.5,
+    "cpu": 68.9,
+    "note": "best of three repeats of 60 frames on an idle machine; the in-run measurement was taken while the tracker was still running"
+  }
+}

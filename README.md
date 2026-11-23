@@ -24,8 +24,9 @@ the files are. If you only read one part, read the next section.
 | Activity budgets | Share of time per behaviour from the model's predictions versus the human labels. | pen-level error 9.2 points, no-model copy 11.9 | `scripts/activity_budget.py`, `reports/activity_budget_2026-11-16/` |
 | Label gate audit | Checking by eye that the interpolated rows we keep are right. | 68 of 72 boxes correct, none wrong | `scripts/audit_gate.py`, `reports/gate_audit_2026-11-18*/` |
 | Frame-rate ablation | The box model at 6, 2, 1 and 0.5 boxes per second. | 2 per second is best, 0.5 per second loses only 0.03 | `scripts/fps_ablation.py`, `reports/fps_ablation_2026-11-18/` |
-| Detector and tracker | YOLO11n finds pigs, ByteTrack follows them. Trained on one clip, tested on three unseen days. | mAP50 0.951, 58 ms per frame on CPU | `scripts/detector_*.py`, `reports/detector_2026-11-18/` |
-| Ablation on predicted boxes | The frame-rate ablation again, on the detector's boxes. | behaviour score within 0.02 across rates | `scripts/fps_ablation_tracks.py`, `reports/fps_ablation_tracks_2026-11-18/` |
+| Detector and tracker | YOLO11n finds pigs, ByteTrack follows them. Trained on seven clips from five days, validated on 11 November, tested on the untouched 2 December clips. | test precision 0.98 to 0.99, 8 to 18 identity switches per five minutes, 69 ms per frame on CPU | `scripts/detector_*.py`, `reports/detector_2026-11-23/` |
+| Ablation on predicted boxes | The frame-rate ablation again, on the detector's boxes. | behaviour score within 0.02 across rates | `scripts/fps_ablation_tracks.py`, `reports/fps_ablation_tracks_2026-11-23/` |
+| Mislabelled clip found | Clip 2019_11_11/000016's annotations do not match its video. | detector precision 0.13 on it, 0.97 to 1.00 everywhere else | `reports/detector_2026-11-23/excluded_mislabelled_clip/` |
 | Event summary and bytes per day | The record a pen monitor sends, and what it costs to send. | 24 bytes per record, 6.9 kB per day, 50 SMS | `scripts/event_summary.py`, `reports/deployability_2026-11-19/` |
 | Reproducibility | The v2 notebook re-run on a fresh machine. | every table identical | `reports/v2_molab_2026-11-18_rerun/` |
 | Audio branch | Call valence models on Soundwel, scored under three splits. | macro-F1 0.74 within seen teams, 0.52 on a new team | `Experiments/pigwatch-audio.ipynb` |
@@ -95,6 +96,13 @@ Things to know about the video data (details in `IMPLEMENTATION_NOTES.txt`):
   boxes by at least half, the gap between them must be at most 20 frames, and a carried label may
   run for at most 10 steps. This keeps 39,180 of the 160,154 filled-in rows. We audited 72 kept
   rows by eye and found 68 boxes correct, 4 doubtful and none wrong.
+- Clip `2019_11_11/000016` is mislabelled in the archive. Its annotation file, including the
+  human-placed boxes, puts the pigs on empty floor while the video shows them elsewhere, and no
+  time offset makes the two agree. The label table reproduces the annotation file exactly, so the
+  fault is in the source. Anything that pairs pixels with labels (detector validation, pig
+  cut-outs, image embeddings) must leave this clip out. Label-only work, such as the box model,
+  is still consistent for it. The detector's boxes on it are kept in
+  `reports/detector_2026-11-23/excluded_mislabelled_clip/` as evidence.
 - Two label tables with the same row counts can still differ in where the boxes sit, and that
   changes every number. Each run therefore records the md5 fingerprint of the table it used in
   `run_info.json`.
@@ -174,8 +182,10 @@ reports/
   gate_audit_2026-11-18/              24 audited rows from one clip, 23 correct
   gate_audit_2026-11-18_all_clips/    48 audited rows from all 12 clips, 45 correct, 3 doubtful
   fps_ablation_2026-11-18/            frame-rate ablation on human boxes
-  detector_2026-11-18/                detector weights (best.pt), training curves, one track file per clip, detector_eval.csv
-  fps_ablation_tracks_2026-11-18/     frame-rate ablation on predicted boxes
+  detector_2026-11-18/                the first detector, trained on one clip (kept for comparison)
+  detector_2026-11-23/                the six-day detector: weights (best.pt), training curves, one track file per clip, detector_eval.csv
+  fps_ablation_tracks_2026-11-18/     frame-rate ablation on the one-clip detector's boxes
+  fps_ablation_tracks_2026-11-23/     frame-rate ablation on the six-day detector's boxes
   deployability_2026-11-19/           example event record, bytes-per-day table and figure
 ```
 
@@ -286,16 +296,20 @@ For the budget use case, half a box per second is enough. Figure and tables are 
 
 Everything above used the human-drawn boxes. A farm system has to find the pigs itself.
 `scripts/detector_train.py` fine-tunes a small detector (YOLO11n, 2.6 million parameters, starting
-from weights pretrained on everyday photos) on 600 frames of one clip (2019_12_02/000005), and
-`scripts/detector_eval.py` measures how much is lost when the nine numbers come from predicted
-boxes instead of human ones. Only four clip videos are on the local machine, so the detector saw
-one day and was tested on the other three.
+from weights pretrained on everyday photos), and `scripts/detector_eval.py` measures how much is
+lost when the nine numbers come from predicted boxes instead of human ones.
 
-Detection on 1,800 frames from the three unseen days gives mAP50 0.951, precision 0.941 and recall
-0.906. In plain words, on a new day it finds about nine in ten pigs, nine in ten of its boxes are
-real pigs, and a box counts as right when it overlaps the human one by at least half. Training
-took about 25 minutes on a laptop GPU. One frame takes 13.5 ms on the GPU and 58 ms on the CPU, so
-a CPU alone manages 17 frames per second, far more than the 2 per second the pipeline needs.
+The split follows the six-day protocol the paper uses. Training frames come from the seven clips
+of 5, 15, 22 and 28 November and 10 December (4,200 frames on the 2-per-second grid). The two
+sound clips of 11 November pick the epoch (1,200 frames). The two clips of 2 December are never
+used for training or model choice and give the test numbers. Clip 2019_11_11/000016 is left out
+of everything because its labels do not match its video (see Data).
+
+Detection on the 1,200 validation frames gives mAP50 0.995 and precision and recall both 0.99.
+Training took 53 minutes on a laptop GPU and stopped itself at epoch 21 (best epoch 11). One frame
+takes about 20 ms on the GPU and 69 ms on the CPU on an idle machine (best of three repeats), so a
+laptop CPU alone manages about 14 frames per second, far more than the 2 per second the pipeline
+needs. The Raspberry Pi number is still to be measured.
 
 ByteTrack then follows each box from frame to frame and gives it a track id. The table scores each
 clip on the 2-per-second grid. Predicted boxes are matched one to one to human boxes (overlap at
@@ -304,42 +318,54 @@ predicted track, and its score sits beside the same model on that clip's human b
 
 | Clip | Role | Precision | Recall | Id switches in 5 min | Track ids per pig | Macro-F1, human boxes | Macro-F1, predicted boxes | Pen budget error, human | Pen budget error, predicted |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2019_11_11/000028 | unseen day | 0.896 | 0.921 | 94 | 5.9 | 0.288 | 0.307 | 3.4 | 5.2 |
-| 2019_11_22/000010 | unseen day | 0.934 | 0.909 | 83 | 6.1 | 0.278 | 0.283 | 6.5 | 7.7 |
-| 2019_12_10/000078 | unseen day | 0.841 | 0.951 | 58 | 4.2 | 0.348 | 0.301 | 10.1 | 10.4 |
-| 2019_12_02/000005 | detector's training clip | 0.997 | 0.999 | 0 | 1.0 | 0.354 | 0.390 | 4.9 | 7.5 |
+| 2019_12_02/000005 | test, untouched | 0.993 | 0.997 | 8 | 1.4 | 0.354 | 0.343 | 4.9 | 7.5 |
+| 2019_12_02/000208 | test, untouched | 0.978 | 0.988 | 18 | 3.0 | 0.456 | 0.424 | 6.8 | 6.4 |
+| 2019_11_11/000028 | validation | 0.968 | 0.992 | 27 | 2.4 | 0.288 | 0.349 | 3.4 | 5.6 |
+| 2019_11_11/000036 | validation | 0.978 | 0.991 | 29 | 2.0 | 0.397 | 0.309 | 5.6 | 5.1 |
+| seven training clips | training | 0.97 to 1.00 | 0.97 to 1.00 | 0 to 40 | 1.0 to 5.5 | | | | |
+| 2019_11_11/000016 | mislabelled, excluded | 0.132 | 0.145 | | | | | | |
 
 What this says:
 
-- Finding pigs transfers to new days. Keeping their identities does not yet. On unseen days a pig
-  changes track id 60 to 90 times in five minutes, so a per-pig history is not reliable. Counting
-  pigs and the pen-level budget are.
-- The behaviour score barely moves between human and predicted boxes (within 0.05), so the box
-  model does not depend on perfect boxes. The pen budget error rises by one to three points.
-- The training clip's row is optimistic, because the detector has seen those frames. Read the
-  unseen-day rows.
+- Finding pigs on a new day works. On the untouched test day precision and recall are 0.98 to
+  1.00, and a box counts as right only when it overlaps the human one by at least half.
+- Keeping identities is much better than with the one-clip detector. A pig now changes track id
+  8 to 29 times in five minutes instead of 60 to 90, and collects 1 to 3 ids instead of 4 to 6.
+  Per-pig histories over minutes are within reach, over a whole clip not yet.
+- The behaviour score on predicted boxes stays within 0.06 of the score on human boxes, up on one
+  clip and down on three, so the box model does not depend on perfect boxes. The pen budget error
+  moves by at most 2.6 points and improves on two clips.
+- The mislabelled clip is the only one the detector fails on, which is how the mislabelling was
+  found.
 
 The human-box scores here differ from the per-day numbers in the notebook because this model is
-trained at 2 per second and scored one clip at a time. Outputs are in `reports/detector_2026-11-18/`.
+trained at 2 per second and scored one clip at a time. Outputs, including the one-clip detector
+from 18 November for comparison, are in `reports/detector_2026-11-23/` and `reports/detector_2026-11-18/`.
 
 ### The frame-rate ablation on predicted boxes
 
 `scripts/fps_ablation_tracks.py` repeats the frame-rate ablation with the detector's boxes in place
-of the human ones. Means over the three clips the detector never saw:
+of the human ones. Means over the four clips the six-day detector never trained on (the two
+validation clips of 11 November and the two test clips of 2 December):
 
 | Boxes per second | Precision | Recall | Id switches in 5 min | Macro-F1, human boxes | Macro-F1, predicted track | Pen budget error, human | Pen budget error, predicted |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 6 (full rate) | 0.889 | 0.928 | 154 | 0.279 | 0.294 | 6.4 | 5.9 |
-| 2 | 0.890 | 0.927 | 78 | 0.305 | 0.297 | 6.7 | 7.8 |
-| 1 | 0.891 | 0.926 | 54 | 0.283 | 0.310 | 7.0 | 7.9 |
-| 0.5 | 0.891 | 0.924 | 42 | 0.306 | 0.315 | 6.4 | 8.7 |
+| 6 (full rate) | 0.977 | 0.991 | 39 | 0.329 | 0.358 | 5.6 | 7.5 |
+| 2 | 0.979 | 0.992 | 21 | 0.374 | 0.356 | 5.2 | 6.2 |
+| 1 | 0.979 | 0.991 | 13 | 0.349 | 0.364 | 6.0 | 6.6 |
+| 0.5 | 0.978 | 0.991 | 9 | 0.318 | 0.314 | 6.0 | 6.9 |
+
+On the two untouched test clips alone, the predicted-track macro-F1 is 0.39, 0.38, 0.38 and 0.37
+at 6, 2, 1 and 0.5 boxes per second, and the pen budget error 8.5, 6.9, 8.0 and 8.2 points.
 
 Finding pigs does not depend on the rate, because each frame is detected on its own. The behaviour
-score on the predicted track stays within 0.02 across the four rates, which is inside the
-clip-to-clip noise with only three clips. The pen budget from the predicted track drifts from about
-6 to about 9 points as the rate drops, still well under the 12 points of the no-model baseline. The
-reading is the same as on human boxes. Half a box per second is enough for budgets. Per-clip numbers
-and the figure are in `reports/fps_ablation_tracks_2026-11-18/`.
+score on the predicted track stays within 0.05 of itself across the four rates and within 0.04 of
+the human-box score at every rate. The pen budget from the predicted track is 6 to 8 points at
+every rate, well under the 12 points of the no-model baseline, and 2 boxes per second is the best
+rate for budgets as it was on human boxes. Identity switches fall with the rate mostly because
+there are fewer frames at which to switch. Half a box per second is enough for budgets. Per-clip
+numbers and the figure are in `reports/fps_ablation_tracks_2026-11-23/`; the same ablation on the
+one-clip detector is in `reports/fps_ablation_tracks_2026-11-18/`.
 
 ## Audio branch
 
