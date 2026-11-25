@@ -15,7 +15,7 @@ The proposal asks three questions:
 This README is the map of the repo. Each section says what was done, what came out, and where
 the files are. If you only read one part, read the next section.
 
-## Where we are (20 November 2026)
+## Where we are (25 November 2026)
 
 | Piece | What it shows | Key number | Files |
 | --- | --- | --- | --- |
@@ -29,13 +29,14 @@ the files are. If you only read one part, read the next section.
 | Mislabelled clip found | Clip 2019_11_11/000016's annotations do not match its video. | detector precision 0.13 on it, 0.97 to 1.00 everywhere else | `reports/detector_2026-11-23/excluded_mislabelled_clip/` |
 | Event summary and bytes per day | The record a pen monitor sends, and what it costs to send. | 24 bytes per record, 6.9 kB per day, 50 SMS | `scripts/event_summary.py`, `reports/deployability_2026-11-19/` |
 | Reproducibility | The v2 notebook re-run on a fresh machine. | every table identical | `reports/v2_molab_2026-11-18_rerun/` |
-| Audio branch | Call valence models on Soundwel, scored under three splits. | macro-F1 0.74 within seen teams, 0.52 on a new team | `Experiments/pigwatch-audio.ipynb` |
+| Audio branch | Call valence models on Soundwel, scored under three splits, three seeds. Final model EfficientNet-B0, exported to ONNX and tested at 8 bits. | macro-F1 0.74 by session, 0.53 on a new team, 8.5 ms per call on one CPU thread, 8-bit loses 0.15 | `Experiments/pigwatch-audio.ipynb`, `audio_models/final_model/`, `audio_results/` |
 
 The one-line story so far. On video, nine numbers from the box track beat an image network, the
 model gives useful pen-level activity budgets on days it has never seen, the detector finds pigs
 on new days but loses their identities, and half a box per second is enough. On audio, the models
-work within the recording teams they were trained on and drop to near chance on a new team. On the
-systems side, one summary per pen every five minutes fits in a few SMS messages a day.
+work within the recording teams they were trained on and drop to near chance on a new team.
+Shrinking the audio model to 8-bit weights costs too much accuracy to be worth it. On the systems
+side, one summary per pen every five minutes fits in a few SMS messages a day.
 
 ## How to run things
 
@@ -125,7 +126,7 @@ Every count, with its unit, so nobody has to guess what a number refers to.
 | 120,974 | label rows | filled-in rows rejected by the gate (never used) |
 | 600 | video frames | exported per clip for the detector, one per grid slot |
 | 6,887 | calls | Soundwel, one WAV file per call |
-| 6,150 | calls | calls with all ten supplied acoustic features; the other 737, all from one team, lack them, so the feature-based models use 6,150 and the spectrogram models use all 6,887 |
+| 6,150 | calls | calls with all ten supplied acoustic features. The other 737, all from one team, lack them, so the feature-based models use 6,150 and the spectrogram models use all 6,887 |
 
 The 16 behaviour labels, their counts on the 2-per-second grid, and what we do with each:
 
@@ -137,7 +138,7 @@ The 16 behaviour labels, their counts on the 2-per-second grid, and what we do w
 | standing | 6,263 | standing | stationary | frequent still posture |
 | lying | 5,088 | lying | resting | frequent still posture, awake |
 | walk | 4,306 | walk | locomotion | frequent, locomotion |
-| fight | 1,367 | not scored | none | welfare-relevant but absent on some days, so it cannot be scored day by day; candidate for an event flag |
+| fight | 1,367 | not scored | none | welfare-relevant but absent on some days, so it cannot be scored day by day. Candidate for an event flag |
 | drink | 962 | drink | drinking | rare but happens in one place, so it is learnable |
 | nose-to-nose, sitting, play with toy, run, nose-poke elsewhere | 75 to 929 | not scored | none | too rare for a per-day score |
 | jump on top of, other, chase | 1 to 6 | not scored | none | almost never occur |
@@ -170,7 +171,7 @@ Experiments/
   notebook_v1_kadima.ipynb            v1 (Kaggle): image network on a cut-out of each pig, one fixed test day
   notebook_v2_improved.ipynb          v2 (Jupyter draft)
   notebook_v2_marimo.py               v2 as a marimo notebook, the version that runs on molab (current)
-  pigwatch-audio.ipynb                the audio branch (Paul): Soundwel preprocessing, baselines, CNN and PANNs
+  pigwatch-audio.ipynb                the audio branch (Paul): Soundwel preprocessing, baselines, EfficientNet and PANNs
   gated_audit_sheet.png               the first audit sheet (whole frames, superseded by the three-frame sheets)
 reports/
   environment.json                    package versions
@@ -187,6 +188,11 @@ reports/
   fps_ablation_tracks_2026-11-18/     frame-rate ablation on the one-clip detector's boxes
   fps_ablation_tracks_2026-11-23/     frame-rate ablation on the six-day detector's boxes
   deployability_2026-11-19/           example event record, bytes-per-day table and figure
+audio_models/
+  final_model/                        the final audio model (Paul): EfficientNet-B0 weights, ONNX export, preprocessing config
+  MobileNetV2.pth                     the PANNs MobileNetV2 weights used for the comparison
+audio_results/                        per-fold result tables for every audio model, quantization and calibration runs,
+                                      table1_model_comparison.csv and table2_deployment.csv as summaries
 ```
 
 Every results folder has a `run_info.json` that says when it was made, with which seed, which
@@ -364,36 +370,70 @@ the human-box score at every rate. The pen budget from the predicted track is 6 
 every rate, well under the 12 points of the no-model baseline, and 2 boxes per second is the best
 rate for budgets as it was on human boxes. Identity switches fall with the rate mostly because
 there are fewer frames at which to switch. Half a box per second is enough for budgets. Per-clip
-numbers and the figure are in `reports/fps_ablation_tracks_2026-11-23/`; the same ablation on the
+numbers and the figure are in `reports/fps_ablation_tracks_2026-11-23/`. The same ablation on the
 one-clip detector is in `reports/fps_ablation_tracks_2026-11-18/`.
 
 ## Audio branch
 
 The audio notebook (`Experiments/pigwatch-audio.ipynb`, by Paul) classifies each Soundwel call as
 positive or negative valence. Calls are resampled to 32 kHz, centred in a one-second window and
-turned into 64-band log-mel spectrograms. Three kinds of model are compared. Gradient boosting on
-the ten acoustic features that come with the corpus, a small CNN on the spectrograms, and the
+turned into 64-band log-mel spectrograms (the exact recipe is in
+`audio_models/final_model/config.json`). Three kinds of model are compared. Gradient boosting on
+seven of the ten acoustic features that come with the corpus, small image networks trained from
+scratch on the spectrograms (EfficientNet-B0 and the lighter EfficientNet-Lite0), and the
 pretrained PANNs networks (MobileNetV2 and Cnn14), either fine-tuned or frozen with a logistic
 regression on top.
 
 The split matters more than the model. Calls from one recording session or one recording team are
 alike, so a random split lets the model recognise the setup rather than the valence. Every model is
 therefore scored three ways. Random five-fold (optimistic), five folds grouped by session, and
-leave-one-recording-team-out, which is what a new farm looks like.
+leave-one-recording-team-out, which is what a new farm looks like. The two main models were run
+with three seeds, the rest once.
 
 | Model | Random split | Grouped by session | Recording team held out |
 | --- | --- | --- | --- |
-| Logistic regression on the supplied features | 0.69 | 0.58 | 0.51 |
-| Gradient boosting on the supplied features | 0.83 | 0.63 | 0.52 |
-| CNN on log-mel spectrograms | 0.82 | 0.74 | 0.48 |
+| Call type only, no audio (gradient boosting) | | 0.56 | 0.53 |
+| Gradient boosting on seven acoustic features, 3 seeds | 0.83 | 0.67 | 0.52 |
+| EfficientNet-B0 on log-mel spectrograms, 3 seeds | 0.82 | 0.74 | 0.53 |
+| EfficientNet-Lite0 on log-mel spectrograms | | 0.69 | |
 | PANNs MobileNetV2, frozen, logistic regression on top | 0.80 | 0.69 | 0.50 |
-| PANNs MobileNetV2, fine-tuned | 0.77 | 0.65 | 0.44 |
+| PANNs MobileNetV2, fine-tuned | 0.77 | 0.66 | 0.49 |
+| PANNs Cnn14, frozen, logistic regression on top | 0.74 | 0.64 | 0.51 |
+| PANNs Cnn14, fine-tuned | | 0.66 | |
 
-Scores are macro-F1, mean over folds. Every model loses a third to a half of its score between the
-random split and a held-out team. The best score on a new team is 0.52, and for two of the four
-teams the AUC is near 0.5. The audio branch works within the conditions it was trained on and does
-not yet transfer to a new recording setup. That is the same pattern the vision branch shows across
-days, and it is the honest result for research question 1.
+Scores are macro-F1, mean over folds (and seeds). Full per-fold tables are in `audio_results/`,
+with `table1_model_comparison.csv` as the summary. EfficientNet-B0 is the final model. Within
+seen teams it is the best by a clear margin. On a held-out team every model sits between 0.49 and
+0.53, and the call-type label alone, with no audio at all, gets 0.53. The held-out score also
+varies a lot by team. For EfficientNet-B0 it is about 0.68 on IASPA and 0.44 to 0.52 on the other
+three. The audio branch works within the conditions it was trained on and does not yet transfer to
+a new recording setup. That is the same pattern the vision branch shows across days, and it is the
+honest result for research question 1.
+
+Two more experiments point at the deployment questions.
+
+**A few local labels help some teams.** Calibrating the EfficientNet-B0 model on 10 to 100
+labelled calls from the held-out team lifts NMBU from 0.38 to 0.54 with 10 calls and 0.57 with
+100 (the ceiling with all local labels is 0.58), and IASPA from 0.64 to 0.69. ETHZ and FBN do not
+move. So a new farm would need a small labelled sample, and even then only some setups recover
+(`audio_results/results_local_calibration.csv`).
+
+**8-bit weights cost too much on audio.** The final model was exported to ONNX and quantized to
+INT8 in several settings (`audio_results/results_quantization*.csv`, summary in
+`table2_deployment.csv`). Scores are grouped by session, timing is one CPU thread per call.
+
+| Model | Macro-F1 | Size | Time per call |
+| --- | --- | --- | --- |
+| EfficientNet-B0, 32-bit ONNX | 0.74 | 16.0 MB | 8.5 ms |
+| EfficientNet-B0, 8-bit, best setting | 0.59 | 4.8 MB | 14.4 ms |
+| EfficientNet-Lite0, 32-bit ONNX | 0.69 | 13.5 MB | 7.9 ms |
+| EfficientNet-Lite0, 8-bit, best setting | 0.58 | 4.0 MB | 6.4 ms |
+
+Quantizing shrinks the file by three to four times but loses 0.1 to 0.15 of macro-F1, and on the
+laptop CPU the 8-bit EfficientNet-B0 is slower, not faster. For now the 32-bit ONNX file is the
+one to put on the farm computer. At 8.5 ms per one-second call it is far from being the
+bottleneck. The files are in `audio_models/final_model/` (PyTorch weights, ONNX export and the
+preprocessing config).
 
 ## What leaves the farm: event summaries and bytes per day
 
@@ -452,6 +492,7 @@ The instructor's evaluation of 23 November and our point-by-point response are i
    tested by injecting anomalies into real summaries and sweeping the alert threshold. Week 12,
    owed, and week 14 depends on it.
 2. Compressed detector timing, 8-bit instead of 32-bit weights, to finish research question 2.
+   On audio this is done and 8 bits lost 0.15 of macro-F1, so the audio side stays at 32 bits.
 3. Systems track. Delivery under emulated 2G and 4G links, SMS fallback latency, solar uptime for
    three kit sizes, and timing on a small computer such as a Raspberry Pi.
 4. Detector on all 12 clips, and fewer identity switches (tune the tracker, or use the fact that
