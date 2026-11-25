@@ -1,0 +1,9 @@
+Model,Runs,Grouped F1,Grouped AUC,Cross-lab F1,Cross-lab AUC,Random (leaky) F1,Random (leaky) AUC
+Call type only (HistGB),1,0.558,0.727,0.528,0.652,,
+"HistGB, 7 acoustic features",3 seeds,0.667,0.753,0.524,0.651,0.833,0.929
+"EfficientNet-B0, log-mel",3 seeds (random CV: 1),0.741,0.855,0.528,0.69,0.817,0.897
+"EfficientNet-Lite0, log-mel",1,0.694,0.83,,,,
+"PANNs MobileNetV2, fine-tuned",1,0.66,0.786,0.494,0.568,0.771,0.866
+"PANNs Cnn14, fine-tuned",1,0.661,0.789,,,,
+"PANNs MobileNetV2, frozen + LogReg",1,0.686,0.777,0.502,0.64,0.801,0.905
+"PANNs Cnn14, frozen + LogReg",1,0.638,0.716,0.507,0.602,0.744,0.858
