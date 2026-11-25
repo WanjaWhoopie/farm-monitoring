@@ -1,0 +1,28 @@
+{
+  "model": "EfficientNet-B0 (timm efficientnet_b0), 1 input channel, 2 classes",
+  "output": "softmax over logits; index 1 = negative valence (distress), index 0 = positive",
+  "threshold": 0.5,
+  "input_shape": [
+    1,
+    1,
+    64,
+    101
+  ],
+  "preprocessing": {
+    "resample_hz": 32000,
+    "mono": true,
+    "volume": "divide by max absolute sample",
+    "length": "1.0 s; shorter calls zero-padded equally on both sides, longer calls centre-cropped",
+    "mel": {
+      "n_fft": 1024,
+      "hop_length": 320,
+      "n_mels": 64,
+      "fmin": 50,
+      "fmax": 16000,
+      "power": 2.0
+    },
+    "log": "librosa.power_to_db(ref=np.max, top_db=80)",
+    "scale": "(x + 40) / 40"
+  },
+  "trained_on": "6,150 Soundwel benchmark calls (all folds), seed 0"
+}

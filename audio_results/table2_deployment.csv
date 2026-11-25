@@ -1,0 +1,6 @@
+model,macro_f1,auc,size_MB,cpu_ms_1thread
+EfficientNet-B0 FP32,0.743,0.857,16.017,8.483
+EfficientNet-B0 INT8 (best setting),0.59,0.75,4.755,14.419
+EfficientNet-Lite0 FP32,0.687,0.827,13.523,7.929
+EfficientNet-Lite0 INT8 (MinMax),0.494,0.709,3.947,6.523
+EfficientNet-Lite0 INT8 (input stage FP32),0.578,0.674,3.953,6.354
