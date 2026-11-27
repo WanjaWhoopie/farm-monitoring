@@ -1,0 +1,97 @@
+audio,rule,z,false_alarms_per_day
+calibrated,movement,1.0,13.067
+calibrated,rest,1.0,12.45
+calibrated,call,1.0,10.933
+calibrated,combined,1.0,0.433
+calibrated,count,1.0,1.7
+calibrated,feeding,1.0,0.6
+calibrated,movement,1.5,4.183
+calibrated,rest,1.5,3.8
+calibrated,call,1.5,3.517
+calibrated,combined,1.5,0.067
+calibrated,count,1.5,0.2
+calibrated,feeding,1.5,0.05
+calibrated,movement,2.0,0.433
+calibrated,rest,2.0,0.817
+calibrated,call,2.0,1.15
+calibrated,combined,2.0,0.0
+calibrated,count,2.0,0.017
+calibrated,feeding,2.0,0.0
+calibrated,movement,2.5,0.1
+calibrated,rest,2.5,0.233
+calibrated,call,2.5,0.25
+calibrated,combined,2.5,0.0
+calibrated,count,2.5,0.0
+calibrated,feeding,2.5,0.0
+calibrated,movement,3.0,0.017
+calibrated,rest,3.0,0.067
+calibrated,call,3.0,0.033
+calibrated,combined,3.0,0.0
+calibrated,count,3.0,0.0
+calibrated,feeding,3.0,0.0
+calibrated,movement,3.5,0.0
+calibrated,rest,3.5,0.05
+calibrated,call,3.5,0.0
+calibrated,combined,3.5,0.0
+calibrated,count,3.5,0.0
+calibrated,feeding,3.5,0.0
+calibrated,movement,4.0,0.0
+calibrated,rest,4.0,0.05
+calibrated,call,4.0,0.0
+calibrated,combined,4.0,0.0
+calibrated,count,4.0,0.0
+calibrated,feeding,4.0,0.0
+calibrated,movement,5.0,0.0
+calibrated,rest,5.0,0.0
+calibrated,call,5.0,0.0
+calibrated,combined,5.0,0.0
+calibrated,count,5.0,0.0
+calibrated,feeding,5.0,0.0
+new farm,movement,1.0,13.067
+new farm,rest,1.0,12.45
+new farm,call,1.0,9.933
+new farm,combined,1.0,0.367
+new farm,count,1.0,1.7
+new farm,feeding,1.0,0.6
+new farm,movement,1.5,4.183
+new farm,rest,1.5,3.8
+new farm,call,1.5,2.883
+new farm,combined,1.5,0.017
+new farm,count,1.5,0.2
+new farm,feeding,1.5,0.05
+new farm,movement,2.0,0.433
+new farm,rest,2.0,0.817
+new farm,call,2.0,0.717
+new farm,combined,2.0,0.0
+new farm,count,2.0,0.017
+new farm,feeding,2.0,0.0
+new farm,movement,2.5,0.1
+new farm,rest,2.5,0.233
+new farm,call,2.5,0.067
+new farm,combined,2.5,0.0
+new farm,count,2.5,0.0
+new farm,feeding,2.5,0.0
+new farm,movement,3.0,0.017
+new farm,rest,3.0,0.067
+new farm,call,3.0,0.0
+new farm,combined,3.0,0.0
+new farm,count,3.0,0.0
+new farm,feeding,3.0,0.0
+new farm,movement,3.5,0.0
+new farm,rest,3.5,0.05
+new farm,call,3.5,0.0
+new farm,combined,3.5,0.0
+new farm,count,3.5,0.0
+new farm,feeding,3.5,0.0
+new farm,movement,4.0,0.0
+new farm,rest,4.0,0.05
+new farm,call,4.0,0.0
+new farm,combined,4.0,0.0
+new farm,count,4.0,0.0
+new farm,feeding,4.0,0.0
+new farm,movement,5.0,0.0
+new farm,rest,5.0,0.0
+new farm,call,5.0,0.0
+new farm,combined,5.0,0.0
+new farm,count,5.0,0.0
+new farm,feeding,5.0,0.0

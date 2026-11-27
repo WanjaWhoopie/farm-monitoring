@@ -15,7 +15,7 @@ The proposal asks three questions:
 This README is the map of the repo. Each section says what was done, what came out, and where
 the files are. If you only read one part, read the next section.
 
-## Where we are (25 November 2026)
+## Where we are (28 November 2026)
 
 | Piece | What it shows | Key number | Files |
 | --- | --- | --- | --- |
@@ -24,11 +24,13 @@ the files are. If you only read one part, read the next section.
 | Activity budgets | Share of time per behaviour from the model's predictions versus the human labels. | pen-level error 9.2 points, no-model copy 11.9 | `scripts/activity_budget.py`, `reports/activity_budget_2026-11-16/` |
 | Label gate audit | Checking by eye that the interpolated rows we keep are right. | 68 of 72 boxes correct, none wrong | `scripts/audit_gate.py`, `reports/gate_audit_2026-11-18*/` |
 | Frame-rate ablation | The box model at 6, 2, 1 and 0.5 boxes per second. | 2 per second is best, 0.5 per second loses only 0.03 | `scripts/fps_ablation.py`, `reports/fps_ablation_2026-11-18/` |
-| Detector and tracker | YOLO11n finds pigs, ByteTrack follows them. Trained on seven clips from five days, validated on 11 November, tested on the untouched 2 December clips. | test precision 0.98 to 0.99, 8 to 18 identity switches per five minutes, 69 ms per frame on CPU | `scripts/detector_*.py`, `reports/detector_2026-11-23/` |
+| Detector and tracker | YOLO11n finds pigs, ByteTrack follows them. Trained on seven clips from five days, validated on 11 November, tested on the untouched 2 December clips. | test precision 0.98 to 0.99, 8 to 18 identity switches per five minutes, 69 ms per frame on CPU (37 ms as ONNX) | `scripts/detector_*.py`, `reports/detector_2026-11-23/` |
 | Ablation on predicted boxes | The frame-rate ablation again, on the detector's boxes. | behaviour score within 0.02 across rates | `scripts/fps_ablation_tracks.py`, `reports/fps_ablation_tracks_2026-11-23/` |
 | Mislabelled clip found | Clip 2019_11_11/000016's annotations do not match its video. | detector precision 0.13 on it, 0.97 to 1.00 everywhere else | `reports/detector_2026-11-23/excluded_mislabelled_clip/` |
 | Event summary and bytes per day | The record a pen monitor sends, and what it costs to send. | 24 bytes per record, 6.9 kB per day, 50 SMS | `scripts/event_summary.py`, `reports/deployability_2026-11-19/` |
 | Reproducibility | The v2 notebook re-run on a fresh machine. | every table identical | `reports/v2_molab_2026-11-18_rerun/` |
+| Fusion rules and threshold sweep | Six hand-written rules on the event record, injected anomalies on simulated days, the alert threshold swept under two audio accuracies. | combined rule catches every sick pen at 0.4 false alarms a day, count rule within 5 minutes, none fire on the real windows | `scripts/fusion_rules.py`, `reports/fusion_rules_2026-11-28/` |
+| Handover package | The detector as ONNX, the event record spec and the rules file, for Edge Impulse profiling and the web dashboard. | ONNX detector 10.6 MB, mAP50 0.994, 37 ms per frame on a laptop CPU | `deploy/` |
 | Audio branch | Call valence models on Soundwel, scored under three splits, three seeds. Final model EfficientNet-B0, exported to ONNX and tested at 8 bits. | macro-F1 0.74 by session, 0.53 on a new team, 8.5 ms per call on one CPU thread, 8-bit loses 0.15 | `Experiments/pigwatch-audio.ipynb`, `audio_models/final_model/`, `audio_results/` |
 
 The one-line story so far. On video, nine numbers from the box track beat an image network, the
@@ -36,7 +38,9 @@ model gives useful pen-level activity budgets on days it has never seen, the det
 on new days but loses their identities, and half a box per second is enough. On audio, the models
 work within the recording teams they were trained on and drop to near chance on a new team.
 Shrinking the audio model to 8-bit weights costs too much accuracy to be worth it. On the systems
-side, one summary per pen every five minutes fits in a few SMS messages a day.
+side, one summary per pen every five minutes fits in a few SMS messages a day, and hand-written
+rules on that summary catch injected anomalies with under one false alarm a day, with the combined
+vision-and-audio rule working at a lower threshold than either signal alone.
 
 ## How to run things
 
@@ -65,6 +69,7 @@ Data is not in the repo. The scripts expect:
 | `python scripts/detector_eval.py --tracks reports/detector_<date>` | no | 1 min | detection, tracking and behaviour scores on predicted boxes |
 | `python scripts/fps_ablation_tracks.py --tracks reports/detector_<date>` | no | 5 min | the frame-rate ablation on predicted boxes |
 | `python scripts/event_summary.py` | no | seconds | example record, bytes-per-day table and figure |
+| `python scripts/fusion_rules.py` | no | 3 min | the six rules, sweep tables, operating points, figure, `reports/fusion_rules_<date>/` |
 
 The v2 notebook runs on molab or any marimo server with a GPU. Open
 `Experiments/notebook_v2_marimo.py`, put your Kaggle username and key in a file called
@@ -167,6 +172,7 @@ scripts/
   detector_eval.py                    scores predicted boxes and tracks, and the behaviour model on them
   fps_ablation_tracks.py              the frame-rate ablation on the predicted track
   event_summary.py                    the per-window event record and bytes per day
+  fusion_rules.py                     the six fusion rules, injected anomalies and the threshold sweep
 Experiments/
   notebook_v1_kadima.ipynb            v1 (Kaggle): image network on a cut-out of each pig, one fixed test day
   notebook_v2_improved.ipynb          v2 (Jupyter draft)
@@ -188,6 +194,11 @@ reports/
   fps_ablation_tracks_2026-11-18/     frame-rate ablation on the one-clip detector's boxes
   fps_ablation_tracks_2026-11-23/     frame-rate ablation on the six-day detector's boxes
   deployability_2026-11-19/           example event record, bytes-per-day table and figure
+  fusion_rules_2026-11-28/            sweep tables, operating points, an example sick-pen day, figure
+deploy/                               the handover package (see Handover below)
+  detector/pig_yolo11n_640.onnx       the six-day detector as ONNX, with config.json beside it
+  event_record.md                     the event record, field by field, JSON and 24-byte binary
+  rules.json                          the six rules, their thresholds and the severity levels
 audio_models/
   final_model/                        the final audio model (Paul): EfficientNet-B0 weights, ONNX export, preprocessing config
   MobileNetV2.pth                     the PANNs MobileNetV2 weights used for the comparison
@@ -315,7 +326,9 @@ Detection on the 1,200 validation frames gives mAP50 0.995 and precision and rec
 Training took 53 minutes on a laptop GPU and stopped itself at epoch 21 (best epoch 11). One frame
 takes about 20 ms on the GPU and 69 ms on the CPU on an idle machine (best of three repeats), so a
 laptop CPU alone manages about 14 frames per second, far more than the 2 per second the pipeline
-needs. The Raspberry Pi number is still to be measured.
+needs. The same model exported to ONNX runs at 37 ms per frame on the CPU with onnxruntime. There
+will be no Raspberry Pi number, since the board was not available, so an Edge Impulse profile
+stands in for it (see Handover).
 
 ByteTrack then follows each box from frame to frame and gives it a track id. The table scores each
 clip on the 2-per-second grid. Predicted boxes are matched one to one to human boxes (overlap at
@@ -466,6 +479,85 @@ real files. Raw video needs a link busy for 170 days to send one day. The box st
 fast link. The event summary fits in a handful of SMS messages a day with no data link at all. That
 is the case for running the models on the farm.
 
+## Fusion rules on the event record
+
+No public dataset has video and audio of the same pigs, so fusion cannot be learned from data and
+cannot be tested on real paired recordings. What we can do is write the rules by hand on the event
+record, build a normal daily rhythm around our real windows, inject anomalies into simulated days
+and sweep the alert threshold. `scripts/fusion_rules.py` does that. Results are in
+`reports/fusion_rules_2026-11-28/` and the figure is `fusion_sweep_figure.png` there.
+
+How it works, step by step.
+
+1. Real windows. The six-day detector's tracks and the behaviour model's predicted budgets give
+   11 real event records, one per clip, with the mislabelled clip left out. They are daytime only.
+2. A daily rhythm. Simulated days of 288 windows. Each window is a real record bent to a smooth
+   day and night rest curve (rest share 0.85 at 2 am, 0.45 at 2 pm) with noise, a feeding peak at
+   7 am and 4 pm, a call-rate curve, and a valence detector with the balanced accuracy of Paul's
+   final model. That is 0.76 when calibrated on the farm (grouped cross-validation) and 0.61 on
+   a new farm (leave-one-team-out). Every assumption is listed in `run_info.json`.
+3. A baseline band. Median and robust spread per field and hour of day over seven normal days,
+   the normal rhythm a pen monitor would learn in its first week. Every field is then a z-score
+   against its band.
+4. Six rules, each with persistence (the condition must hold in 2 of the last 3 windows) and a
+   quality gate (when fewer than four pigs are seen only the count rule may fire).
+
+| Rule | Fires when | Modality |
+| --- | --- | --- |
+| movement | active share (investigating, eat, walk, drink) below its band | vision |
+| rest | sleep plus lying above its band | vision |
+| call | share of negative calls above its band, with at least 5 calls in the window | audio |
+| combined | movement and call in the same window | both |
+| count | pigs seen below its band | vision |
+| feeding | eat share below its band during a feeding hour | vision |
+
+Three severity levels sit on top. Watch is any one of movement, rest, feeding or call. Alert is
+the combined rule, or one vision rule sustained for 30 minutes. Urgent is the count rule. Alerts
+and urgents are sent at once, watches go in the daily summary. Audio alone can raise a watch or
+promote a vision watch to an alert, never raise an alert by itself. That turns the 0.53 held-out
+audio score into a design rule.
+
+5. Injected anomalies and the sweep. Nine anomaly types on test days. Lethargy, distress and a
+   sick pen (both together), each sudden and as a three-hour ramp, plus a missing pig, a camera
+   fault and a feeder failure. Onset at a random time between 6 am and 6 pm. For each rule and
+   each threshold z from 1 to 5 the script records the detection rate on the anomalies that rule
+   is meant to catch, the median lag to the first alert, and false-alarm episodes per normal day
+   (60 normal days, 40 days per anomaly type, seed 42).
+
+The operating point of a rule is the smallest z that gives at most one false alarm per day.
+
+| Rule | z | False alarms per day | Detection rate | Median lag |
+| --- | --- | --- | --- | --- |
+| movement | 2.0 | 0.43 | 0.99 | 56 min |
+| rest | 2.0 | 0.82 | 0.98 | 51 min |
+| call, calibrated audio | 2.5 | 0.25 | 1.00 | 84 min |
+| call, new-farm audio | 2.0 | 0.72 | 0.60 | 145 min |
+| combined | 1.0 | 0.43 | 1.00 | 50 min |
+| count | 1.5 | 0.20 | 1.00 | 5 min |
+| feeding | 1.0 | 0.60 | 0.78 | 235 min |
+
+What the sweep says.
+
+- The combined rule runs at a much lower threshold than either of its parts (z 1 against 2 to
+  2.5) for the same false-alarm rate, and still catches every sick pen. That is the one place
+  where fusion changes the answer, and it holds with new-farm audio too.
+- Audio on its own is the weakest signal. With new-farm accuracy the call rule misses 40 percent
+  of distress days and takes two and a half hours. Calibrated on the farm it catches all of them
+  in under an hour and a half.
+- The count rule is the fastest and cleanest. A missing pig or a dead camera shows within one
+  window.
+- The feeding rule only sees a failure at the next feeding time, which is the four-hour lag, and
+  it misses the days where the onset falls after the last feed.
+- Rest and movement catch the same events, and rest raises more false alarms. One of them is
+  enough.
+- At the operating thresholds none of the six rules fires on any of the 11 real windows.
+
+Limits, stated plainly. The daily rhythm, the call rate, the feeding peak and the anomaly shapes
+are assumptions, not measurements. Eleven real windows are too few to learn a baseline from, so
+the simulation supplies it. The numbers above show the shape of the trade-off between catching
+anomalies and false alarms, and which rules need which modality. They are not a measured
+detection rate on a farm, and the paper says so.
+
 ## Reproducibility
 
 `Experiments/notebook_v2_marimo.py` fixes every source of randomness from one seed (42). Each run
@@ -483,20 +575,56 @@ held out, lands in the same place (macro-F1 0.28 versus our 0.31 on the same row
 versus 9.3 points, both against 12.2 for no model). It is on the branch
 `report/behaviour-experiments-2026-11-20` and will be merged after review.
 
+## Handover: Edge Impulse and the web dashboard
+
+The department could not supply a Raspberry Pi (email of 23 November 2026). The edge profiling
+moves to Edge Impulse, and anything that needed the board goes in the paper as a limitation. The
+`deploy/` folder holds what the two people building on this work need. Nothing in it needs the
+videos, the training data or a GPU.
+
+For the Edge Impulse profile (model size, memory and expected latency on a target).
+
+- Detector. `deploy/detector/pig_yolo11n_640.onnx`, 10.6 MB, with `config.json` beside it
+  giving the input shape, the preprocessing, the output layout and the accuracy it reproduces
+  (mAP50 0.994, the same as the PyTorch weights). Upload it through "Bring your own model", pick
+  a Linux target such as Raspberry Pi 4 or 5, and record the estimated latency and RAM. Try the
+  INT8 option there as well, since the detector's 8-bit accuracy is the one number we could not
+  measure ourselves.
+- Audio model. `audio_models/final_model/effnet_b0_valence_fp32.onnx`, 16 MB, with its
+  preprocessing in the `config.json` next to it. Input 1 x 1 x 64 x 101, output two softmax
+  scores. Profile the 32-bit file only. Our own INT8 test lost 0.15 of macro-F1 (see Audio
+  branch).
+- What to write down from each profile. Target, RAM, flash, estimated ms per inference, and
+  whether INT8 was offered. Those numbers replace the laptop timings in this README and go in the
+  paper's deployability table.
+
+For the web dashboard.
+
+- The device sends one event record per pen per five minutes and nothing else. Its fields, the
+  24-byte binary form for SMS and what to draw are in `deploy/event_record.md`. Real example
+  records are in `reports/deployability_2026-11-19/summaries_all_clips.jsonl`.
+- The rules the device applies and their thresholds are in `deploy/rules.json`. The dashboard
+  does not run the rules. It shows the flags and the severity the device sends, and the file says
+  what each flag means.
+- `pip install pandas` is enough to read the examples.
+
+Untested on hardware, to be listed as limitations in the paper. Detector INT8 accuracy and speed,
+latency and power on a single-board computer, solar uptime for the three kit sizes, and SMS
+delivery latency on a real network.
+
 ## What is next
 
 The instructor's evaluation of 23 November and our point-by-point response are in
 `reports/instructor_feedback_response_2026-11-23.md`. The items below reflect it.
 
-1. Fusion rules on the event summary, for example less movement together with more negative calls,
-   tested by injecting anomalies into real summaries and sweeping the alert threshold. Week 12,
-   owed, and week 14 depends on it.
-2. Compressed detector timing, 8-bit instead of 32-bit weights, to finish research question 2.
-   On audio this is done and 8 bits lost 0.15 of macro-F1, so the audio side stays at 32 bits.
-3. Systems track. Delivery under emulated 2G and 4G links, SMS fallback latency, solar uptime for
-   three kit sizes, and timing on a small computer such as a Raspberry Pi.
-4. Detector on all 12 clips, and fewer identity switches (tune the tracker, or use the fact that
-   the pen always holds eight pigs).
-5. Agree one evaluation protocol for the paper. The six-day protocol with 2 December held out is
-   the stricter one.
-6. Final presentation on 7 or 9 December, paper on 14 December.
+1. Decide which fusion rules go in the paper table. Four (movement, call, combined, count) or all
+   six. The script evaluates all six either way.
+2. Edge Impulse profiles for both ONNX models (see Handover). These replace the Raspberry Pi
+   measurements and give the detector's 8-bit numbers.
+3. Systems track on the laptop. Delivery under emulated 2G and 4G links, SMS fallback latency,
+   solar uptime for three kit sizes.
+4. Fewer identity switches (tune the tracker, or use the fact that the pen always holds eight
+   pigs).
+5. Tell the group about the mislabelled clip 2019_11_11/000016, which affects any result that
+   pairs its pixels with its labels.
+6. Figures frozen 4 December, final presentation on 7 or 9 December, paper on 14 December.

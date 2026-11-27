@@ -1,0 +1,161 @@
+audio,z,day,windows_level_0,windows_level_1,windows_level_2,windows_level_3
+calibrated,1.0,normal,229.6,54.2,1.5,2.8
+calibrated,1.0,lethargy_sudden,15.5,16.9,106.2,1.6
+calibrated,1.0,lethargy_gradual,26.1,20.2,102.4,1.3
+calibrated,1.0,distress_sudden,13.7,110.0,9.5,1.1
+calibrated,1.0,distress_gradual,25.3,105.8,7.3,1.6
+calibrated,1.0,sick_pen_sudden,4.6,16.4,111.6,1.9
+calibrated,1.0,sick_pen_gradual,13.2,26.4,95.5,1.1
+calibrated,1.0,missing_pig,0.6,0.2,0.0,157.4
+calibrated,1.0,camera_fault,0.9,0.1,0.0,147.6
+calibrated,1.0,feeder_failure,101.2,26.2,8.1,1.4
+calibrated,1.5,normal,271.0,16.6,0.2,0.3
+calibrated,1.5,lethargy_sudden,37.1,20.9,82.0,0.1
+calibrated,1.5,lethargy_gradual,52.3,25.0,72.8,0.1
+calibrated,1.5,distress_sudden,35.7,96.8,1.7,0.0
+calibrated,1.5,distress_gradual,52.6,86.5,0.9,0.1
+calibrated,1.5,sick_pen_sudden,19.5,26.6,88.2,0.2
+calibrated,1.5,sick_pen_gradual,32.8,34.6,68.8,0.1
+calibrated,1.5,missing_pig,0.9,0.1,0.0,157.3
+calibrated,1.5,camera_fault,1.0,0.0,0.0,147.5
+calibrated,1.5,feeder_failure,118.5,11.7,6.6,0.0
+calibrated,2.0,normal,284.5,3.5,0.0,0.0
+calibrated,2.0,lethargy_sudden,61.8,22.1,56.3,0.0
+calibrated,2.0,lethargy_gradual,80.3,19.6,50.1,0.0
+calibrated,2.0,distress_sudden,67.4,66.8,0.1,0.0
+calibrated,2.0,distress_gradual,83.7,56.4,0.0,0.0
+calibrated,2.0,sick_pen_sudden,41.0,33.1,60.4,0.0
+calibrated,2.0,sick_pen_gradual,60.1,35.3,40.8,0.0
+calibrated,2.0,missing_pig,1.0,0.0,0.0,157.3
+calibrated,2.0,camera_fault,1.0,0.0,0.0,147.5
+calibrated,2.0,feeder_failure,125.0,5.9,5.9,0.0
+calibrated,2.5,normal,287.2,0.8,0.0,0.0
+calibrated,2.5,lethargy_sudden,83.9,21.6,34.7,0.0
+calibrated,2.5,lethargy_gradual,102.2,16.0,31.8,0.0
+calibrated,2.5,distress_sudden,99.2,35.0,0.1,0.0
+calibrated,2.5,distress_gradual,115.0,25.1,0.0,0.0
+calibrated,2.5,sick_pen_sudden,66.4,30.5,37.6,0.0
+calibrated,2.5,sick_pen_gradual,86.9,24.9,24.4,0.0
+calibrated,2.5,missing_pig,1.0,0.0,0.0,157.3
+calibrated,2.5,camera_fault,1.0,0.0,0.0,147.5
+calibrated,2.5,feeder_failure,126.5,4.8,5.4,0.0
+calibrated,3.0,normal,287.8,0.2,0.0,0.0
+calibrated,3.0,lethargy_sudden,103.2,16.1,20.9,0.0
+calibrated,3.0,lethargy_gradual,118.6,12.9,18.5,0.0
+calibrated,3.0,distress_sudden,121.8,12.4,0.0,0.0
+calibrated,3.0,distress_gradual,132.3,7.8,0.0,0.0
+calibrated,3.0,sick_pen_sudden,92.8,19.4,22.4,0.0
+calibrated,3.0,sick_pen_gradual,108.3,14.6,13.2,0.0
+calibrated,3.0,missing_pig,1.0,0.0,0.0,157.3
+calibrated,3.0,camera_fault,1.0,0.0,0.0,147.5
+calibrated,3.0,feeder_failure,127.5,5.0,4.3,0.0
+calibrated,3.5,normal,287.9,0.1,0.0,0.0
+calibrated,3.5,lethargy_sudden,118.3,13.1,8.8,0.0
+calibrated,3.5,lethargy_gradual,131.3,11.0,7.7,0.0
+calibrated,3.5,distress_sudden,130.8,3.5,0.0,0.0
+calibrated,3.5,distress_gradual,138.3,1.8,0.0,0.0
+calibrated,3.5,sick_pen_sudden,110.4,14.9,9.3,0.0
+calibrated,3.5,sick_pen_gradual,122.2,9.0,5.0,0.0
+calibrated,3.5,missing_pig,1.0,0.0,0.0,157.3
+calibrated,3.5,camera_fault,1.0,0.0,0.0,147.5
+calibrated,3.5,feeder_failure,128.2,5.2,3.4,0.0
+calibrated,4.0,normal,287.9,0.1,0.0,0.0
+calibrated,4.0,lethargy_sudden,130.8,7.9,1.4,0.0
+calibrated,4.0,lethargy_gradual,142.5,6.6,0.9,0.0
+calibrated,4.0,distress_sudden,133.6,0.7,0.0,0.0
+calibrated,4.0,distress_gradual,139.8,0.2,0.0,0.0
+calibrated,4.0,sick_pen_sudden,124.9,8.1,1.6,0.0
+calibrated,4.0,sick_pen_gradual,130.4,5.1,0.7,0.0
+calibrated,4.0,missing_pig,108.5,0.0,0.0,49.7
+calibrated,4.0,camera_fault,1.0,0.0,0.0,147.5
+calibrated,4.0,feeder_failure,129.4,5.0,2.4,0.0
+calibrated,5.0,normal,288.0,0.0,0.0,0.0
+calibrated,5.0,lethargy_sudden,139.9,0.3,0.0,0.0
+calibrated,5.0,lethargy_gradual,149.8,0.3,0.0,0.0
+calibrated,5.0,distress_sudden,134.3,0.0,0.0,0.0
+calibrated,5.0,distress_gradual,140.1,0.0,0.0,0.0
+calibrated,5.0,sick_pen_sudden,134.2,0.3,0.0,0.0
+calibrated,5.0,sick_pen_gradual,136.1,0.1,0.0,0.0
+calibrated,5.0,missing_pig,156.4,0.0,0.0,1.9
+calibrated,5.0,camera_fault,1.0,0.0,0.0,147.5
+calibrated,5.0,feeder_failure,135.7,0.7,0.4,0.0
+new farm,1.0,normal,231.3,52.5,1.3,2.8
+new farm,1.0,lethargy_sudden,16.7,15.6,106.2,1.6
+new farm,1.0,lethargy_gradual,27.1,19.0,102.7,1.3
+new farm,1.0,distress_sudden,80.8,49.9,2.5,1.1
+new farm,1.0,distress_gradual,89.3,47.6,1.6,1.6
+new farm,1.0,sick_pen_sudden,12.0,15.1,105.5,1.9
+new farm,1.0,sick_pen_gradual,23.3,21.1,90.7,1.1
+new farm,1.0,missing_pig,0.7,0.2,0.0,157.4
+new farm,1.0,camera_fault,0.9,0.0,0.0,147.6
+new farm,1.0,feeder_failure,102.5,25.0,8.0,1.4
+new farm,1.5,normal,272.2,15.4,0.1,0.3
+new farm,1.5,lethargy_sudden,37.9,20.1,82.0,0.1
+new farm,1.5,lethargy_gradual,52.6,24.6,72.8,0.1
+new farm,1.5,distress_sudden,116.4,17.7,0.1,0.0
+new farm,1.5,distress_gradual,126.1,13.8,0.0,0.1
+new farm,1.5,sick_pen_sudden,35.0,20.9,78.5,0.2
+new farm,1.5,sick_pen_gradual,50.1,24.4,61.6,0.1
+new farm,1.5,missing_pig,0.9,0.1,0.0,157.3
+new farm,1.5,camera_fault,1.0,0.0,0.0,147.5
+new farm,1.5,feeder_failure,119.6,10.6,6.5,0.0
+new farm,2.0,normal,285.2,2.8,0.0,0.0
+new farm,2.0,lethargy_sudden,62.1,21.7,56.4,0.0
+new farm,2.0,lethargy_gradual,80.6,19.2,50.2,0.0
+new farm,2.0,distress_sudden,130.6,3.7,0.0,0.0
+new farm,2.0,distress_gradual,137.3,2.8,0.0,0.0
+new farm,2.0,sick_pen_sudden,61.0,20.8,52.8,0.0
+new farm,2.0,sick_pen_gradual,79.8,20.1,36.4,0.0
+new farm,2.0,missing_pig,1.0,0.0,0.0,157.3
+new farm,2.0,camera_fault,1.0,0.0,0.0,147.5
+new farm,2.0,feeder_failure,125.3,5.5,5.9,0.0
+new farm,2.5,normal,287.5,0.5,0.0,0.0
+new farm,2.5,lethargy_sudden,83.9,21.6,34.7,0.0
+new farm,2.5,lethargy_gradual,102.4,15.9,31.8,0.0
+new farm,2.5,distress_sudden,133.7,0.6,0.0,0.0
+new farm,2.5,distress_gradual,139.5,0.6,0.0,0.0
+new farm,2.5,sick_pen_sudden,82.8,18.4,33.4,0.0
+new farm,2.5,sick_pen_gradual,98.8,14.4,23.0,0.0
+new farm,2.5,missing_pig,1.0,0.0,0.0,157.3
+new farm,2.5,camera_fault,1.0,0.0,0.0,147.5
+new farm,2.5,feeder_failure,126.6,4.8,5.4,0.0
+new farm,3.0,normal,287.9,0.1,0.0,0.0
+new farm,3.0,lethargy_sudden,103.2,16.1,20.9,0.0
+new farm,3.0,lethargy_gradual,118.6,12.9,18.5,0.0
+new farm,3.0,distress_sudden,134.2,0.1,0.0,0.0
+new farm,3.0,distress_gradual,140.1,0.0,0.0,0.0
+new farm,3.0,sick_pen_sudden,100.1,13.2,21.2,0.0
+new farm,3.0,sick_pen_gradual,113.5,10.0,12.7,0.0
+new farm,3.0,missing_pig,1.0,0.0,0.0,157.3
+new farm,3.0,camera_fault,1.0,0.0,0.0,147.5
+new farm,3.0,feeder_failure,127.5,5.0,4.3,0.0
+new farm,3.5,normal,287.9,0.1,0.0,0.0
+new farm,3.5,lethargy_sudden,118.3,13.1,8.8,0.0
+new farm,3.5,lethargy_gradual,131.3,11.0,7.7,0.0
+new farm,3.5,distress_sudden,134.2,0.1,0.0,0.0
+new farm,3.5,distress_gradual,140.1,0.0,0.0,0.0
+new farm,3.5,sick_pen_sudden,113.5,12.2,8.8,0.0
+new farm,3.5,sick_pen_gradual,123.4,7.8,5.0,0.0
+new farm,3.5,missing_pig,1.0,0.0,0.0,157.3
+new farm,3.5,camera_fault,1.0,0.0,0.0,147.5
+new farm,3.5,feeder_failure,128.2,5.2,3.4,0.0
+new farm,4.0,normal,287.9,0.1,0.0,0.0
+new farm,4.0,lethargy_sudden,130.8,7.9,1.4,0.0
+new farm,4.0,lethargy_gradual,142.5,6.6,0.9,0.0
+new farm,4.0,distress_sudden,134.3,0.0,0.0,0.0
+new farm,4.0,distress_gradual,140.1,0.0,0.0,0.0
+new farm,4.0,sick_pen_sudden,125.7,7.2,1.6,0.0
+new farm,4.0,sick_pen_gradual,130.8,4.7,0.7,0.0
+new farm,4.0,missing_pig,108.5,0.0,0.0,49.7
+new farm,4.0,camera_fault,1.0,0.0,0.0,147.5
+new farm,4.0,feeder_failure,129.4,5.0,2.4,0.0
+new farm,5.0,normal,288.0,0.0,0.0,0.0
+new farm,5.0,lethargy_sudden,139.9,0.3,0.0,0.0
+new farm,5.0,lethargy_gradual,149.8,0.3,0.0,0.0
+new farm,5.0,distress_sudden,134.3,0.0,0.0,0.0
+new farm,5.0,distress_gradual,140.1,0.0,0.0,0.0
+new farm,5.0,sick_pen_sudden,134.2,0.3,0.0,0.0
+new farm,5.0,sick_pen_gradual,136.1,0.1,0.0,0.0
+new farm,5.0,missing_pig,156.4,0.0,0.0,1.9
+new farm,5.0,camera_fault,1.0,0.0,0.0,147.5
+new farm,5.0,feeder_failure,135.7,0.7,0.4,0.0

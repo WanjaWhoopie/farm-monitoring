@@ -1,0 +1,151 @@
+{
+  "what": "Decision rules a pen monitor applies to its own event records. Each field is z-scored against the pen's baseline (median and robust spread per hour of day, learned from the first 7 normal days). A rule fires when its condition holds in 2 of the last 3 windows.",
+  "source": "scripts/fusion_rules.py, thresholds from reports/fusion_rules_2026-11-28/operating_points.csv (largest threshold giving at most one false alarm per simulated day)",
+  "window_minutes": 5,
+  "baseline_days": 7,
+  "persistence": {
+    "k": 2,
+    "n": 3
+  },
+  "quality_gate": "if pigs_seen < 4, only the count rule may fire",
+  "feeding_hours": [
+    7,
+    16
+  ],
+  "rules": {
+    "movement": {
+      "field": "active_share",
+      "fields_summed": [
+        "investigating",
+        "eat",
+        "walk",
+        "drink"
+      ],
+      "direction": "below band",
+      "modality": "vision",
+      "z_threshold": {
+        "calibrated_audio": 2.0,
+        "new_farm_audio": 2.0
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.433,
+        "detection_rate": 0.988,
+        "median_lag_min": 56.25
+      },
+      "targets": [
+        "lethargy_sudden",
+        "lethargy_gradual",
+        "sick_pen_sudden",
+        "sick_pen_gradual"
+      ]
+    },
+    "rest": {
+      "field": "rest_share",
+      "fields_summed": [
+        "sleep",
+        "lying"
+      ],
+      "direction": "above band",
+      "modality": "vision",
+      "z_threshold": {
+        "calibrated_audio": 2.0,
+        "new_farm_audio": 2.0
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.817,
+        "detection_rate": 0.975,
+        "median_lag_min": 51.25
+      },
+      "targets": [
+        "lethargy_sudden",
+        "lethargy_gradual",
+        "sick_pen_sudden",
+        "sick_pen_gradual"
+      ]
+    },
+    "call": {
+      "field": "neg_valence",
+      "direction": "above band",
+      "modality": "audio",
+      "requires": "calls >= 5 in the window",
+      "z_threshold": {
+        "calibrated_audio": 2.5,
+        "new_farm_audio": 2.0
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.25,
+        "detection_rate": 1.0,
+        "median_lag_min": 83.75
+      },
+      "targets": [
+        "distress_sudden",
+        "distress_gradual",
+        "sick_pen_sudden",
+        "sick_pen_gradual"
+      ]
+    },
+    "combined": {
+      "field": "movement AND call in the same window",
+      "direction": "both",
+      "modality": "vision + audio",
+      "z_threshold": {
+        "calibrated_audio": 1.0,
+        "new_farm_audio": 1.0
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.433,
+        "detection_rate": 1.0,
+        "median_lag_min": 50.0
+      },
+      "targets": [
+        "sick_pen_sudden",
+        "sick_pen_gradual"
+      ]
+    },
+    "count": {
+      "field": "pigs_seen",
+      "direction": "below band",
+      "modality": "vision",
+      "note": "the only rule that still fires when fewer than 4 pigs are seen",
+      "z_threshold": {
+        "calibrated_audio": 1.5,
+        "new_farm_audio": 1.5
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.2,
+        "detection_rate": 1.0,
+        "median_lag_min": 5.0
+      },
+      "targets": [
+        "missing_pig",
+        "camera_fault"
+      ]
+    },
+    "feeding": {
+      "field": "eat",
+      "direction": "below band",
+      "modality": "vision",
+      "requires": "hour of day in feeding_hours",
+      "z_threshold": {
+        "calibrated_audio": 1.0,
+        "new_farm_audio": 1.0
+      },
+      "simulated_at_threshold": {
+        "false_alarms_per_day": 0.6,
+        "detection_rate": 0.775,
+        "median_lag_min": 235.0
+      },
+      "targets": [
+        "feeder_failure"
+      ]
+    }
+  },
+  "severity": {
+    "0": "normal",
+    "1": "watch: any one of movement, rest, feeding, call",
+    "2": "alert: combined, or one vision rule sustained for 6 windows (30 min)",
+    "3": "urgent: count",
+    "send": "levels 2 and 3 are sent at once (SMS fallback), level 1 goes in the daily summary",
+    "audio_alone": "audio can raise watch or promote a vision watch to alert, never raise an alert by itself, until calibrated with local labels"
+  }
+}

@@ -1,0 +1,865 @@
+audio,rule,z,anomaly,detection_rate,median_lag_min,n_days
+calibrated,movement,1.0,lethargy_sudden,1.0,5.0,40
+calibrated,rest,1.0,lethargy_sudden,1.0,5.0,40
+calibrated,call,1.0,lethargy_sudden,0.975,75.0,40
+calibrated,combined,1.0,lethargy_sudden,0.975,95.0,40
+calibrated,count,1.0,lethargy_sudden,0.75,390.0,40
+calibrated,feeding,1.0,lethargy_sudden,0.175,60.0,40
+calibrated,movement,1.0,lethargy_gradual,1.0,45.0,40
+calibrated,rest,1.0,lethargy_gradual,1.0,55.0,40
+calibrated,call,1.0,lethargy_gradual,1.0,47.5,40
+calibrated,combined,1.0,lethargy_gradual,1.0,147.5,40
+calibrated,count,1.0,lethargy_gradual,0.575,220.0,40
+calibrated,feeding,1.0,lethargy_gradual,0.15,290.0,40
+calibrated,movement,1.0,distress_sudden,1.0,45.0,40
+calibrated,rest,1.0,distress_sudden,1.0,75.0,40
+calibrated,call,1.0,distress_sudden,1.0,5.0,40
+calibrated,combined,1.0,distress_sudden,1.0,82.5,40
+calibrated,count,1.0,distress_sudden,0.5,287.5,40
+calibrated,feeding,1.0,distress_sudden,0.05,302.5,40
+calibrated,movement,1.0,distress_gradual,1.0,102.5,40
+calibrated,rest,1.0,distress_gradual,1.0,65.0,40
+calibrated,call,1.0,distress_gradual,1.0,30.0,40
+calibrated,combined,1.0,distress_gradual,0.95,195.0,40
+calibrated,count,1.0,distress_gradual,0.575,380.0,40
+calibrated,feeding,1.0,distress_gradual,0.1,397.5,40
+calibrated,movement,1.0,sick_pen_sudden,1.0,5.0,40
+calibrated,rest,1.0,sick_pen_sudden,1.0,5.0,40
+calibrated,call,1.0,sick_pen_sudden,1.0,5.0,40
+calibrated,combined,1.0,sick_pen_sudden,1.0,5.0,40
+calibrated,count,1.0,sick_pen_sudden,0.6,242.5,40
+calibrated,feeding,1.0,sick_pen_sudden,0.2,72.5,40
+calibrated,movement,1.0,sick_pen_gradual,1.0,25.0,40
+calibrated,rest,1.0,sick_pen_gradual,1.0,25.0,40
+calibrated,call,1.0,sick_pen_gradual,1.0,35.0,40
+calibrated,combined,1.0,sick_pen_gradual,1.0,95.0,40
+calibrated,count,1.0,sick_pen_gradual,0.575,445.0,40
+calibrated,feeding,1.0,sick_pen_gradual,0.2,175.0,40
+calibrated,movement,1.0,missing_pig,1.0,62.5,40
+calibrated,rest,1.0,missing_pig,1.0,72.5,40
+calibrated,call,1.0,missing_pig,1.0,55.0,40
+calibrated,combined,1.0,missing_pig,0.525,195.0,40
+calibrated,count,1.0,missing_pig,1.0,5.0,40
+calibrated,feeding,1.0,missing_pig,0.2,332.5,40
+calibrated,movement,1.0,camera_fault,0.025,0.0,40
+calibrated,rest,1.0,camera_fault,0.025,0.0,40
+calibrated,call,1.0,camera_fault,0.025,0.0,40
+calibrated,combined,1.0,camera_fault,0.0,,40
+calibrated,count,1.0,camera_fault,1.0,5.0,40
+calibrated,feeding,1.0,camera_fault,0.0,,40
+calibrated,movement,1.0,feeder_failure,1.0,60.0,40
+calibrated,rest,1.0,feeder_failure,1.0,65.0,40
+calibrated,call,1.0,feeder_failure,1.0,60.0,40
+calibrated,combined,1.0,feeder_failure,0.425,180.0,40
+calibrated,count,1.0,feeder_failure,0.525,240.0,40
+calibrated,feeding,1.0,feeder_failure,0.775,235.0,40
+calibrated,movement,1.5,lethargy_sudden,1.0,5.0,40
+calibrated,rest,1.5,lethargy_sudden,1.0,5.0,40
+calibrated,call,1.5,lethargy_sudden,0.825,195.0,40
+calibrated,combined,1.5,lethargy_sudden,0.65,177.5,40
+calibrated,count,1.5,lethargy_sudden,0.05,212.5,40
+calibrated,feeding,1.5,lethargy_sudden,0.025,35.0,40
+calibrated,movement,1.5,lethargy_gradual,1.0,80.0,40
+calibrated,rest,1.5,lethargy_gradual,1.0,72.5,40
+calibrated,call,1.5,lethargy_gradual,0.85,185.0,40
+calibrated,combined,1.5,lethargy_gradual,0.675,300.0,40
+calibrated,count,1.5,lethargy_gradual,0.05,85.0,40
+calibrated,feeding,1.5,lethargy_gradual,0.0,,40
+calibrated,movement,1.5,distress_sudden,0.8,175.0,40
+calibrated,rest,1.5,distress_sudden,0.85,107.5,40
+calibrated,call,1.5,distress_sudden,1.0,5.0,40
+calibrated,combined,1.5,distress_sudden,0.6,177.5,40
+calibrated,count,1.5,distress_sudden,0.025,245.0,40
+calibrated,feeding,1.5,distress_sudden,0.0,,40
+calibrated,movement,1.5,distress_gradual,0.875,295.0,40
+calibrated,rest,1.5,distress_gradual,0.875,235.0,40
+calibrated,call,1.5,distress_gradual,1.0,75.0,40
+calibrated,combined,1.5,distress_gradual,0.4,367.5,40
+calibrated,count,1.5,distress_gradual,0.1,160.0,40
+calibrated,feeding,1.5,distress_gradual,0.0,,40
+calibrated,movement,1.5,sick_pen_sudden,1.0,5.0,40
+calibrated,rest,1.5,sick_pen_sudden,1.0,5.0,40
+calibrated,call,1.5,sick_pen_sudden,1.0,5.0,40
+calibrated,combined,1.5,sick_pen_sudden,1.0,5.0,40
+calibrated,count,1.5,sick_pen_sudden,0.125,265.0,40
+calibrated,feeding,1.5,sick_pen_sudden,0.0,,40
+calibrated,movement,1.5,sick_pen_gradual,1.0,80.0,40
+calibrated,rest,1.5,sick_pen_gradual,1.0,75.0,40
+calibrated,call,1.5,sick_pen_gradual,1.0,62.5,40
+calibrated,combined,1.5,sick_pen_gradual,1.0,132.5,40
+calibrated,count,1.5,sick_pen_gradual,0.075,475.0,40
+calibrated,feeding,1.5,sick_pen_gradual,0.025,5.0,40
+calibrated,movement,1.5,missing_pig,0.875,180.0,40
+calibrated,rest,1.5,missing_pig,0.875,125.0,40
+calibrated,call,1.5,missing_pig,0.925,210.0,40
+calibrated,combined,1.5,missing_pig,0.075,280.0,40
+calibrated,count,1.5,missing_pig,1.0,5.0,40
+calibrated,feeding,1.5,missing_pig,0.025,5.0,40
+calibrated,movement,1.5,camera_fault,0.0,,40
+calibrated,rest,1.5,camera_fault,0.0,,40
+calibrated,call,1.5,camera_fault,0.0,,40
+calibrated,combined,1.5,camera_fault,0.0,,40
+calibrated,count,1.5,camera_fault,1.0,5.0,40
+calibrated,feeding,1.5,camera_fault,0.0,,40
+calibrated,movement,1.5,feeder_failure,0.975,125.0,40
+calibrated,rest,1.5,feeder_failure,0.95,142.5,40
+calibrated,call,1.5,feeder_failure,0.85,102.5,40
+calibrated,combined,1.5,feeder_failure,0.15,435.0,40
+calibrated,count,1.5,feeder_failure,0.025,650.0,40
+calibrated,feeding,1.5,feeder_failure,0.775,235.0,40
+calibrated,movement,2.0,lethargy_sudden,1.0,5.0,40
+calibrated,rest,2.0,lethargy_sudden,1.0,5.0,40
+calibrated,call,2.0,lethargy_sudden,0.45,405.0,40
+calibrated,combined,2.0,lethargy_sudden,0.125,195.0,40
+calibrated,count,2.0,lethargy_sudden,0.0,,40
+calibrated,feeding,2.0,lethargy_sudden,0.0,,40
+calibrated,movement,2.0,lethargy_gradual,1.0,110.0,40
+calibrated,rest,2.0,lethargy_gradual,1.0,117.5,40
+calibrated,call,2.0,lethargy_gradual,0.4,255.0,40
+calibrated,combined,2.0,lethargy_gradual,0.075,225.0,40
+calibrated,count,2.0,lethargy_gradual,0.0,,40
+calibrated,feeding,2.0,lethargy_gradual,0.0,,40
+calibrated,movement,2.0,distress_sudden,0.225,395.0,40
+calibrated,rest,2.0,distress_sudden,0.35,275.0,40
+calibrated,call,2.0,distress_sudden,1.0,10.0,40
+calibrated,combined,2.0,distress_sudden,0.05,435.0,40
+calibrated,count,2.0,distress_sudden,0.0,,40
+calibrated,feeding,2.0,distress_sudden,0.0,,40
+calibrated,movement,2.0,distress_gradual,0.3,282.5,40
+calibrated,rest,2.0,distress_gradual,0.475,280.0,40
+calibrated,call,2.0,distress_gradual,1.0,110.0,40
+calibrated,combined,2.0,distress_gradual,0.025,230.0,40
+calibrated,count,2.0,distress_gradual,0.0,,40
+calibrated,feeding,2.0,distress_gradual,0.0,,40
+calibrated,movement,2.0,sick_pen_sudden,1.0,5.0,40
+calibrated,rest,2.0,sick_pen_sudden,1.0,5.0,40
+calibrated,call,2.0,sick_pen_sudden,1.0,10.0,40
+calibrated,combined,2.0,sick_pen_sudden,1.0,15.0,40
+calibrated,count,2.0,sick_pen_sudden,0.025,200.0,40
+calibrated,feeding,2.0,sick_pen_sudden,0.0,,40
+calibrated,movement,2.0,sick_pen_gradual,0.95,107.5,40
+calibrated,rest,2.0,sick_pen_gradual,0.9,97.5,40
+calibrated,call,2.0,sick_pen_gradual,1.0,105.0,40
+calibrated,combined,2.0,sick_pen_gradual,0.875,170.0,40
+calibrated,count,2.0,sick_pen_gradual,0.0,,40
+calibrated,feeding,2.0,sick_pen_gradual,0.0,,40
+calibrated,movement,2.0,missing_pig,0.225,425.0,40
+calibrated,rest,2.0,missing_pig,0.3,110.0,40
+calibrated,call,2.0,missing_pig,0.65,320.0,40
+calibrated,combined,2.0,missing_pig,0.0,,40
+calibrated,count,2.0,missing_pig,1.0,5.0,40
+calibrated,feeding,2.0,missing_pig,0.0,,40
+calibrated,movement,2.0,camera_fault,0.0,,40
+calibrated,rest,2.0,camera_fault,0.0,,40
+calibrated,call,2.0,camera_fault,0.0,,40
+calibrated,combined,2.0,camera_fault,0.0,,40
+calibrated,count,2.0,camera_fault,1.0,5.0,40
+calibrated,feeding,2.0,camera_fault,0.0,,40
+calibrated,movement,2.0,feeder_failure,0.8,232.5,40
+calibrated,rest,2.0,feeder_failure,0.8,210.0,40
+calibrated,call,2.0,feeder_failure,0.375,320.0,40
+calibrated,combined,2.0,feeder_failure,0.075,510.0,40
+calibrated,count,2.0,feeder_failure,0.0,,40
+calibrated,feeding,2.0,feeder_failure,0.775,235.0,40
+calibrated,movement,2.5,lethargy_sudden,1.0,10.0,40
+calibrated,rest,2.5,lethargy_sudden,0.975,10.0,40
+calibrated,call,2.5,lethargy_sudden,0.075,540.0,40
+calibrated,combined,2.5,lethargy_sudden,0.025,195.0,40
+calibrated,count,2.5,lethargy_sudden,0.0,,40
+calibrated,feeding,2.5,lethargy_sudden,0.0,,40
+calibrated,movement,2.5,lethargy_gradual,0.925,150.0,40
+calibrated,rest,2.5,lethargy_gradual,0.925,145.0,40
+calibrated,call,2.5,lethargy_gradual,0.1,130.0,40
+calibrated,combined,2.5,lethargy_gradual,0.0,,40
+calibrated,count,2.5,lethargy_gradual,0.0,,40
+calibrated,feeding,2.5,lethargy_gradual,0.0,,40
+calibrated,movement,2.5,distress_sudden,0.075,450.0,40
+calibrated,rest,2.5,distress_sudden,0.075,240.0,40
+calibrated,call,2.5,distress_sudden,1.0,20.0,40
+calibrated,combined,2.5,distress_sudden,0.025,475.0,40
+calibrated,count,2.5,distress_sudden,0.0,,40
+calibrated,feeding,2.5,distress_sudden,0.0,,40
+calibrated,movement,2.5,distress_gradual,0.1,497.5,40
+calibrated,rest,2.5,distress_gradual,0.15,282.5,40
+calibrated,call,2.5,distress_gradual,1.0,147.5,40
+calibrated,combined,2.5,distress_gradual,0.0,,40
+calibrated,count,2.5,distress_gradual,0.0,,40
+calibrated,feeding,2.5,distress_gradual,0.0,,40
+calibrated,movement,2.5,sick_pen_sudden,1.0,5.0,40
+calibrated,rest,2.5,sick_pen_sudden,1.0,10.0,40
+calibrated,call,2.5,sick_pen_sudden,1.0,15.0,40
+calibrated,combined,2.5,sick_pen_sudden,0.975,55.0,40
+calibrated,count,2.5,sick_pen_sudden,0.0,,40
+calibrated,feeding,2.5,sick_pen_sudden,0.0,,40
+calibrated,movement,2.5,sick_pen_gradual,0.875,130.0,40
+calibrated,rest,2.5,sick_pen_gradual,0.85,125.0,40
+calibrated,call,2.5,sick_pen_gradual,1.0,147.5,40
+calibrated,combined,2.5,sick_pen_gradual,0.675,195.0,40
+calibrated,count,2.5,sick_pen_gradual,0.0,,40
+calibrated,feeding,2.5,sick_pen_gradual,0.0,,40
+calibrated,movement,2.5,missing_pig,0.025,765.0,40
+calibrated,rest,2.5,missing_pig,0.125,280.0,40
+calibrated,call,2.5,missing_pig,0.125,180.0,40
+calibrated,combined,2.5,missing_pig,0.0,,40
+calibrated,count,2.5,missing_pig,1.0,5.0,40
+calibrated,feeding,2.5,missing_pig,0.0,,40
+calibrated,movement,2.5,camera_fault,0.0,,40
+calibrated,rest,2.5,camera_fault,0.0,,40
+calibrated,call,2.5,camera_fault,0.0,,40
+calibrated,combined,2.5,camera_fault,0.0,,40
+calibrated,count,2.5,camera_fault,1.0,5.0,40
+calibrated,feeding,2.5,camera_fault,0.0,,40
+calibrated,movement,2.5,feeder_failure,0.775,235.0,40
+calibrated,rest,2.5,feeder_failure,0.725,260.0,40
+calibrated,call,2.5,feeder_failure,0.05,662.5,40
+calibrated,combined,2.5,feeder_failure,0.025,510.0,40
+calibrated,count,2.5,feeder_failure,0.0,,40
+calibrated,feeding,2.5,feeder_failure,0.775,235.0,40
+calibrated,movement,3.0,lethargy_sudden,1.0,32.5,40
+calibrated,rest,3.0,lethargy_sudden,0.9,22.5,40
+calibrated,call,3.0,lethargy_sudden,0.0,,40
+calibrated,combined,3.0,lethargy_sudden,0.0,,40
+calibrated,count,3.0,lethargy_sudden,0.0,,40
+calibrated,feeding,3.0,lethargy_sudden,0.0,,40
+calibrated,movement,3.0,lethargy_gradual,0.85,167.5,40
+calibrated,rest,3.0,lethargy_gradual,0.8,165.0,40
+calibrated,call,3.0,lethargy_gradual,0.0,,40
+calibrated,combined,3.0,lethargy_gradual,0.0,,40
+calibrated,count,3.0,lethargy_gradual,0.0,,40
+calibrated,feeding,3.0,lethargy_gradual,0.0,,40
+calibrated,movement,3.0,distress_sudden,0.025,395.0,40
+calibrated,rest,3.0,distress_sudden,0.025,450.0,40
+calibrated,call,3.0,distress_sudden,0.95,65.0,40
+calibrated,combined,3.0,distress_sudden,0.0,,40
+calibrated,count,3.0,distress_sudden,0.0,,40
+calibrated,feeding,3.0,distress_sudden,0.0,,40
+calibrated,movement,3.0,distress_gradual,0.0,,40
+calibrated,rest,3.0,distress_gradual,0.0,,40
+calibrated,call,3.0,distress_gradual,0.875,190.0,40
+calibrated,combined,3.0,distress_gradual,0.0,,40
+calibrated,count,3.0,distress_gradual,0.0,,40
+calibrated,feeding,3.0,distress_gradual,0.0,,40
+calibrated,movement,3.0,sick_pen_sudden,1.0,15.0,40
+calibrated,rest,3.0,sick_pen_sudden,0.95,12.5,40
+calibrated,call,3.0,sick_pen_sudden,1.0,65.0,40
+calibrated,combined,3.0,sick_pen_sudden,0.7,110.0,40
+calibrated,count,3.0,sick_pen_sudden,0.0,,40
+calibrated,feeding,3.0,sick_pen_sudden,0.0,,40
+calibrated,movement,3.0,sick_pen_gradual,0.75,170.0,40
+calibrated,rest,3.0,sick_pen_gradual,0.725,170.0,40
+calibrated,call,3.0,sick_pen_gradual,0.975,190.0,40
+calibrated,combined,3.0,sick_pen_gradual,0.375,225.0,40
+calibrated,count,3.0,sick_pen_gradual,0.0,,40
+calibrated,feeding,3.0,sick_pen_gradual,0.0,,40
+calibrated,movement,3.0,missing_pig,0.0,,40
+calibrated,rest,3.0,missing_pig,0.075,110.0,40
+calibrated,call,3.0,missing_pig,0.0,,40
+calibrated,combined,3.0,missing_pig,0.0,,40
+calibrated,count,3.0,missing_pig,1.0,5.0,40
+calibrated,feeding,3.0,missing_pig,0.0,,40
+calibrated,movement,3.0,camera_fault,0.0,,40
+calibrated,rest,3.0,camera_fault,0.0,,40
+calibrated,call,3.0,camera_fault,0.0,,40
+calibrated,combined,3.0,camera_fault,0.0,,40
+calibrated,count,3.0,camera_fault,1.0,5.0,40
+calibrated,feeding,3.0,camera_fault,0.0,,40
+calibrated,movement,3.0,feeder_failure,0.775,255.0,40
+calibrated,rest,3.0,feeder_failure,0.525,365.0,40
+calibrated,call,3.0,feeder_failure,0.0,,40
+calibrated,combined,3.0,feeder_failure,0.0,,40
+calibrated,count,3.0,feeder_failure,0.0,,40
+calibrated,feeding,3.0,feeder_failure,0.775,235.0,40
+calibrated,movement,3.5,lethargy_sudden,0.875,65.0,40
+calibrated,rest,3.5,lethargy_sudden,0.875,55.0,40
+calibrated,call,3.5,lethargy_sudden,0.0,,40
+calibrated,combined,3.5,lethargy_sudden,0.0,,40
+calibrated,count,3.5,lethargy_sudden,0.0,,40
+calibrated,feeding,3.5,lethargy_sudden,0.0,,40
+calibrated,movement,3.5,lethargy_gradual,0.775,180.0,40
+calibrated,rest,3.5,lethargy_gradual,0.75,177.5,40
+calibrated,call,3.5,lethargy_gradual,0.0,,40
+calibrated,combined,3.5,lethargy_gradual,0.0,,40
+calibrated,count,3.5,lethargy_gradual,0.0,,40
+calibrated,feeding,3.5,lethargy_gradual,0.0,,40
+calibrated,movement,3.5,distress_sudden,0.0,,40
+calibrated,rest,3.5,distress_sudden,0.025,450.0,40
+calibrated,call,3.5,distress_sudden,0.65,115.0,40
+calibrated,combined,3.5,distress_sudden,0.0,,40
+calibrated,count,3.5,distress_sudden,0.0,,40
+calibrated,feeding,3.5,distress_sudden,0.0,,40
+calibrated,movement,3.5,distress_gradual,0.0,,40
+calibrated,rest,3.5,distress_gradual,0.0,,40
+calibrated,call,3.5,distress_gradual,0.525,220.0,40
+calibrated,combined,3.5,distress_gradual,0.0,,40
+calibrated,count,3.5,distress_gradual,0.0,,40
+calibrated,feeding,3.5,distress_gradual,0.0,,40
+calibrated,movement,3.5,sick_pen_sudden,0.8,42.5,40
+calibrated,rest,3.5,sick_pen_sudden,0.775,45.0,40
+calibrated,call,3.5,sick_pen_sudden,0.75,90.0,40
+calibrated,combined,3.5,sick_pen_sudden,0.175,210.0,40
+calibrated,count,3.5,sick_pen_sudden,0.0,,40
+calibrated,feeding,3.5,sick_pen_sudden,0.0,,40
+calibrated,movement,3.5,sick_pen_gradual,0.6,182.5,40
+calibrated,rest,3.5,sick_pen_gradual,0.625,180.0,40
+calibrated,call,3.5,sick_pen_gradual,0.525,235.0,40
+calibrated,combined,3.5,sick_pen_gradual,0.075,255.0,40
+calibrated,count,3.5,sick_pen_gradual,0.0,,40
+calibrated,feeding,3.5,sick_pen_gradual,0.0,,40
+calibrated,movement,3.5,missing_pig,0.0,,40
+calibrated,rest,3.5,missing_pig,0.0,,40
+calibrated,call,3.5,missing_pig,0.0,,40
+calibrated,combined,3.5,missing_pig,0.0,,40
+calibrated,count,3.5,missing_pig,1.0,5.0,40
+calibrated,feeding,3.5,missing_pig,0.0,,40
+calibrated,movement,3.5,camera_fault,0.0,,40
+calibrated,rest,3.5,camera_fault,0.0,,40
+calibrated,call,3.5,camera_fault,0.0,,40
+calibrated,combined,3.5,camera_fault,0.0,,40
+calibrated,count,3.5,camera_fault,1.0,5.0,40
+calibrated,feeding,3.5,camera_fault,0.0,,40
+calibrated,movement,3.5,feeder_failure,0.5,247.5,40
+calibrated,rest,3.5,feeder_failure,0.25,385.0,40
+calibrated,call,3.5,feeder_failure,0.0,,40
+calibrated,combined,3.5,feeder_failure,0.0,,40
+calibrated,count,3.5,feeder_failure,0.0,,40
+calibrated,feeding,3.5,feeder_failure,0.775,235.0,40
+calibrated,movement,4.0,lethargy_sudden,0.85,102.5,40
+calibrated,rest,4.0,lethargy_sudden,0.85,105.0,40
+calibrated,call,4.0,lethargy_sudden,0.0,,40
+calibrated,combined,4.0,lethargy_sudden,0.0,,40
+calibrated,count,4.0,lethargy_sudden,0.0,,40
+calibrated,feeding,4.0,lethargy_sudden,0.0,,40
+calibrated,movement,4.0,lethargy_gradual,0.65,230.0,40
+calibrated,rest,4.0,lethargy_gradual,0.7,222.5,40
+calibrated,call,4.0,lethargy_gradual,0.0,,40
+calibrated,combined,4.0,lethargy_gradual,0.0,,40
+calibrated,count,4.0,lethargy_gradual,0.0,,40
+calibrated,feeding,4.0,lethargy_gradual,0.0,,40
+calibrated,movement,4.0,distress_sudden,0.0,,40
+calibrated,rest,4.0,distress_sudden,0.0,,40
+calibrated,call,4.0,distress_sudden,0.325,180.0,40
+calibrated,combined,4.0,distress_sudden,0.0,,40
+calibrated,count,4.0,distress_sudden,0.0,,40
+calibrated,feeding,4.0,distress_sudden,0.0,,40
+calibrated,movement,4.0,distress_gradual,0.0,,40
+calibrated,rest,4.0,distress_gradual,0.0,,40
+calibrated,call,4.0,distress_gradual,0.175,295.0,40
+calibrated,combined,4.0,distress_gradual,0.0,,40
+calibrated,count,4.0,distress_gradual,0.0,,40
+calibrated,feeding,4.0,distress_gradual,0.0,,40
+calibrated,movement,4.0,sick_pen_sudden,0.7,92.5,40
+calibrated,rest,4.0,sick_pen_sudden,0.725,100.0,40
+calibrated,call,4.0,sick_pen_sudden,0.375,130.0,40
+calibrated,combined,4.0,sick_pen_sudden,0.0,,40
+calibrated,count,4.0,sick_pen_sudden,0.0,,40
+calibrated,feeding,4.0,sick_pen_sudden,0.0,,40
+calibrated,movement,4.0,sick_pen_gradual,0.475,210.0,40
+calibrated,rest,4.0,sick_pen_gradual,0.425,210.0,40
+calibrated,call,4.0,sick_pen_gradual,0.2,307.5,40
+calibrated,combined,4.0,sick_pen_gradual,0.0,,40
+calibrated,count,4.0,sick_pen_gradual,0.0,,40
+calibrated,feeding,4.0,sick_pen_gradual,0.0,,40
+calibrated,movement,4.0,missing_pig,0.0,,40
+calibrated,rest,4.0,missing_pig,0.0,,40
+calibrated,call,4.0,missing_pig,0.0,,40
+calibrated,combined,4.0,missing_pig,0.0,,40
+calibrated,count,4.0,missing_pig,1.0,17.5,40
+calibrated,feeding,4.0,missing_pig,0.0,,40
+calibrated,movement,4.0,camera_fault,0.0,,40
+calibrated,rest,4.0,camera_fault,0.0,,40
+calibrated,call,4.0,camera_fault,0.0,,40
+calibrated,combined,4.0,camera_fault,0.0,,40
+calibrated,count,4.0,camera_fault,1.0,5.0,40
+calibrated,feeding,4.0,camera_fault,0.0,,40
+calibrated,movement,4.0,feeder_failure,0.225,260.0,40
+calibrated,rest,4.0,feeder_failure,0.075,410.0,40
+calibrated,call,4.0,feeder_failure,0.0,,40
+calibrated,combined,4.0,feeder_failure,0.0,,40
+calibrated,count,4.0,feeder_failure,0.0,,40
+calibrated,feeding,4.0,feeder_failure,0.775,235.0,40
+calibrated,movement,5.0,lethargy_sudden,0.025,250.0,40
+calibrated,rest,5.0,lethargy_sudden,0.15,362.5,40
+calibrated,call,5.0,lethargy_sudden,0.0,,40
+calibrated,combined,5.0,lethargy_sudden,0.0,,40
+calibrated,count,5.0,lethargy_sudden,0.0,,40
+calibrated,feeding,5.0,lethargy_sudden,0.0,,40
+calibrated,movement,5.0,lethargy_gradual,0.025,225.0,40
+calibrated,rest,5.0,lethargy_gradual,0.175,280.0,40
+calibrated,call,5.0,lethargy_gradual,0.0,,40
+calibrated,combined,5.0,lethargy_gradual,0.0,,40
+calibrated,count,5.0,lethargy_gradual,0.0,,40
+calibrated,feeding,5.0,lethargy_gradual,0.0,,40
+calibrated,movement,5.0,distress_sudden,0.0,,40
+calibrated,rest,5.0,distress_sudden,0.0,,40
+calibrated,call,5.0,distress_sudden,0.0,,40
+calibrated,combined,5.0,distress_sudden,0.0,,40
+calibrated,count,5.0,distress_sudden,0.0,,40
+calibrated,feeding,5.0,distress_sudden,0.0,,40
+calibrated,movement,5.0,distress_gradual,0.0,,40
+calibrated,rest,5.0,distress_gradual,0.0,,40
+calibrated,call,5.0,distress_gradual,0.025,295.0,40
+calibrated,combined,5.0,distress_gradual,0.0,,40
+calibrated,count,5.0,distress_gradual,0.0,,40
+calibrated,feeding,5.0,distress_gradual,0.0,,40
+calibrated,movement,5.0,sick_pen_sudden,0.025,255.0,40
+calibrated,rest,5.0,sick_pen_sudden,0.15,292.5,40
+calibrated,call,5.0,sick_pen_sudden,0.0,,40
+calibrated,combined,5.0,sick_pen_sudden,0.0,,40
+calibrated,count,5.0,sick_pen_sudden,0.0,,40
+calibrated,feeding,5.0,sick_pen_sudden,0.0,,40
+calibrated,movement,5.0,sick_pen_gradual,0.025,320.0,40
+calibrated,rest,5.0,sick_pen_gradual,0.1,230.0,40
+calibrated,call,5.0,sick_pen_gradual,0.0,,40
+calibrated,combined,5.0,sick_pen_gradual,0.0,,40
+calibrated,count,5.0,sick_pen_gradual,0.0,,40
+calibrated,feeding,5.0,sick_pen_gradual,0.0,,40
+calibrated,movement,5.0,missing_pig,0.0,,40
+calibrated,rest,5.0,missing_pig,0.0,,40
+calibrated,call,5.0,missing_pig,0.0,,40
+calibrated,combined,5.0,missing_pig,0.0,,40
+calibrated,count,5.0,missing_pig,0.675,310.0,40
+calibrated,feeding,5.0,missing_pig,0.0,,40
+calibrated,movement,5.0,camera_fault,0.0,,40
+calibrated,rest,5.0,camera_fault,0.0,,40
+calibrated,call,5.0,camera_fault,0.0,,40
+calibrated,combined,5.0,camera_fault,0.0,,40
+calibrated,count,5.0,camera_fault,1.0,5.0,40
+calibrated,feeding,5.0,camera_fault,0.0,,40
+calibrated,movement,5.0,feeder_failure,0.0,,40
+calibrated,rest,5.0,feeder_failure,0.0,,40
+calibrated,call,5.0,feeder_failure,0.0,,40
+calibrated,combined,5.0,feeder_failure,0.0,,40
+calibrated,count,5.0,feeder_failure,0.0,,40
+calibrated,feeding,5.0,feeder_failure,0.1,50.0,40
+new farm,movement,1.0,lethargy_sudden,1.0,5.0,40
+new farm,rest,1.0,lethargy_sudden,1.0,5.0,40
+new farm,call,1.0,lethargy_sudden,1.0,75.0,40
+new farm,combined,1.0,lethargy_sudden,0.975,90.0,40
+new farm,count,1.0,lethargy_sudden,0.75,390.0,40
+new farm,feeding,1.0,lethargy_sudden,0.175,60.0,40
+new farm,movement,1.0,lethargy_gradual,1.0,45.0,40
+new farm,rest,1.0,lethargy_gradual,1.0,55.0,40
+new farm,call,1.0,lethargy_gradual,1.0,45.0,40
+new farm,combined,1.0,lethargy_gradual,0.975,125.0,40
+new farm,count,1.0,lethargy_gradual,0.575,220.0,40
+new farm,feeding,1.0,lethargy_gradual,0.15,290.0,40
+new farm,movement,1.0,distress_sudden,1.0,45.0,40
+new farm,rest,1.0,distress_sudden,1.0,75.0,40
+new farm,call,1.0,distress_sudden,1.0,10.0,40
+new farm,combined,1.0,distress_sudden,0.725,125.0,40
+new farm,count,1.0,distress_sudden,0.5,287.5,40
+new farm,feeding,1.0,distress_sudden,0.05,302.5,40
+new farm,movement,1.0,distress_gradual,1.0,102.5,40
+new farm,rest,1.0,distress_gradual,1.0,65.0,40
+new farm,call,1.0,distress_gradual,1.0,42.5,40
+new farm,combined,1.0,distress_gradual,0.575,365.0,40
+new farm,count,1.0,distress_gradual,0.575,380.0,40
+new farm,feeding,1.0,distress_gradual,0.1,397.5,40
+new farm,movement,1.0,sick_pen_sudden,1.0,5.0,40
+new farm,rest,1.0,sick_pen_sudden,1.0,5.0,40
+new farm,call,1.0,sick_pen_sudden,1.0,10.0,40
+new farm,combined,1.0,sick_pen_sudden,1.0,15.0,40
+new farm,count,1.0,sick_pen_sudden,0.6,242.5,40
+new farm,feeding,1.0,sick_pen_sudden,0.2,72.5,40
+new farm,movement,1.0,sick_pen_gradual,1.0,25.0,40
+new farm,rest,1.0,sick_pen_gradual,1.0,25.0,40
+new farm,call,1.0,sick_pen_gradual,1.0,40.0,40
+new farm,combined,1.0,sick_pen_gradual,1.0,120.0,40
+new farm,count,1.0,sick_pen_gradual,0.575,445.0,40
+new farm,feeding,1.0,sick_pen_gradual,0.2,175.0,40
+new farm,movement,1.0,missing_pig,1.0,62.5,40
+new farm,rest,1.0,missing_pig,1.0,72.5,40
+new farm,call,1.0,missing_pig,1.0,55.0,40
+new farm,combined,1.0,missing_pig,0.425,280.0,40
+new farm,count,1.0,missing_pig,1.0,5.0,40
+new farm,feeding,1.0,missing_pig,0.2,332.5,40
+new farm,movement,1.0,camera_fault,0.025,0.0,40
+new farm,rest,1.0,camera_fault,0.025,0.0,40
+new farm,call,1.0,camera_fault,0.0,,40
+new farm,combined,1.0,camera_fault,0.0,,40
+new farm,count,1.0,camera_fault,1.0,5.0,40
+new farm,feeding,1.0,camera_fault,0.0,,40
+new farm,movement,1.0,feeder_failure,1.0,60.0,40
+new farm,rest,1.0,feeder_failure,1.0,65.0,40
+new farm,call,1.0,feeder_failure,0.95,62.5,40
+new farm,combined,1.0,feeder_failure,0.5,162.5,40
+new farm,count,1.0,feeder_failure,0.525,240.0,40
+new farm,feeding,1.0,feeder_failure,0.775,235.0,40
+new farm,movement,1.5,lethargy_sudden,1.0,5.0,40
+new farm,rest,1.5,lethargy_sudden,1.0,5.0,40
+new farm,call,1.5,lethargy_sudden,0.7,162.5,40
+new farm,combined,1.5,lethargy_sudden,0.575,145.0,40
+new farm,count,1.5,lethargy_sudden,0.05,212.5,40
+new farm,feeding,1.5,lethargy_sudden,0.025,35.0,40
+new farm,movement,1.5,lethargy_gradual,1.0,80.0,40
+new farm,rest,1.5,lethargy_gradual,1.0,72.5,40
+new farm,call,1.5,lethargy_gradual,0.775,115.0,40
+new farm,combined,1.5,lethargy_gradual,0.525,255.0,40
+new farm,count,1.5,lethargy_gradual,0.05,85.0,40
+new farm,feeding,1.5,lethargy_gradual,0.0,,40
+new farm,movement,1.5,distress_sudden,0.8,175.0,40
+new farm,rest,1.5,distress_sudden,0.85,107.5,40
+new farm,call,1.5,distress_sudden,0.975,45.0,40
+new farm,combined,1.5,distress_sudden,0.1,180.0,40
+new farm,count,1.5,distress_sudden,0.025,245.0,40
+new farm,feeding,1.5,distress_sudden,0.0,,40
+new farm,movement,1.5,distress_gradual,0.875,295.0,40
+new farm,rest,1.5,distress_gradual,0.875,235.0,40
+new farm,call,1.5,distress_gradual,0.95,140.0,40
+new farm,combined,1.5,distress_gradual,0.025,230.0,40
+new farm,count,1.5,distress_gradual,0.1,160.0,40
+new farm,feeding,1.5,distress_gradual,0.0,,40
+new farm,movement,1.5,sick_pen_sudden,1.0,5.0,40
+new farm,rest,1.5,sick_pen_sudden,1.0,5.0,40
+new farm,call,1.5,sick_pen_sudden,1.0,60.0,40
+new farm,combined,1.5,sick_pen_sudden,0.925,65.0,40
+new farm,count,1.5,sick_pen_sudden,0.125,265.0,40
+new farm,feeding,1.5,sick_pen_sudden,0.0,,40
+new farm,movement,1.5,sick_pen_gradual,1.0,80.0,40
+new farm,rest,1.5,sick_pen_gradual,1.0,75.0,40
+new farm,call,1.5,sick_pen_gradual,1.0,117.5,40
+new farm,combined,1.5,sick_pen_gradual,0.875,195.0,40
+new farm,count,1.5,sick_pen_gradual,0.075,475.0,40
+new farm,feeding,1.5,sick_pen_gradual,0.025,5.0,40
+new farm,movement,1.5,missing_pig,0.875,180.0,40
+new farm,rest,1.5,missing_pig,0.875,125.0,40
+new farm,call,1.5,missing_pig,0.825,250.0,40
+new farm,combined,1.5,missing_pig,0.025,25.0,40
+new farm,count,1.5,missing_pig,1.0,5.0,40
+new farm,feeding,1.5,missing_pig,0.025,5.0,40
+new farm,movement,1.5,camera_fault,0.0,,40
+new farm,rest,1.5,camera_fault,0.0,,40
+new farm,call,1.5,camera_fault,0.0,,40
+new farm,combined,1.5,camera_fault,0.0,,40
+new farm,count,1.5,camera_fault,1.0,5.0,40
+new farm,feeding,1.5,camera_fault,0.0,,40
+new farm,movement,1.5,feeder_failure,0.975,125.0,40
+new farm,rest,1.5,feeder_failure,0.95,142.5,40
+new farm,call,1.5,feeder_failure,0.525,105.0,40
+new farm,combined,1.5,feeder_failure,0.1,565.0,40
+new farm,count,1.5,feeder_failure,0.025,650.0,40
+new farm,feeding,1.5,feeder_failure,0.775,235.0,40
+new farm,movement,2.0,lethargy_sudden,1.0,5.0,40
+new farm,rest,2.0,lethargy_sudden,1.0,5.0,40
+new farm,call,2.0,lethargy_sudden,0.25,220.0,40
+new farm,combined,2.0,lethargy_sudden,0.15,185.0,40
+new farm,count,2.0,lethargy_sudden,0.0,,40
+new farm,feeding,2.0,lethargy_sudden,0.0,,40
+new farm,movement,2.0,lethargy_gradual,1.0,110.0,40
+new farm,rest,2.0,lethargy_gradual,1.0,117.5,40
+new farm,call,2.0,lethargy_gradual,0.275,175.0,40
+new farm,combined,2.0,lethargy_gradual,0.15,292.5,40
+new farm,count,2.0,lethargy_gradual,0.0,,40
+new farm,feeding,2.0,lethargy_gradual,0.0,,40
+new farm,movement,2.0,distress_sudden,0.225,395.0,40
+new farm,rest,2.0,distress_sudden,0.35,275.0,40
+new farm,call,2.0,distress_sudden,0.625,95.0,40
+new farm,combined,2.0,distress_sudden,0.0,,40
+new farm,count,2.0,distress_sudden,0.0,,40
+new farm,feeding,2.0,distress_sudden,0.0,,40
+new farm,movement,2.0,distress_gradual,0.3,282.5,40
+new farm,rest,2.0,distress_gradual,0.475,280.0,40
+new farm,call,2.0,distress_gradual,0.6,152.5,40
+new farm,combined,2.0,distress_gradual,0.0,,40
+new farm,count,2.0,distress_gradual,0.0,,40
+new farm,feeding,2.0,distress_gradual,0.0,,40
+new farm,movement,2.0,sick_pen_sudden,1.0,5.0,40
+new farm,rest,2.0,sick_pen_sudden,1.0,5.0,40
+new farm,call,2.0,sick_pen_sudden,0.65,137.5,40
+new farm,combined,2.0,sick_pen_sudden,0.525,155.0,40
+new farm,count,2.0,sick_pen_sudden,0.025,200.0,40
+new farm,feeding,2.0,sick_pen_sudden,0.0,,40
+new farm,movement,2.0,sick_pen_gradual,0.95,107.5,40
+new farm,rest,2.0,sick_pen_gradual,0.9,97.5,40
+new farm,call,2.0,sick_pen_gradual,0.525,235.0,40
+new farm,combined,2.0,sick_pen_gradual,0.325,240.0,40
+new farm,count,2.0,sick_pen_gradual,0.0,,40
+new farm,feeding,2.0,sick_pen_gradual,0.0,,40
+new farm,movement,2.0,missing_pig,0.225,425.0,40
+new farm,rest,2.0,missing_pig,0.3,110.0,40
+new farm,call,2.0,missing_pig,0.275,160.0,40
+new farm,combined,2.0,missing_pig,0.0,,40
+new farm,count,2.0,missing_pig,1.0,5.0,40
+new farm,feeding,2.0,missing_pig,0.0,,40
+new farm,movement,2.0,camera_fault,0.0,,40
+new farm,rest,2.0,camera_fault,0.0,,40
+new farm,call,2.0,camera_fault,0.0,,40
+new farm,combined,2.0,camera_fault,0.0,,40
+new farm,count,2.0,camera_fault,1.0,5.0,40
+new farm,feeding,2.0,camera_fault,0.0,,40
+new farm,movement,2.0,feeder_failure,0.8,232.5,40
+new farm,rest,2.0,feeder_failure,0.8,210.0,40
+new farm,call,2.0,feeder_failure,0.125,105.0,40
+new farm,combined,2.0,feeder_failure,0.05,565.0,40
+new farm,count,2.0,feeder_failure,0.0,,40
+new farm,feeding,2.0,feeder_failure,0.775,235.0,40
+new farm,movement,2.5,lethargy_sudden,1.0,10.0,40
+new farm,rest,2.5,lethargy_sudden,0.975,10.0,40
+new farm,call,2.5,lethargy_sudden,0.075,435.0,40
+new farm,combined,2.5,lethargy_sudden,0.025,195.0,40
+new farm,count,2.5,lethargy_sudden,0.0,,40
+new farm,feeding,2.5,lethargy_sudden,0.0,,40
+new farm,movement,2.5,lethargy_gradual,0.925,150.0,40
+new farm,rest,2.5,lethargy_gradual,0.925,145.0,40
+new farm,call,2.5,lethargy_gradual,0.025,285.0,40
+new farm,combined,2.5,lethargy_gradual,0.025,285.0,40
+new farm,count,2.5,lethargy_gradual,0.0,,40
+new farm,feeding,2.5,lethargy_gradual,0.0,,40
+new farm,movement,2.5,distress_sudden,0.075,450.0,40
+new farm,rest,2.5,distress_sudden,0.075,240.0,40
+new farm,call,2.5,distress_sudden,0.2,125.0,40
+new farm,combined,2.5,distress_sudden,0.0,,40
+new farm,count,2.5,distress_sudden,0.0,,40
+new farm,feeding,2.5,distress_sudden,0.0,,40
+new farm,movement,2.5,distress_gradual,0.1,497.5,40
+new farm,rest,2.5,distress_gradual,0.15,282.5,40
+new farm,call,2.5,distress_gradual,0.175,125.0,40
+new farm,combined,2.5,distress_gradual,0.0,,40
+new farm,count,2.5,distress_gradual,0.0,,40
+new farm,feeding,2.5,distress_gradual,0.0,,40
+new farm,movement,2.5,sick_pen_sudden,1.0,5.0,40
+new farm,rest,2.5,sick_pen_sudden,1.0,10.0,40
+new farm,call,2.5,sick_pen_sudden,0.275,205.0,40
+new farm,combined,2.5,sick_pen_sudden,0.1,357.5,40
+new farm,count,2.5,sick_pen_sudden,0.0,,40
+new farm,feeding,2.5,sick_pen_sudden,0.0,,40
+new farm,movement,2.5,sick_pen_gradual,0.875,130.0,40
+new farm,rest,2.5,sick_pen_gradual,0.85,125.0,40
+new farm,call,2.5,sick_pen_gradual,0.125,255.0,40
+new farm,combined,2.5,sick_pen_gradual,0.075,290.0,40
+new farm,count,2.5,sick_pen_gradual,0.0,,40
+new farm,feeding,2.5,sick_pen_gradual,0.0,,40
+new farm,movement,2.5,missing_pig,0.025,765.0,40
+new farm,rest,2.5,missing_pig,0.125,280.0,40
+new farm,call,2.5,missing_pig,0.025,175.0,40
+new farm,combined,2.5,missing_pig,0.0,,40
+new farm,count,2.5,missing_pig,1.0,5.0,40
+new farm,feeding,2.5,missing_pig,0.0,,40
+new farm,movement,2.5,camera_fault,0.0,,40
+new farm,rest,2.5,camera_fault,0.0,,40
+new farm,call,2.5,camera_fault,0.0,,40
+new farm,combined,2.5,camera_fault,0.0,,40
+new farm,count,2.5,camera_fault,1.0,5.0,40
+new farm,feeding,2.5,camera_fault,0.0,,40
+new farm,movement,2.5,feeder_failure,0.775,235.0,40
+new farm,rest,2.5,feeder_failure,0.725,260.0,40
+new farm,call,2.5,feeder_failure,0.025,630.0,40
+new farm,combined,2.5,feeder_failure,0.025,630.0,40
+new farm,count,2.5,feeder_failure,0.0,,40
+new farm,feeding,2.5,feeder_failure,0.775,235.0,40
+new farm,movement,3.0,lethargy_sudden,1.0,32.5,40
+new farm,rest,3.0,lethargy_sudden,0.9,22.5,40
+new farm,call,3.0,lethargy_sudden,0.0,,40
+new farm,combined,3.0,lethargy_sudden,0.0,,40
+new farm,count,3.0,lethargy_sudden,0.0,,40
+new farm,feeding,3.0,lethargy_sudden,0.0,,40
+new farm,movement,3.0,lethargy_gradual,0.85,167.5,40
+new farm,rest,3.0,lethargy_gradual,0.8,165.0,40
+new farm,call,3.0,lethargy_gradual,0.0,,40
+new farm,combined,3.0,lethargy_gradual,0.0,,40
+new farm,count,3.0,lethargy_gradual,0.0,,40
+new farm,feeding,3.0,lethargy_gradual,0.0,,40
+new farm,movement,3.0,distress_sudden,0.025,395.0,40
+new farm,rest,3.0,distress_sudden,0.025,450.0,40
+new farm,call,3.0,distress_sudden,0.025,70.0,40
+new farm,combined,3.0,distress_sudden,0.0,,40
+new farm,count,3.0,distress_sudden,0.0,,40
+new farm,feeding,3.0,distress_sudden,0.0,,40
+new farm,movement,3.0,distress_gradual,0.0,,40
+new farm,rest,3.0,distress_gradual,0.0,,40
+new farm,call,3.0,distress_gradual,0.025,295.0,40
+new farm,combined,3.0,distress_gradual,0.0,,40
+new farm,count,3.0,distress_gradual,0.0,,40
+new farm,feeding,3.0,distress_gradual,0.0,,40
+new farm,movement,3.0,sick_pen_sudden,1.0,15.0,40
+new farm,rest,3.0,sick_pen_sudden,0.95,12.5,40
+new farm,call,3.0,sick_pen_sudden,0.05,270.0,40
+new farm,combined,3.0,sick_pen_sudden,0.0,,40
+new farm,count,3.0,sick_pen_sudden,0.0,,40
+new farm,feeding,3.0,sick_pen_sudden,0.0,,40
+new farm,movement,3.0,sick_pen_gradual,0.75,170.0,40
+new farm,rest,3.0,sick_pen_gradual,0.725,170.0,40
+new farm,call,3.0,sick_pen_gradual,0.0,,40
+new farm,combined,3.0,sick_pen_gradual,0.0,,40
+new farm,count,3.0,sick_pen_gradual,0.0,,40
+new farm,feeding,3.0,sick_pen_gradual,0.0,,40
+new farm,movement,3.0,missing_pig,0.0,,40
+new farm,rest,3.0,missing_pig,0.075,110.0,40
+new farm,call,3.0,missing_pig,0.0,,40
+new farm,combined,3.0,missing_pig,0.0,,40
+new farm,count,3.0,missing_pig,1.0,5.0,40
+new farm,feeding,3.0,missing_pig,0.0,,40
+new farm,movement,3.0,camera_fault,0.0,,40
+new farm,rest,3.0,camera_fault,0.0,,40
+new farm,call,3.0,camera_fault,0.0,,40
+new farm,combined,3.0,camera_fault,0.0,,40
+new farm,count,3.0,camera_fault,1.0,5.0,40
+new farm,feeding,3.0,camera_fault,0.0,,40
+new farm,movement,3.0,feeder_failure,0.775,255.0,40
+new farm,rest,3.0,feeder_failure,0.525,365.0,40
+new farm,call,3.0,feeder_failure,0.0,,40
+new farm,combined,3.0,feeder_failure,0.0,,40
+new farm,count,3.0,feeder_failure,0.0,,40
+new farm,feeding,3.0,feeder_failure,0.775,235.0,40
+new farm,movement,3.5,lethargy_sudden,0.875,65.0,40
+new farm,rest,3.5,lethargy_sudden,0.875,55.0,40
+new farm,call,3.5,lethargy_sudden,0.0,,40
+new farm,combined,3.5,lethargy_sudden,0.0,,40
+new farm,count,3.5,lethargy_sudden,0.0,,40
+new farm,feeding,3.5,lethargy_sudden,0.0,,40
+new farm,movement,3.5,lethargy_gradual,0.775,180.0,40
+new farm,rest,3.5,lethargy_gradual,0.75,177.5,40
+new farm,call,3.5,lethargy_gradual,0.0,,40
+new farm,combined,3.5,lethargy_gradual,0.0,,40
+new farm,count,3.5,lethargy_gradual,0.0,,40
+new farm,feeding,3.5,lethargy_gradual,0.0,,40
+new farm,movement,3.5,distress_sudden,0.0,,40
+new farm,rest,3.5,distress_sudden,0.025,450.0,40
+new farm,call,3.5,distress_sudden,0.0,,40
+new farm,combined,3.5,distress_sudden,0.0,,40
+new farm,count,3.5,distress_sudden,0.0,,40
+new farm,feeding,3.5,distress_sudden,0.0,,40
+new farm,movement,3.5,distress_gradual,0.0,,40
+new farm,rest,3.5,distress_gradual,0.0,,40
+new farm,call,3.5,distress_gradual,0.025,295.0,40
+new farm,combined,3.5,distress_gradual,0.0,,40
+new farm,count,3.5,distress_gradual,0.0,,40
+new farm,feeding,3.5,distress_gradual,0.0,,40
+new farm,movement,3.5,sick_pen_sudden,0.8,42.5,40
+new farm,rest,3.5,sick_pen_sudden,0.775,45.0,40
+new farm,call,3.5,sick_pen_sudden,0.0,,40
+new farm,combined,3.5,sick_pen_sudden,0.0,,40
+new farm,count,3.5,sick_pen_sudden,0.0,,40
+new farm,feeding,3.5,sick_pen_sudden,0.0,,40
+new farm,movement,3.5,sick_pen_gradual,0.6,182.5,40
+new farm,rest,3.5,sick_pen_gradual,0.625,180.0,40
+new farm,call,3.5,sick_pen_gradual,0.0,,40
+new farm,combined,3.5,sick_pen_gradual,0.0,,40
+new farm,count,3.5,sick_pen_gradual,0.0,,40
+new farm,feeding,3.5,sick_pen_gradual,0.0,,40
+new farm,movement,3.5,missing_pig,0.0,,40
+new farm,rest,3.5,missing_pig,0.0,,40
+new farm,call,3.5,missing_pig,0.0,,40
+new farm,combined,3.5,missing_pig,0.0,,40
+new farm,count,3.5,missing_pig,1.0,5.0,40
+new farm,feeding,3.5,missing_pig,0.0,,40
+new farm,movement,3.5,camera_fault,0.0,,40
+new farm,rest,3.5,camera_fault,0.0,,40
+new farm,call,3.5,camera_fault,0.0,,40
+new farm,combined,3.5,camera_fault,0.0,,40
+new farm,count,3.5,camera_fault,1.0,5.0,40
+new farm,feeding,3.5,camera_fault,0.0,,40
+new farm,movement,3.5,feeder_failure,0.5,247.5,40
+new farm,rest,3.5,feeder_failure,0.25,385.0,40
+new farm,call,3.5,feeder_failure,0.0,,40
+new farm,combined,3.5,feeder_failure,0.0,,40
+new farm,count,3.5,feeder_failure,0.0,,40
+new farm,feeding,3.5,feeder_failure,0.775,235.0,40
+new farm,movement,4.0,lethargy_sudden,0.85,102.5,40
+new farm,rest,4.0,lethargy_sudden,0.85,105.0,40
+new farm,call,4.0,lethargy_sudden,0.0,,40
+new farm,combined,4.0,lethargy_sudden,0.0,,40
+new farm,count,4.0,lethargy_sudden,0.0,,40
+new farm,feeding,4.0,lethargy_sudden,0.0,,40
+new farm,movement,4.0,lethargy_gradual,0.65,230.0,40
+new farm,rest,4.0,lethargy_gradual,0.7,222.5,40
+new farm,call,4.0,lethargy_gradual,0.0,,40
+new farm,combined,4.0,lethargy_gradual,0.0,,40
+new farm,count,4.0,lethargy_gradual,0.0,,40
+new farm,feeding,4.0,lethargy_gradual,0.0,,40
+new farm,movement,4.0,distress_sudden,0.0,,40
+new farm,rest,4.0,distress_sudden,0.0,,40
+new farm,call,4.0,distress_sudden,0.0,,40
+new farm,combined,4.0,distress_sudden,0.0,,40
+new farm,count,4.0,distress_sudden,0.0,,40
+new farm,feeding,4.0,distress_sudden,0.0,,40
+new farm,movement,4.0,distress_gradual,0.0,,40
+new farm,rest,4.0,distress_gradual,0.0,,40
+new farm,call,4.0,distress_gradual,0.0,,40
+new farm,combined,4.0,distress_gradual,0.0,,40
+new farm,count,4.0,distress_gradual,0.0,,40
+new farm,feeding,4.0,distress_gradual,0.0,,40
+new farm,movement,4.0,sick_pen_sudden,0.7,92.5,40
+new farm,rest,4.0,sick_pen_sudden,0.725,100.0,40
+new farm,call,4.0,sick_pen_sudden,0.0,,40
+new farm,combined,4.0,sick_pen_sudden,0.0,,40
+new farm,count,4.0,sick_pen_sudden,0.0,,40
+new farm,feeding,4.0,sick_pen_sudden,0.0,,40
+new farm,movement,4.0,sick_pen_gradual,0.475,210.0,40
+new farm,rest,4.0,sick_pen_gradual,0.425,210.0,40
+new farm,call,4.0,sick_pen_gradual,0.0,,40
+new farm,combined,4.0,sick_pen_gradual,0.0,,40
+new farm,count,4.0,sick_pen_gradual,0.0,,40
+new farm,feeding,4.0,sick_pen_gradual,0.0,,40
+new farm,movement,4.0,missing_pig,0.0,,40
+new farm,rest,4.0,missing_pig,0.0,,40
+new farm,call,4.0,missing_pig,0.0,,40
+new farm,combined,4.0,missing_pig,0.0,,40
+new farm,count,4.0,missing_pig,1.0,17.5,40
+new farm,feeding,4.0,missing_pig,0.0,,40
+new farm,movement,4.0,camera_fault,0.0,,40
+new farm,rest,4.0,camera_fault,0.0,,40
+new farm,call,4.0,camera_fault,0.0,,40
+new farm,combined,4.0,camera_fault,0.0,,40
+new farm,count,4.0,camera_fault,1.0,5.0,40
+new farm,feeding,4.0,camera_fault,0.0,,40
+new farm,movement,4.0,feeder_failure,0.225,260.0,40
+new farm,rest,4.0,feeder_failure,0.075,410.0,40
+new farm,call,4.0,feeder_failure,0.0,,40
+new farm,combined,4.0,feeder_failure,0.0,,40
+new farm,count,4.0,feeder_failure,0.0,,40
+new farm,feeding,4.0,feeder_failure,0.775,235.0,40
+new farm,movement,5.0,lethargy_sudden,0.025,250.0,40
+new farm,rest,5.0,lethargy_sudden,0.15,362.5,40
+new farm,call,5.0,lethargy_sudden,0.0,,40
+new farm,combined,5.0,lethargy_sudden,0.0,,40
+new farm,count,5.0,lethargy_sudden,0.0,,40
+new farm,feeding,5.0,lethargy_sudden,0.0,,40
+new farm,movement,5.0,lethargy_gradual,0.025,225.0,40
+new farm,rest,5.0,lethargy_gradual,0.175,280.0,40
+new farm,call,5.0,lethargy_gradual,0.0,,40
+new farm,combined,5.0,lethargy_gradual,0.0,,40
+new farm,count,5.0,lethargy_gradual,0.0,,40
+new farm,feeding,5.0,lethargy_gradual,0.0,,40
+new farm,movement,5.0,distress_sudden,0.0,,40
+new farm,rest,5.0,distress_sudden,0.0,,40
+new farm,call,5.0,distress_sudden,0.0,,40
+new farm,combined,5.0,distress_sudden,0.0,,40
+new farm,count,5.0,distress_sudden,0.0,,40
+new farm,feeding,5.0,distress_sudden,0.0,,40
+new farm,movement,5.0,distress_gradual,0.0,,40
+new farm,rest,5.0,distress_gradual,0.0,,40
+new farm,call,5.0,distress_gradual,0.0,,40
+new farm,combined,5.0,distress_gradual,0.0,,40
+new farm,count,5.0,distress_gradual,0.0,,40
+new farm,feeding,5.0,distress_gradual,0.0,,40
+new farm,movement,5.0,sick_pen_sudden,0.025,255.0,40
+new farm,rest,5.0,sick_pen_sudden,0.15,292.5,40
+new farm,call,5.0,sick_pen_sudden,0.0,,40
+new farm,combined,5.0,sick_pen_sudden,0.0,,40
+new farm,count,5.0,sick_pen_sudden,0.0,,40
+new farm,feeding,5.0,sick_pen_sudden,0.0,,40
+new farm,movement,5.0,sick_pen_gradual,0.025,320.0,40
+new farm,rest,5.0,sick_pen_gradual,0.1,230.0,40
+new farm,call,5.0,sick_pen_gradual,0.0,,40
+new farm,combined,5.0,sick_pen_gradual,0.0,,40
+new farm,count,5.0,sick_pen_gradual,0.0,,40
+new farm,feeding,5.0,sick_pen_gradual,0.0,,40
+new farm,movement,5.0,missing_pig,0.0,,40
+new farm,rest,5.0,missing_pig,0.0,,40
+new farm,call,5.0,missing_pig,0.0,,40
+new farm,combined,5.0,missing_pig,0.0,,40
+new farm,count,5.0,missing_pig,0.675,310.0,40
+new farm,feeding,5.0,missing_pig,0.0,,40
+new farm,movement,5.0,camera_fault,0.0,,40
+new farm,rest,5.0,camera_fault,0.0,,40
+new farm,call,5.0,camera_fault,0.0,,40
+new farm,combined,5.0,camera_fault,0.0,,40
+new farm,count,5.0,camera_fault,1.0,5.0,40
+new farm,feeding,5.0,camera_fault,0.0,,40
+new farm,movement,5.0,feeder_failure,0.0,,40
+new farm,rest,5.0,feeder_failure,0.0,,40
+new farm,call,5.0,feeder_failure,0.0,,40
+new farm,combined,5.0,feeder_failure,0.0,,40
+new farm,count,5.0,feeder_failure,0.0,,40
+new farm,feeding,5.0,feeder_failure,0.1,50.0,40

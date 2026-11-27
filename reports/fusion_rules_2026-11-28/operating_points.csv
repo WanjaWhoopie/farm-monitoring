@@ -1,0 +1,13 @@
+audio,rule,z,false_alarms_per_day,detection_rate,median_lag_min,targets
+calibrated,movement,2.0,0.433,0.988,56.25,"lethargy_sudden, lethargy_gradual, sick_pen_sudden, sick_pen_gradual"
+calibrated,rest,2.0,0.817,0.975,51.25,"lethargy_sudden, lethargy_gradual, sick_pen_sudden, sick_pen_gradual"
+calibrated,call,2.5,0.25,1.0,83.75,"distress_sudden, distress_gradual, sick_pen_sudden, sick_pen_gradual"
+calibrated,combined,1.0,0.433,1.0,50.0,"sick_pen_sudden, sick_pen_gradual"
+calibrated,count,1.5,0.2,1.0,5.0,"missing_pig, camera_fault"
+calibrated,feeding,1.0,0.6,0.775,235.0,feeder_failure
+new farm,movement,2.0,0.433,0.988,56.25,"lethargy_sudden, lethargy_gradual, sick_pen_sudden, sick_pen_gradual"
+new farm,rest,2.0,0.817,0.975,51.25,"lethargy_sudden, lethargy_gradual, sick_pen_sudden, sick_pen_gradual"
+new farm,call,2.0,0.717,0.6,145.0,"distress_sudden, distress_gradual, sick_pen_sudden, sick_pen_gradual"
+new farm,combined,1.0,0.367,1.0,67.5,"sick_pen_sudden, sick_pen_gradual"
+new farm,count,1.5,0.2,1.0,5.0,"missing_pig, camera_fault"
+new farm,feeding,1.0,0.6,0.775,235.0,feeder_failure

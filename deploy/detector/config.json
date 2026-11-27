@@ -1,0 +1,34 @@
+{
+  "model": "YOLO11n fine-tuned for one class (pig), ultralytics 8.4.24, trained 23 Nov 2026 on 4,200 frames from seven Edinburgh clips of five days (six-day protocol)",
+  "file": "pig_yolo11n_640.onnx",
+  "export": "ultralytics export format=onnx imgsz=640 opset=12 simplify=True dynamic=False, from reports/detector_2026-11-23/best.pt",
+  "size_MB": 10.6,
+  "input": {
+    "name": "images",
+    "shape": [1, 3, 640, 640],
+    "dtype": "float32",
+    "layout": "NCHW, RGB",
+    "preprocessing": "letterbox the frame to 640 x 640 (keep aspect ratio, pad with grey 114), divide by 255, no mean/std normalisation"
+  },
+  "output": {
+    "name": "output0",
+    "shape": [1, 5, 8400],
+    "rows": ["cx", "cy", "w", "h", "score"],
+    "units": "pixels of the 640 x 640 letterboxed input",
+    "postprocessing": "keep rows with score >= 0.25, non-maximum suppression at IoU 0.7, undo the letterbox to get boxes in the original frame; the model has no NMS inside"
+  },
+  "tracking": "ByteTrack on the kept boxes (ultralytics bytetrack.yaml defaults), one track id per pig",
+  "source_video": "Edinburgh pig pen camera, 1280 x 720 at 6.04 frames per second; the behaviour model needs 2 boxes per pig per second, so run the detector on every third frame",
+  "accuracy": {
+    "validation_11_nov_pytorch": {"map50": 0.9946, "map50_95": 0.5961, "precision": 0.9904, "recall": 0.9896},
+    "validation_11_nov_onnx": {"map50": 0.9944, "map50_95": 0.59, "precision": 0.9849, "recall": 0.9878},
+    "test_2_dec_untouched": {"precision": "0.98 to 0.99", "recall": "0.99 to 1.00", "identity_switches_per_5_min": "8 to 18"}
+  },
+  "timing_laptop": {
+    "pytorch_gpu_ms_per_frame": 19.5,
+    "pytorch_cpu_ms_per_frame": 68.9,
+    "onnxruntime_cpu_ms_per_frame": 36.6,
+    "note": "best of three on an idle laptop; the Edge Impulse profile replaces these for the target device"
+  },
+  "untested_on_hardware": "INT8 quantisation of this detector, latency and power on a Raspberry Pi or similar board. Edge Impulse profiling is the substitute (department email of 23 Nov 2026)."
+}
