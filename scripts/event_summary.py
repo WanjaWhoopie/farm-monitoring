@@ -17,8 +17,11 @@ Window = one Edinburgh clip (five minutes). A deployed system would use the same
 Binary record (24 bytes, little-endian):
   version u8 | pen u8 | window start u32 (unix s) | window length u8 (min) | pigs seen x10 u8
   | 7 behaviour shares u8 each (0-255 = 0-100%) | motion u16 (px/s x10) | calls u8
-  | negative-valence share u8 | flags u8 | CRC-8 u8 | reserved u8 x3
+  | negative-valence share u8 | flags u8 (bits 0-5 one per rule, bits 6-7 severity) | CRC-8 u8
+  | reserved u8 x3
 Audio fields are present in the record but empty here: there is no paired audio for these pens.
+The flags and severity come from the fusion rules (scripts/fusion_rules.py, deploy/rules.json);
+decode_binary() is the inverse of encode_binary() and deploy/check_handover.py tests the round trip.
 
 Usage: python scripts/event_summary.py [--out DIR]
 Outputs: event_summary_example.json, summaries_all_clips.jsonl, bytes_per_day.csv,
@@ -53,6 +56,8 @@ SURFACE, INK, INK2, GRID = "#fcfcfb", "#0b0b0b", "#5a5955", "#e1e0d9"
 # one SMS carries 140 bytes of binary payload (or 160 7-bit characters).
 LINK_2G_BPS = 5_000
 SMS_BYTES = 140
+RULE_BITS = ["movement", "rest", "call", "combined", "count", "feeding"]  # bit 0 .. bit 5 of the flags byte
+BINARY_FORMAT = "<BBIBB7BHBBB"  # body, then CRC-8 and three reserved bytes
 # Audio assumptions: 16 kHz, 16-bit mono PCM; Opus speech coding at 24 kbit/s.
 AUDIO_PCM_BPS = 16_000 * 2
 AUDIO_OPUS_BPS = 24_000 / 8
@@ -88,16 +93,36 @@ def summary_for_clip(clip: str, budgets: pd.DataFrame, pen: int) -> dict:
             "motion_px_s": motion,
             "audio": {"calls": None, "neg_valence": None},
             "flags": [],
+            "severity": 0,
             "src": "clip " + clip}
 
 
 def encode_binary(s: dict) -> bytes:
     shares = [int(round(255 * s["budget"][c])) for c in CLASSES7]
-    body = struct.pack("<BBIBB7BHBBB", s["v"], s["pen"], s["t"], s["win_min"],
+    flags = sum(1 << RULE_BITS.index(f) for f in s.get("flags", []) if f in RULE_BITS)
+    flags |= (int(s.get("severity", 0)) & 0b11) << 6
+    body = struct.pack(BINARY_FORMAT, s["v"], s["pen"], s["t"], s["win_min"],
                        int(round(10 * (s["pigs_seen"] or 0))), *shares,
                        int(round(10 * (s["motion_px_s"] or 0))), s["audio"]["calls"] or 0,
-                       int(round(255 * (s["audio"]["neg_valence"] or 0))), 0)
+                       int(round(255 * (s["audio"]["neg_valence"] or 0))), flags)
     return body + bytes([crc8(body)]) + bytes(3)
+
+
+def decode_binary(b: bytes) -> dict:
+    """Inverse of encode_binary. Raises ValueError on a bad length or CRC."""
+    if len(b) != 24:
+        raise ValueError(f"expected 24 bytes, got {len(b)}")
+    body = b[:20]
+    if crc8(body) != b[20]:
+        raise ValueError("CRC mismatch")
+    v, pen, t, win_min, pigs10, *rest = struct.unpack(BINARY_FORMAT, body)
+    shares, motion10, calls, neg255, flags = rest[:7], rest[7], rest[8], rest[9], rest[10]
+    return {"v": v, "pen": pen, "t": t, "win_min": win_min, "pigs_seen": pigs10 / 10,
+            "budget": {c: round(x / 255, 3) for c, x in zip(CLASSES7, shares)},
+            "motion_px_s": motion10 / 10,
+            "audio": {"calls": calls, "neg_valence": round(neg255 / 255, 3)},
+            "flags": [r for i, r in enumerate(RULE_BITS) if flags >> i & 1],
+            "severity": flags >> 6}
 
 
 def human(n: float) -> str:

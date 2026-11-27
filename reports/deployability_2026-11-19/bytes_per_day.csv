@@ -4,8 +4,8 @@ stream,kind,bytes_per_day,readable,hours_on_2g_link,sms_per_day,share_of_raw_vid
 audio compressed (Opus 24 kbit/s),raw,259200000.0,259 MB,14.4,1851429,3.53e-03
 "box stream, CSV at 6 per s (detector output as written)",boxes,508322592.0,508 MB,28.24,3630876,6.92e-03
 "box stream, binary 8 bytes per box at 2 per s",boxes,11439360.0,11.4 MB,0.64,81710,1.56e-04
-"event summary, compact JSON every 5 min",summary,78624.0,78.6 kB,0.0,562,1.07e-06
-"event summary, compressed JSON every 5 min",summary,60768.0,60.8 kB,0.0,435,8.28e-07
+"event summary, compact JSON every 5 min",summary,82368.0,82.4 kB,0.0,589,1.12e-06
+"event summary, compressed JSON every 5 min",summary,62784.0,62.8 kB,0.0,449,8.55e-07
 "event summary, 24-byte binary every 5 min",summary,6912.0,6.91 kB,0.0,50,9.42e-08
 "event summary, 24-byte binary every 15 min",summary,2304.0,2.3 kB,0.0,17,3.14e-08
 "event summary, 24-byte binary every hour",summary,576.0,576 B,0.0,5,7.85e-09

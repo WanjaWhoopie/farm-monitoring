@@ -1,10 +1,10 @@
 {
-  "saved_at": "2026-11-19T20:34:22",
+  "saved_at": "2026-11-28T00:52:20",
   "window_s": 300,
   "record_bytes": {
-    "json_pretty": 374,
-    "json_compact": 273,
-    "json_compact_gzip": 211,
+    "json_pretty": 391,
+    "json_compact": 286,
+    "json_compact_gzip": 218,
     "binary": 24
   },
   "video_bytes_per_clip_mean": 254879836,

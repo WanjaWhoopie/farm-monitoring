@@ -199,6 +199,7 @@ deploy/                               the handover package (see Handover below)
   detector/pig_yolo11n_640.onnx       the six-day detector as ONNX, with config.json beside it
   event_record.md                     the event record, field by field, JSON and 24-byte binary
   rules.json                          the six rules, their thresholds and the severity levels
+  check_handover.py                   four checks that the package works without the training code
 audio_models/
   final_model/                        the final audio model (Paul): EfficientNet-B0 weights, ONNX export, preprocessing config
   MobileNetV2.pth                     the PANNs MobileNetV2 weights used for the comparison
@@ -457,7 +458,7 @@ of the seven behaviours, how much the pigs moved, two audio fields (call count a
 negative-valence calls, empty here because these pens have no paired audio), and any flags. The
 example in `reports/deployability_2026-11-19/` is filled from the real outputs for one clip.
 
-The same record encoded four ways. Readable JSON is 374 bytes, compact JSON 273, compressed 211,
+The same record encoded four ways. Readable JSON is 391 bytes, compact JSON 286, compressed 218,
 and a fixed binary layout 24 bytes. Five binary records fit in one SMS.
 
 Bytes per day for one pen, 24 hours, by what is sent:
@@ -469,7 +470,7 @@ Bytes per day for one pen, 24 hours, by what is sent:
 | Audio compressed (Opus, 24 kbit/s) | 259 MB | 14 | 1.9 million |
 | Box stream, CSV at 6 per second | 508 MB | 28 | 3.6 million |
 | Box stream, binary, 2 per second | 11 MB | 0.6 | 82 thousand |
-| Event summary, compact JSON every 5 min | 79 kB | under a minute | 562 |
+| Event summary, compact JSON every 5 min | 82 kB | under a minute | 589 |
 | Event summary, 24-byte binary every 5 min | 6.9 kB | seconds | 50 |
 | Event summary, 24-byte binary every hour | 576 B | seconds | 5 |
 
@@ -591,8 +592,8 @@ For the Edge Impulse profile (model size, memory and expected latency on a targe
   INT8 option there as well, since the detector's 8-bit accuracy is the one number we could not
   measure ourselves.
 - Audio model. `audio_models/final_model/effnet_b0_valence_fp32.onnx`, 16 MB, with its
-  preprocessing in the `config.json` next to it. Input 1 x 1 x 64 x 101, output two softmax
-  scores. Profile the 32-bit file only. Our own INT8 test lost 0.15 of macro-F1 (see Audio
+  preprocessing in the `config.json` next to it. Input 1 x 1 x 64 x 101 named `mel`, output two
+  logits named `logits`. Apply softmax, index 1 is negative valence. Profile the 32-bit file only. Our own INT8 test lost 0.15 of macro-F1 (see Audio
   branch).
 - What to write down from each profile. Target, RAM, flash, estimated ms per inference, and
   whether INT8 was offered. Those numbers replace the laptop timings in this README and go in the
@@ -607,6 +608,14 @@ For the web dashboard.
   does not run the rules. It shows the flags and the severity the device sends, and the file says
   what each flag means.
 - `pip install pandas` is enough to read the examples.
+
+Before building on the package, run `python deploy/check_handover.py` from the repository root.
+It decodes one real frame through the detector ONNX using only the steps in `config.json` and
+compares the boxes with the human labels and with the ultralytics decoder, loads the audio ONNX
+and checks the preprocessing recipe gives the documented shape, round-trips the 24-byte record
+with flags and severity, and checks `rules.json` against the sweep's operating points. It
+should print 4 of 4 checks passed. Run on 28 November 2026: all four pass, the hand-decoded
+boxes match the ultralytics decoder exactly and all eight pigs in the test frame.
 
 Untested on hardware, to be listed as limitations in the paper. Detector INT8 accuracy and speed,
 latency and power on a single-board computer, solar uptime for the three kit sizes, and SMS

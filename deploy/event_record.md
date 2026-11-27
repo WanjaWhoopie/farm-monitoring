@@ -43,10 +43,8 @@ Edinburgh clips, audio fields empty because those pens had no microphone).
 | `severity` | 0 normal, 1 watch, 2 alert, 3 urgent (see `rules.json`) | rules |
 | `src` | free text, where the record came from | config |
 
-Compact JSON is about 270 bytes. The `severity` field and the rule names in `flags` were added
-on 28 November 2026 with the fusion rules. The byte counts in the README's bytes-per-day table
-were measured before that and are a few bytes short. The dashboard should accept the fields it
-knows and ignore any it does not, so the device can add fields without breaking it.
+Compact JSON is about 290 bytes. The dashboard should accept the fields it knows and ignore
+any it does not, so the device can add fields without breaking it.
 
 ## Binary form, 24 bytes, little-endian
 
@@ -67,8 +65,10 @@ For SMS fallback. Five of these fit in one 140-byte SMS.
 | 20 | CRC-8 | polynomial 0x07 over bytes 0 to 19 |
 | 21 to 23 | reserved | zero |
 
-Encoder and CRC in `scripts/event_summary.py` (`encode_binary`, `crc8`). The struct format is
-`<BBIBB7BHBBB` followed by the CRC byte and three zero bytes.
+Encoder, decoder and CRC in `scripts/event_summary.py` (`encode_binary`, `decode_binary`,
+`crc8`). The struct format is `<BBIBB7BHBBB` followed by the CRC byte and three zero bytes.
+`deploy/check_handover.py` round-trips a record with flags and severity and checks that a
+corrupted byte is rejected.
 
 ## What the dashboard should show
 
